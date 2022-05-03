@@ -1,0 +1,88 @@
+import React from "react";
+import styled from "styled-components";
+import Icon from "../input/Input";
+import Button from "../button/Button";
+import { device } from "../../styles/breakpoints";
+
+const SearchContainer = styled.div`
+	max-width: 1126px;
+	width: 95%;
+	min-height: 130px;
+	border: solid 1px var(--color-black);
+	background-color: var(--color-white);
+	border-radius: 0 0 10px 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	@media ${device.laptop} {
+		width: 95%;
+		min-height: 380px;
+	}
+
+	.form__data-container {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		padding: 8px;
+		@media ${device.laptop} {
+			flex-direction: column;
+		}
+	}
+	.form__line {
+		height: 100px;
+		width: 1px;
+		background-color: black;
+		@media ${device.laptop} {
+			height: 1px;
+			width: 95%;
+		}
+	}
+`;
+
+const SearchBtnContainer = styled.div`
+	width: 188px;
+	height: 66px;
+	@media ${device.laptop} {
+		width: 95%;
+	}
+`;
+
+function Searchbar() {
+	return (
+		<SearchContainer>
+			<form>
+				<div className="form__data-container">
+					<Icon
+						labelText="Select your hotel"
+						icon="carbon:location-company"
+						placeholder="Choose your destination"
+					/>
+					<div className="form__line"></div>
+					<Icon
+						labelText="Arrival - Depature"
+						icon="bx:calendar"
+						placeholder="Add data"
+					/>
+					<div className="form__line"></div>
+					<Icon
+						labelText="Visitors"
+						icon="fluent:guest-add-20-regular"
+						placeholder="Add guest"
+					/>
+					<SearchBtnContainer>
+						<Button
+							text="Search"
+							icon="bx:search-alt"
+							btnCategory="primary"
+							color="blue"
+							typeOfButton="button"
+						></Button>
+					</SearchBtnContainer>
+				</div>
+			</form>
+		</SearchContainer>
+	);
+}
+
+export default Searchbar;
