@@ -1,48 +1,124 @@
-import React, { useState } from "react";
-import { Accordion, Slider, Text, Container, Checkbox } from "@mantine/core";
+import React, { useState, useRef } from "react";
+import {
+	Accordion,
+	RangeSlider,
+	Text,
+	Container,
+	Checkbox,
+} from "@mantine/core";
+import styled from "styled-components";
 import { Icon } from "@iconify/react";
 
+const AccordionContainer = styled(Accordion)`
+	.mantine-v4lv9f {
+		border: none;
+	}
+	.mantine-Accordion-itemOpened {
+		border: none;
+	}
+	.mantine-Accordion-label {
+		font-size: var(--font-size-md);
+	}
+	.mantine-Accordion-icon {
+		color: var(--color-secondary);
+	}
+	.mantine-Accordion-icon svg {
+		height: var(--size-md);
+		width: var(--size-md);
+	}
+`;
+const StarsIcons = styled(Icon)`
+	font-size: 26px;
+	color: var(--color-secondary);
+`;
+
+const SliderComponent = styled(Container)`
+	.mantine-Slider-bar {
+		background-color: var(--color-secondary);
+		height: 4px;
+		top: 2px;
+	}
+	.mantine-d21okt {
+	}
+	.mantine-d21okt::before {
+		content: "";
+		position: absolute;
+		top: 2px;
+		bottom: 0;
+		border-radius: 32px;
+		right: 0;
+		left: 0;
+		background-color: var(--color-primary);
+		z-index: -10;
+		height: 3px;
+	}
+	.mantine-Slider-thumb {
+		background-color: var(--color-secondary);
+		height: 10px;
+		width: 10px;
+		border: none;
+		box-shadow: 0px 0px 0px 10px rgba(46, 101, 140, 0.4);
+	}
+	.mantine-mug9ln {
+		color: var(--color-primary);
+	}
+	.values-container {
+		display: flex;
+		justify-content: space-between;
+		padding: 16px 0;
+		font-weight: 700;
+	}
+`;
+
+const CheckboksItem = styled(Checkbox)`
+	margin: var(--size) 0;
+
+	.mantine-Checkbox-input {
+		border: solid 1px var(--color-secondary);
+		background-color: rgba(88, 132, 163, 0.2);
+	}
+	.mantine-Checkbox-icon {
+		color: var(--color-secondary);
+	}
+`;
 function FilterComponent() {
-	const [value, setValue] = useState(50);
-	const [endValue, setEndValue] = useState(50);
+	const [value, setValue] = useState(0);
+	const [endValue, setEndValue] = useState(0);
+
 	return (
 		<>
-			<Accordion>
+			<AccordionContainer>
 				<Accordion.Item label="Hotel class" iconPosition="right">
 					<div>
-						<Icon icon="ant-design:star-filled" />
-						<Icon icon="ant-design:star-filled" />
-						<Icon icon="ant-design:star-filled" />
-						<Icon icon="ant-design:star-filled" />
-						<Icon icon="ant-design:star-outlined" />
+						<StarsIcons icon="ant-design:star-filled" />
+						<StarsIcons icon="ant-design:star-filled" />
+						<StarsIcons icon="ant-design:star-filled" />
+						<StarsIcons icon="ant-design:star-filled" />
+						<StarsIcons icon="ant-design:star-outlined" />
 					</div>
 				</Accordion.Item>
-
 				<Accordion.Item label="Price" iconPosition="right">
-					<Container size={400}>
-						<Slider
-							value={value}
+					<SliderComponent size={400}>
+						<RangeSlider
+							defaultValue={[0, 10000]}
 							onChange={setValue}
 							onChangeEnd={setEndValue}
 						/>
-						<Text mt="md" size="sm">
-							onChange value: <b>{value}</b>
-						</Text>
-						<Text mt={5} size="sm">
-							onChangeEnd value: <b>{endValue}</b>
-						</Text>
-					</Container>
+						<div className="values-container">
+							<span>{value} Nok</span>
+							<span>{endValue} Nok</span>
+						</div>
+					</SliderComponent>
 				</Accordion.Item>
-
 				<Accordion.Item label="PopularFilters" iconPosition="right">
-					<Checkbox label="WiFi included" />
-					<Checkbox label="Breakfast included" />
-					<Checkbox label="Pet friendly" />
-					<Checkbox label="Parking" />
-					<Checkbox label="Spa" />
-					<Checkbox label="Gym" />
+					<CheckboksItem label="WiFi included" />
+					<CheckboksItem label="Breakfast included" />
+					<CheckboksItem label="Pet friendly" />
+					<CheckboksItem label="Parking" />
+					<CheckboksItem label="Spa" />
+					<CheckboksItem label="Gym" />
 				</Accordion.Item>
-			</Accordion>
+			</AccordionContainer>
 		</>
 	);
 }
