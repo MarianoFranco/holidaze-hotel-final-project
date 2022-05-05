@@ -5,6 +5,7 @@ import Searchbar from "../../components/searchbar/Searchbar";
 import SortButton from "../../components/sortButton/SortButton";
 import FilterComponent from "../../components/filterComponent/FilterComponent";
 import HotelDetailsCards from "../../components/hotelDetailsCards/HotelDetailsCards";
+import Footer from "../../components/footer/Footer";
 
 const MainSection = styled.main`
 	max-width: 1440px;
@@ -12,7 +13,6 @@ const MainSection = styled.main`
 `;
 
 const SearchSection = styled.div`
-	border: solid 1px blue;
 	display: flex;
 	justify-content: center;
 	margin: var(--size-xl);
@@ -112,6 +112,7 @@ function hotels() {
 					</div>
 				</ResultsContainer>
 			</MainSection>
+			<Footer></Footer>
 		</>
 	);
 }
