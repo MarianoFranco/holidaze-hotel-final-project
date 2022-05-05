@@ -82,8 +82,9 @@ const CheckboksItem = styled(Checkbox)`
 	}
 `;
 function FilterComponent() {
-	const [value, setValue] = useState(0);
-	const [endValue, setEndValue] = useState(0);
+	const [value, setValue] = useState([0, 10000]);
+
+	console.log("value", value);
 
 	return (
 		<>
@@ -100,13 +101,15 @@ function FilterComponent() {
 				<Accordion.Item label="Price" iconPosition="right">
 					<SliderComponent size={400}>
 						<RangeSlider
+							min={0}
+							max={10000}
 							defaultValue={[0, 10000]}
 							onChange={setValue}
-							onChangeEnd={setEndValue}
+							marks={[{ value: 0 }, { value: 10000 }]}
 						/>
 						<div className="values-container">
-							<span>{value} Nok</span>
-							<span>{endValue} Nok</span>
+							<span>{value[0]} Nok</span>
+							<span>{value[1]} Nok</span>
 						</div>
 					</SliderComponent>
 				</Accordion.Item>
