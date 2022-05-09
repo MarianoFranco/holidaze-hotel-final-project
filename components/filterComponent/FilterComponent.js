@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, usePreviousState } from "react";
 import {
 	Accordion,
 	RangeSlider,
@@ -8,6 +8,7 @@ import {
 } from "@mantine/core";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
+import usePrevious from "../../utils/hooks/usePrevious";
 
 const AccordionContainer = styled(Accordion)`
 	.mantine-v4lv9f {
@@ -84,18 +85,102 @@ const CheckboksItem = styled(Checkbox)`
 function FilterComponent() {
 	const [value, setValue] = useState([0, 10000]);
 
-	console.log("value", value);
+	const [stars, setStars] = useState(5);
+	const prevStars = usePrevious(stars);
+	const [starsSelected, setStarsSelected] = useState(5);
 
+	console.log("stars", stars);
+	console.log("prevstars", prevStars);
 	return (
 		<>
 			<AccordionContainer>
 				<Accordion.Item label="Hotel class" iconPosition="right">
 					<div>
-						<StarsIcons icon="ant-design:star-filled" />
-						<StarsIcons icon="ant-design:star-filled" />
-						<StarsIcons icon="ant-design:star-filled" />
-						<StarsIcons icon="ant-design:star-filled" />
-						<StarsIcons icon="ant-design:star-outlined" />
+						<StarsIcons
+							icon={
+								(stars === null && starsSelected >= 1) ||
+								stars >= 1
+									? "ant-design:star-filled"
+									: "ant-design:star-outlined"
+							}
+							onMouseEnter={() => {
+								setStars(1);
+							}}
+							onClick={() => {
+								setStarsSelected(1);
+							}}
+							onMouseLeave={() => {
+								setStars(null);
+							}}
+						/>
+						<StarsIcons
+							icon={
+								stars >= 2 ||
+								(stars === null && starsSelected >= 2)
+									? "ant-design:star-filled"
+									: "ant-design:star-outlined"
+							}
+							onMouseEnter={() => {
+								setStars(2);
+							}}
+							onClick={() => {
+								setStarsSelected(2);
+							}}
+							onMouseLeave={() => {
+								setStars(null);
+							}}
+						/>
+						<StarsIcons
+							icon={
+								stars >= 3 ||
+								(stars === null && starsSelected >= 3)
+									? "ant-design:star-filled"
+									: "ant-design:star-outlined"
+							}
+							onMouseEnter={() => {
+								setStars(3);
+							}}
+							onClick={() => {
+								setStarsSelected(3);
+							}}
+							onMouseLeave={() => {
+								setStars(null);
+							}}
+						/>
+						<StarsIcons
+							icon={
+								(stars && stars >= 4) ||
+								(!stars && starsSelected >= 4)
+									? "ant-design:star-filled"
+									: "ant-design:star-outlined"
+							}
+							onMouseEnter={() => {
+								setStars(4);
+							}}
+							onClick={() => {
+								setStarsSelected(4);
+							}}
+							onMouseLeave={() => {
+								setStars(null);
+							}}
+						/>
+						<StarsIcons
+							icon={
+								(stars && stars >= 5) ||
+								(!stars && starsSelected >= 5)
+									? "ant-design:star-filled"
+									: "ant-design:star-outlined"
+							}
+							onMouseEnter={() => {
+								setStars(5);
+							}}
+							onClick={() => {
+								setStarsSelected(5);
+							}}
+							onMouseLeave={() => {
+								setStars(null);
+							}}
+						/>
 					</div>
 				</Accordion.Item>
 				<Accordion.Item label="Price" iconPosition="right">

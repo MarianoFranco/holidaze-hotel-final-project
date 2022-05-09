@@ -18,6 +18,9 @@ const SearchSection = styled.div`
 	display: flex;
 	justify-content: center;
 	margin: var(--size-xl);
+	@media ${device.laptopL} {
+		margin: var(--size-xl) var(--size-sm);
+	}
 `;
 const Title = styled.h1`
 	padding: var(--size-md);
@@ -210,6 +213,7 @@ function Hotels({ data }) {
 										price={hotel.price}
 										stars={hotel.stars}
 										sliderImg={hotel.SliderImages}
+										id={hotel.id}
 									></HotelDetailsCards>
 								);
 							})}
