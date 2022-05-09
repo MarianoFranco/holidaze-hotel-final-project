@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import SliderComponent from "../carousel/Carousel";
+import Carousel from "../carousel/Carousel";
 import { device } from "../../styles/breakpoints";
 
 const SectionContainer = styled.div`
@@ -74,7 +74,7 @@ const LineDivider = styled.div`
 		margin: var(--size-lg) auto;
 	}
 `;
-function MostSoldSection() {
+function MostSoldSection({ hotel_data }) {
 	return (
 		<>
 			<SectionContainer>
@@ -84,7 +84,7 @@ function MostSoldSection() {
 					now!
 				</SectionSubtitle>
 				<CardsContainer>
-					<SliderComponent></SliderComponent>
+					<Carousel hotel_data={hotel_data}></Carousel>
 				</CardsContainer>
 				<LineDivider></LineDivider>
 			</SectionContainer>

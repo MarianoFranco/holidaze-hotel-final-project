@@ -5,6 +5,10 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 import Button from "../button/Button";
 import Link from "next/link";
+import StarsIcon from "../starsIcon/StarsIcon";
+import ImageSlider from "../imageSlider/ImageSlider";
+import { device } from "../../styles/breakpoints";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -15,18 +19,26 @@ import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 
 const CardContainer = styled.div`
-	height: 256px;
+	min-height: 256px;
 	background-color: #eeeeee;
 	border-radius: 10px;
 	border: solid 1px var(--color-tertiary);
 	display: flex;
+	position: relative;
+	@media ${device.laptop} {
+		flex-direction: column;
+		gap: var(--size-md);
+		align-items: center;
+	}
 `;
 
 const Gallery = styled.div`
 	width: 230px;
 	height: 140px;
-
 	margin: var(--size-md);
+
+	@media ${device.laptop} {
+	}
 	.swiper {
 		width: 100%;
 		height: 100%;
@@ -56,6 +68,7 @@ const Gallery = styled.div`
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		border-radius: 8px;
 	}
 
 	.mySwiper2 {
@@ -81,13 +94,6 @@ const Gallery = styled.div`
 		opacity: 1;
 	}
 
-	.swiper-slide img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: 8px;
-	}
 	.swiper-button-next::after,
 	.swiper-button-prev::after {
 		font-size: var(--size-md);
@@ -101,6 +107,9 @@ const DataContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
+	@media ${device.laptop} {
+		gap: 16px;
+	}
 	.data__title-container {
 		display: flex;
 		justify-content: space-between;
@@ -117,7 +126,11 @@ const DataContainer = styled.div`
 		font-size: 24px;
 	}
 	.data__address-container {
+		display: flex;
+		flex-direction: column;
+		gap: var(--size-sm);
 	}
+
 	.data__location-container {
 		display: flex;
 		align-items: center;
@@ -147,9 +160,17 @@ const DataContainer = styled.div`
 const Line = styled.div`
 	width: 1px;
 	background-color: var(--color-black);
-	height: 80%;
+	height: 90%;
 	margin: auto;
 	opacity: 0.2;
+
+	@media ${device.laptop} {
+		width: 80%;
+		background-color: var(--color-black);
+		height: 1px;
+		margin: auto;
+		opacity: 0.2;
+	}
 `;
 
 const TotalContainer = styled.div`
@@ -159,10 +180,15 @@ const TotalContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	padding: var(--size);
+	gap: var(--size-lg);
 	.total__icon-container {
 		align-self: flex-end;
 		font-size: 32px;
 		color: var(--color-secondary);
+		@media ${device.laptop} {
+			position: absolute;
+			top: 16px;
+		}
 	}
 	.total__price-container {
 		align-self: flex-end;
@@ -171,6 +197,10 @@ const TotalContainer = styled.div`
 		flex-direction: column;
 		align-items: flex-end;
 		gap: 8px;
+		@media ${device.laptop} {
+			align-self: center;
+			align-items: center;
+		}
 	}
 	.total__total-price {
 	}
@@ -179,19 +209,44 @@ const TotalContainer = styled.div`
 		font-weight: 600;
 	}
 	.total__btn-container {
-		width: 208px;
+		max-width: 208px;
+		width: 100%;
 		height: 64px;
+		@media ${device.laptop} {
+			max-width: 100%;
+		}
 	}
 `;
 
 const BookButton = styled(Button)``;
-function HotelDetailsCards() {
+function HotelDetailsCards({
+	title,
+	address,
+	amenities,
+	price,
+	stars,
+	sliderImg,
+}) {
 	const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
 	return (
 		<>
 			<CardContainer>
 				<Gallery>
+					{/* <ImageSlider
+						style={{
+							"--swiper-navigation-color": "var(--color-primary)",
+							"--swiper-pagination-color": "var(--color-primary)",
+						}}
+						loop={true}
+						spaceBetween={8}
+						navigation={true}
+						thumbs={{ swiper: thumbsSwiper }}
+						modules={[FreeMode, Navigation, Thumbs]}
+						className="mySwiper2"
+						sliderImg={sliderImg}
+					/> */}
+
 					<Swiper
 						style={{
 							"--swiper-navigation-color": "var(--color-primary)",
@@ -204,36 +259,93 @@ function HotelDetailsCards() {
 						modules={[FreeMode, Navigation, Thumbs]}
 						className="mySwiper2"
 					>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-						</SwiperSlide>
+						{sliderImg.map((image) => {
+							const firstLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img1}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+							const secondLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img2}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+							const thirdLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img3}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+							const fourthLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img4}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+							const fifthLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img5}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+
+							return (
+								<div key={image.id}>
+									<SwiperSlide>
+										<Image
+											src={image.Img1}
+											layout="fill"
+											loader={firstLoader}
+											alt={image.title}
+										/>
+									</SwiperSlide>
+									<SwiperSlide>
+										<Image
+											src={image.Img2}
+											loader={secondLoader}
+											layout="fill"
+											alt={image.title}
+										/>
+									</SwiperSlide>
+									<SwiperSlide>
+										<Image
+											src={image.Img3}
+											loader={thirdLoader}
+											layout="fill"
+											alt={image.title}
+										/>
+									</SwiperSlide>
+									<SwiperSlide>
+										<Image
+											src={image.Img4}
+											loader={fourthLoader}
+											layout="fill"
+											alt={image.title}
+										/>
+									</SwiperSlide>
+									<SwiperSlide>
+										<Image
+											src={image.Img5}
+											loader={fifthLoader}
+											layout="fill"
+											alt={image.title}
+										/>
+									</SwiperSlide>
+								</div>
+							);
+						})}
 					</Swiper>
 					<Swiper
 						onSwiper={setThumbsSwiper}
@@ -245,51 +357,104 @@ function HotelDetailsCards() {
 						modules={[FreeMode, Navigation, Thumbs]}
 						className="mySwiper"
 					>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-						</SwiperSlide>
-						<SwiperSlide>
-							<img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-						</SwiperSlide>
+						{sliderImg.map((image) => {
+							const firstLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img1}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+							const secondLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img2}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+							const thirdLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img3}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+							const fourthLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img4}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+							const fifthLoader = ({
+								width = 100,
+								quality = 100,
+							}) => {
+								return `${image.Img5}?w=${width}&q=${
+									quality || 75
+								}`;
+							};
+
+							return (
+								<div key={image.id}>
+									<SwiperSlide>
+										<Image
+											src={image.Img1}
+											layout="fill"
+											loader={firstLoader}
+											alt={image.title}
+										/>
+									</SwiperSlide>
+									<SwiperSlide>
+										<Image
+											src={image.Img2}
+											loader={secondLoader}
+											layout="fill"
+											alt={image.title}
+										/>
+									</SwiperSlide>
+									<SwiperSlide>
+										<Image
+											src={image.Img3}
+											loader={thirdLoader}
+											layout="fill"
+											alt={image.title}
+										/>
+									</SwiperSlide>
+									<SwiperSlide>
+										<Image
+											src={image.Img4}
+											loader={fourthLoader}
+											layout="fill"
+											alt={image.title}
+										/>
+									</SwiperSlide>
+									<SwiperSlide>
+										<Image
+											src={image.Img5}
+											loader={fifthLoader}
+											layout="fill"
+											alt={image.title}
+										/>
+									</SwiperSlide>
+								</div>
+							);
+						})}
 					</Swiper>
 				</Gallery>
 				<DataContainer>
 					<div className="data__title-container">
-						<h3 className="data__title">Hotel Scandic</h3>
+						<h3 className="data__title">{title}</h3>
 						<div className="data__icons-container">
-							<Icon icon="ant-design:star-filled" />
-							<Icon icon="ant-design:star-filled" />
-							<Icon icon="ant-design:star-filled" />
-							<Icon icon="ant-design:star-filled" />
-							<Icon icon="ant-design:star-filled" />
+							<StarsIcon stars={stars} />
 						</div>
 					</div>
 					<div className="data__address-container">
-						<p>1170 Travis Street, Bergen 11708, Norway</p>
+						<p>{address}</p>
 						<div className="data__location-container">
 							<Icon
 								icon="carbon:location-filled"
@@ -298,13 +463,18 @@ function HotelDetailsCards() {
 							<span className="data__location">Map view</span>
 						</div>
 					</div>
+
 					<div className="data__amenities">
-						<Icon icon="fluent:food-24-filled" />
-						<Icon icon="bx:wifi-2" />
-						<Icon icon="ic:outline-pets" />
-						<Icon icon="bx:spa" />
-						<Icon icon="ant-design:car-filled" />
-						<Icon icon="gg:gym" />
+						{amenities.breakfast && (
+							<Icon icon="fluent:food-24-filled" />
+						)}
+						{amenities.wifi && <Icon icon="bx:wifi-2" />}
+						{amenities.pets && <Icon icon="ic:outline-pets" />}
+						{amenities.spa && <Icon icon="bx:spa" />}
+						{amenities.parking && (
+							<Icon icon="ant-design:car-filled" />
+						)}
+						{amenities.gym && <Icon icon="gg:gym" />}
 					</div>
 					<p className="data__cancelation">
 						Free cancelation. No prepayment needed
@@ -318,7 +488,7 @@ function HotelDetailsCards() {
 					<div className="total__price-container">
 						<span className="total__text">from</span>
 						<div className="total__total-price">
-							<span className="total__price">1999</span>
+							<span className="total__price">{price}</span>
 							<span> Nok</span>
 						</div>
 						<span>per night</span>

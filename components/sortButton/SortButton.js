@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
+import { device } from "../../styles/breakpoints";
 
 const Button = styled.button`
 	padding: var(--size) var(--size-md);
@@ -14,10 +15,17 @@ const Button = styled.button`
 	font-size: var(--font-size-md);
 	color: var(--color-secondary);
 	border-radius: 10px;
+	@media ${device.tablet} {
+		font-size: var(--font-size);
+		padding: var(--size-sm) var(--size);
+	}
 	.button__icon {
 		margin-left: 16px;
 		font-size: 34px;
 		color: var(--color-secondary);
+		@media ${device.tablet} {
+			font-size: 24px;
+		}
 	}
 `;
 

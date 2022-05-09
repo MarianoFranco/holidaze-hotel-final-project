@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
+import StarsIcon from "../starsIcon/StarsIcon";
 
 const CardContainer = styled.div`
 	position: relative;
@@ -131,36 +132,34 @@ const DataContainer = styled.div`
 		font-weight: 600;
 	}
 `;
-function SliderCards() {
+function SliderCards({ id, title, imgSrc, imageLoader, stars, town, price }) {
 	return (
 		<>
-			<Link href="/" passHref>
+			<Link href="/" passHref key={id}>
 				<a target="_blank">
 					<CardContainer>
 						<ImgContainer>
 							<ImgElement
-								src="/images/card-img.jpg"
+								src={imgSrc}
 								alt="Card Image"
 								layout="fill"
 								objectFit="cover"
+								loader={imageLoader}
 							></ImgElement>
 						</ImgContainer>
 						<DataContainer>
 							<div className="card__icons-container">
-								<Icon icon="ant-design:star-filled" />
-								<Icon icon="ant-design:star-filled" />
-								<Icon icon="ant-design:star-filled" />
-								<Icon icon="ant-design:star-filled" />
+								<StarsIcon stars={stars}></StarsIcon>
 							</div>
 							<div className="card__info">
-								<h3 className="card__title">Hotel Scandic</h3>
+								<h3 className="card__title">{title}</h3>
 								<div className="card__location">
 									<Icon
 										icon="carbon:location-filled"
 										className="card__location-icon"
 									/>
 									<span className="card__city-name">
-										Bergen, Norway
+										{town}
 									</span>
 								</div>
 							</div>
@@ -176,7 +175,7 @@ function SliderCards() {
 								<div className="card__price-container">
 									<p className="card__price-text">from</p>
 									<p className="card__price-amount">
-										1999 Nok
+										{price} Nok
 									</p>
 								</div>
 							</div>

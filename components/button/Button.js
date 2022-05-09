@@ -47,6 +47,7 @@ const BtnElement = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	cursor: pointer;
 
 	.btn__icon {
 		font-size: 34px;
@@ -94,20 +95,20 @@ const SecBtnElement = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
+	cursor: pointer;
 	.btn__icon {
 		font-size: 34px;
 		margin-left: var(--size);
 	}
 `;
 
-function Button({ text, icon, btnCategory, typeOfButton, color }) {
+function Button({ text, icon, btnCategory, typeOfButton, color, onClick }) {
 	if (btnCategory === "primary") {
 		if (color === "blue") {
 			if (typeOfButton === "button") {
 				return (
 					<BtnContainer color={color}>
-						<BtnElement color={color}>
+						<BtnElement color={color} onClick={onClick}>
 							{text}
 							<Icon icon={icon} className="btn__icon" />
 						</BtnElement>
@@ -125,7 +126,7 @@ function Button({ text, icon, btnCategory, typeOfButton, color }) {
 			if (typeOfButton === "button") {
 				return (
 					<BtnContainer color={color}>
-						<BtnElement color={color}>
+						<BtnElement color={color} onClick={onClick}>
 							{text}
 							<Icon icon={icon} className="btn__icon" />
 						</BtnElement>
@@ -145,7 +146,7 @@ function Button({ text, icon, btnCategory, typeOfButton, color }) {
 			if (typeOfButton === "button") {
 				return (
 					<SecBtnContainer color={color}>
-						<SecBtnElement color={color}>
+						<SecBtnElement color={color} onClick={onClick}>
 							{text}
 							<Icon icon={icon} className="btn__icon" />
 						</SecBtnElement>
@@ -163,7 +164,7 @@ function Button({ text, icon, btnCategory, typeOfButton, color }) {
 			if (typeOfButton === "button") {
 				return (
 					<SecBtnContainer color={color}>
-						<SecBtnElement color={color}>
+						<SecBtnElement color={color} onClick={onClick}>
 							{text}
 							<Icon icon={icon} className="btn__icon" />
 						</SecBtnElement>

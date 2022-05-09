@@ -9,7 +9,7 @@ const SliderContainer = styled(Slider)`
 		padding: 8px;
 	}
 `;
-function SliderComponent() {
+function Carousel({ hotel_data }) {
 	const settings = {
 		dots: false,
 		infinite: true,
@@ -42,7 +42,8 @@ function SliderComponent() {
 		],
 	};
 	const sliderRef = useRef();
-	console.log(sliderRef.current);
+	console.log("carousel", hotel_data);
+
 	return (
 		<>
 			<div className="arrow__prev">
@@ -52,11 +53,29 @@ function SliderComponent() {
 				/>
 			</div>
 			<SliderContainer ref={sliderRef} {...settings}>
-				<SliderCards />
-				<SliderCards />
-				<SliderCards />
-				<SliderCards />
-				<SliderCards />
+				{hotel_data.map((hotel) => {
+					const secondaryLoader = ({
+						width = 100,
+						quality = 100,
+					}) => {
+						return `${hotel.cardImage}?w=${width}&q=${
+							quality || 75
+						}`;
+					};
+					return (
+						<div key={hotel.id}>
+							<SliderCards
+								id={hotel.id}
+								title={hotel.Title}
+								imgSrc={hotel.cardImage}
+								imageLoader={secondaryLoader}
+								stars={hotel.stars}
+								town={hotel.Town}
+								price={hotel.price}
+							/>
+						</div>
+					);
+				})}
 			</SliderContainer>
 			<div className="arrow__next">
 				<Icon
@@ -68,4 +87,4 @@ function SliderComponent() {
 	);
 }
 
-export default SliderComponent;
+export default Carousel;

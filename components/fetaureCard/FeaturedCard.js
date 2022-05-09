@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { device } from "../../styles/breakpoints";
@@ -94,7 +94,15 @@ const FeaturedDataContainer = styled.div`
 		color: var(--color-primary);
 	}
 `;
-export function FeaturedCards({ imgSrc, imgAlt, isaportraitcard }) {
+export function FeaturedCards({
+	imgSrc,
+	imgAlt,
+	isaportraitcard,
+	imageLoader,
+	title,
+	town,
+	small_desc,
+}) {
 	return (
 		<>
 			<FeaturedCardsContainer isaportraitcard={isaportraitcard}>
@@ -105,14 +113,13 @@ export function FeaturedCards({ imgSrc, imgAlt, isaportraitcard }) {
 						objectFit="cover"
 						alt={imgAlt}
 						isaportraitcard={isaportraitcard}
+						loader={imageLoader}
 					/>
 				</FeaturedImgContaner>
 				<FeaturedDataContainer isaportraitcard={isaportraitcard}>
-					<h3 className="featured__title">RADISON HOTEL</h3>
-					<h4 className="featured__location">- BERGEN</h4>
-					<p className="featured__comment">
-						Confort and nature in a perfect armony
-					</p>
+					<h3 className="featured__title">{title}</h3>
+					<h4 className="featured__location">{town}</h4>
+					<p className="featured__comment">{small_desc}</p>
 				</FeaturedDataContainer>
 			</FeaturedCardsContainer>
 		</>

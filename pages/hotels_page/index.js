@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
 import Searchbar from "../../components/searchbar/Searchbar";
@@ -6,7 +6,9 @@ import SortButton from "../../components/sortButton/SortButton";
 import FilterComponent from "../../components/filterComponent/FilterComponent";
 import HotelDetailsCards from "../../components/hotelDetailsCards/HotelDetailsCards";
 import Footer from "../../components/footer/Footer";
-
+import Link from "next/link";
+import { device } from "../../styles/breakpoints";
+import Button from "../../components/button/Button";
 const MainSection = styled.main`
 	max-width: 1440px;
 	margin: auto;
@@ -31,6 +33,17 @@ const ResultsContainer = styled.div`
 		"card4 card1 card1"
 		"card2 card3 card3";
 
+	@media ${device.laptop} {
+		grid-template-columns: 30% auto auto;
+	}
+	@media ${device.tablet} {
+		grid-template-columns: auto;
+		grid-template-areas:
+			"card2 card2 card2"
+			"card1 card1 card1"
+			"card3 card3 card3";
+	}
+
 	.div1 {
 		grid-area: card1;
 	}
@@ -47,22 +60,50 @@ const ResultsContainer = styled.div`
 const SortComponent = styled.div`
 	display: flex;
 	align-items: center;
+	justify-content: center;
+
+	@media ${device.laptop} {
+		align-items: flex-start;
+	}
+	@media ${device.tablet} {
+		justify-content: center;
+	}
 	.sort__title {
 		font-size: var(--font-size-md);
 		margin-right: 16px;
+		font-weight: 500;
+		@media ${device.laptop} {
+			width: 40%;
+			padding: 16px 0;
+		}
+		@media ${device.tablet} {
+			font-size: var(--font-size);
+			text-align: center;
+			width: 120px;
+
+			padding: 12px 0;
+		}
 	}
 	.sort__buttons-container {
 		display: flex;
 		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	@media ${device.laptop} {
 	}
 `;
 const FilteredContainer = styled.div`
 	border: solid 1px rgba(88, 132, 163, 0.4);
 	border-radius: 10px;
 	padding: var(--size);
+
 	.filtered__title {
 		font-size: var(--font-size-md);
 		font-weight: 500;
+		@media ${device.tablet} {
+			font-size: var(--font-size);
+		}
 	}
 	.filtered__line {
 		width: 100%;
@@ -70,13 +111,51 @@ const FilteredContainer = styled.div`
 		margin: var(--size) auto;
 		background-color: rgba(88, 132, 163, 0.4);
 	}
+	.filtered__btn-container {
+		height: 50px;
+	}
+	.btn-test {
+		border: solid 1px red;
+		cursor: pointer;
+	}
+	.filtered-box-container {
+		display: block;
+		@media ${device.tablet} {
+			display: none;
+		}
+	}
+	.filtered-box-container-2 {
+		display: none;
+		@media ${device.tablet} {
+			display: block;
+		}
+	}
 `;
+
 const CardsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
 `;
-function hotels() {
+export async function getStaticProps() {
+	try {
+		let res = await fetch("http://localhost:1337/hotels/");
+		let data = await res.json();
+
+		console.log(data);
+		return {
+			props: { data },
+		};
+	} catch (error) {
+		console.error(error);
+	}
+}
+function Hotels({ data }) {
+	const [opened, toggleOpened] = useState(false);
+	console.log(opened);
+	const showFiltered = () => {
+		opened ? toggleOpened(false) : toggleOpened(true);
+	};
 	return (
 		<>
 			<Header></Header>
@@ -98,16 +177,42 @@ function hotels() {
 					</div>
 					<div className="div2">
 						<FilteredContainer>
-							<p className="filtered__title">Filtered by: </p>
-							<div className="filtered__line"></div>
-							<FilterComponent></FilterComponent>
+							<div className="filtered-box-container">
+								<p className="filtered__title">Filtered by: </p>
+								<div className="filtered__line"></div>
+								<FilterComponent></FilterComponent>
+							</div>
+							<div className="filtered-box-container-2">
+								<div className="filtered__btn-container">
+									<Button
+										icon="mi:filter"
+										text="Filtered by: "
+										color="blue"
+										typeOfButton="button"
+										onClick={showFiltered}
+									/>
+								</div>
+								<div className="filtered__line"></div>
+								{opened && <FilterComponent />}
+							</div>
 						</FilteredContainer>
 					</div>
 					<div className="div3">
 						<CardsContainer>
-							<HotelDetailsCards className="card__container"></HotelDetailsCards>
-							<HotelDetailsCards className="card__container"></HotelDetailsCards>
-							<HotelDetailsCards className="card__container"></HotelDetailsCards>
+							{data.map((hotel) => {
+								return (
+									<HotelDetailsCards
+										key={hotel.id}
+										className="card__container"
+										title={hotel.Title}
+										address={hotel.Address}
+										amenities={hotel.amenities}
+										price={hotel.price}
+										stars={hotel.stars}
+										sliderImg={hotel.SliderImages}
+									></HotelDetailsCards>
+								);
+							})}
 						</CardsContainer>
 					</div>
 				</ResultsContainer>
@@ -117,4 +222,4 @@ function hotels() {
 	);
 }
 
-export default hotels;
+export default Hotels;

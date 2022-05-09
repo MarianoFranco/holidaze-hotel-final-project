@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { device } from "../../styles/breakpoints";
-import { FeaturedCards } from "../cards/Cards";
+import { FeaturedCards } from "../fetaureCard/FeaturedCard";
 import Link from "next/link";
 
 const OurSelectionContainer = styled.div``;
@@ -38,26 +38,46 @@ const DataContainer = styled.div`
 	background-color: rgba(0, 0, 0, 0.75);
 	border-radius: 10px;
 `;
-function OurSelectionSection() {
+function OurSelectionSection({ hotel_data }) {
+	const filteredHotel = hotel_data.filter(function (hotel) {
+		return hotel.featured === true;
+	});
+	console.log("our selection", filteredHotel);
 	return (
 		<>
 			<OurSelectionContainer>
 				<SectionTitle>Our Selection</SectionTitle>
 				<CardContainer>
-					<Link href="/">
-						<a>
-							<FeaturedCards
-								isaportraitcard="true"
-								imgSrc="/images/our-selection.jpg"
-								imgAlt="title of the pictured"
-								mwidth="704px"
-								titleFontSize="var(--font-size-xl)"
-								cityFontSize="var(--font-size-lg)"
-								bradius="10px"
-								containerRadius="0"
-							></FeaturedCards>
-						</a>
-					</Link>
+					{filteredHotel.slice(0, 1).map((hotel) => {
+						const secondaryLoader = ({
+							width = 100,
+							quality = 100,
+						}) => {
+							return `${hotel.cardImage}?w=${width}&q=${
+								quality || 75
+							}`;
+						};
+						return (
+							<Link href="/" key={hotel.id}>
+								<a>
+									<FeaturedCards
+										isaportraitcard="true"
+										imgSrc={hotel.cardImage}
+										imgAlt="title of the pictured"
+										mwidth="704px"
+										titleFontSize="var(--font-size-xl)"
+										cityFontSize="var(--font-size-lg)"
+										bradius="10px"
+										containerRadius="0"
+										imageLoader={secondaryLoader}
+										title={hotel.Title}
+										town={hotel.Town}
+										small_desc={hotel.small_desc}
+									></FeaturedCards>
+								</a>
+							</Link>
+						);
+					})}
 				</CardContainer>
 			</OurSelectionContainer>
 		</>

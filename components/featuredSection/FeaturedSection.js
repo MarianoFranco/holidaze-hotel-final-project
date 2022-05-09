@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { FeaturedCards } from "../cards/Cards";
+import { FeaturedCards } from "../fetaureCard/FeaturedCard";
 import { device } from "../../styles/breakpoints";
 import Link from "next/link";
 
@@ -67,62 +67,46 @@ const CardsContainer = styled.div`
 		grid-area: card5;
 	}
 `;
-function FeaturedSection() {
+
+function FeaturedSection({ hotel_data }) {
+	let count = 0;
+
+	const filteredHotel = hotel_data.filter(function (hotel) {
+		return hotel.featured === true;
+	});
+
 	return (
 		<>
 			<FeaturedContainer>
 				<SectionTitle>Most popular hotels</SectionTitle>
 				<CardsContainer>
-					<div className="div1">
-						<Link href="/" passHref>
-							<a>
-								<FeaturedCards
-									imgSrc="/images/card-img.jpg"
-									imgAlt="title of the photo"
-								/>
-							</a>
-						</Link>
-					</div>
-					<div className="div2">
-						<Link href="/" passHref>
-							<a>
-								<FeaturedCards
-									imgSrc="/images/card-img.jpg"
-									imgAlt="title of the photo"
-								/>
-							</a>
-						</Link>
-					</div>
-					<div className="div3">
-						<Link href="/" passHref>
-							<a>
-								<FeaturedCards
-									imgSrc="/images/card-img.jpg"
-									imgAlt="title of the photo"
-								/>
-							</a>
-						</Link>
-					</div>
-					<div className="div4">
-						<Link href="/" passHref>
-							<a>
-								<FeaturedCards
-									imgSrc="/images/card-img.jpg"
-									imgAlt="title of the photo"
-								/>
-							</a>
-						</Link>
-					</div>
-					<div className="div5">
-						<Link href="/" passHref>
-							<a>
-								<FeaturedCards
-									imgSrc="/images/card-img.jpg"
-									imgAlt="title of the photo"
-								/>
-							</a>
-						</Link>
-					</div>
+					{filteredHotel.slice(0, 5).map((hotel) => {
+						count++;
+						const secondaryLoader = ({
+							width = 100,
+							quality = 100,
+						}) => {
+							return `${hotel.cardImage}?w=${width}&q=${
+								quality || 75
+							}`;
+						};
+						return (
+							<div key={hotel.id} className={`div${count}`}>
+								<Link href="/" passHref>
+									<a>
+										<FeaturedCards
+											imgSrc={hotel.cardImage}
+											imgAlt="title of the photo"
+											imageLoader={secondaryLoader}
+											title={hotel.Title}
+											town={hotel.Town}
+											small_desc={hotel.small_desc}
+										/>
+									</a>
+								</Link>
+							</div>
+						);
+					})}
 				</CardsContainer>
 			</FeaturedContainer>
 		</>
