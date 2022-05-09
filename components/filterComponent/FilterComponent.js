@@ -82,15 +82,14 @@ const CheckboksItem = styled(Checkbox)`
 		color: var(--color-secondary);
 	}
 `;
-function FilterComponent() {
+function FilterComponent({ data, onStarsSelected, onPriceRangeSelected }) {
 	const [value, setValue] = useState([0, 10000]);
 
 	const [stars, setStars] = useState(5);
-	const prevStars = usePrevious(stars);
+	const [wifi, setWifi] = useState(true);
+
 	const [starsSelected, setStarsSelected] = useState(5);
 
-	console.log("stars", stars);
-	console.log("prevstars", prevStars);
 	return (
 		<>
 			<AccordionContainer>
@@ -103,11 +102,12 @@ function FilterComponent() {
 									? "ant-design:star-filled"
 									: "ant-design:star-outlined"
 							}
-							onMouseEnter={() => {
+							onMouseEnter={(e) => {
 								setStars(1);
 							}}
 							onClick={() => {
 								setStarsSelected(1);
+								onStarsSelected(1);
 							}}
 							onMouseLeave={() => {
 								setStars(null);
@@ -125,6 +125,7 @@ function FilterComponent() {
 							}}
 							onClick={() => {
 								setStarsSelected(2);
+								onStarsSelected(2);
 							}}
 							onMouseLeave={() => {
 								setStars(null);
@@ -142,6 +143,7 @@ function FilterComponent() {
 							}}
 							onClick={() => {
 								setStarsSelected(3);
+								onStarsSelected(3);
 							}}
 							onMouseLeave={() => {
 								setStars(null);
@@ -159,6 +161,7 @@ function FilterComponent() {
 							}}
 							onClick={() => {
 								setStarsSelected(4);
+								onStarsSelected(4);
 							}}
 							onMouseLeave={() => {
 								setStars(null);
@@ -176,6 +179,7 @@ function FilterComponent() {
 							}}
 							onClick={() => {
 								setStarsSelected(5);
+								onStarsSelected(5);
 							}}
 							onMouseLeave={() => {
 								setStars(null);
@@ -189,7 +193,11 @@ function FilterComponent() {
 							min={0}
 							max={10000}
 							defaultValue={[0, 10000]}
-							onChange={setValue}
+							onChange={(price) => {
+								console.log("change price", price);
+								setValue(price);
+							}}
+							onChangeEnd={onPriceRangeSelected}
 							marks={[{ value: 0 }, { value: 10000 }]}
 						/>
 						<div className="values-container">
@@ -199,7 +207,11 @@ function FilterComponent() {
 					</SliderComponent>
 				</Accordion.Item>
 				<Accordion.Item label="PopularFilters" iconPosition="right">
-					<CheckboksItem label="WiFi included" />
+					<CheckboksItem
+						label="WiFi included"
+						checked={wifi}
+						onChange={setWifi}
+					/>
 					<CheckboksItem label="Breakfast included" />
 					<CheckboksItem label="Pet friendly" />
 					<CheckboksItem label="Parking" />

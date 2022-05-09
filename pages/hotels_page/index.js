@@ -159,6 +159,25 @@ function Hotels({ data }) {
 	const showFiltered = () => {
 		opened ? toggleOpened(false) : toggleOpened(true);
 	};
+
+	const [starsSelected, setStarsSelected] = useState(null);
+	const [priceRange, setPriceRange] = useState([0, 10000]);
+
+	const starsDataFiltered = data.filter((hotel) => {
+		return starsSelected === null || hotel.stars === starsSelected;
+	});
+	const dataFilteredByRangePrice = starsDataFiltered.filter((hotel) => {
+		return hotel.price >= priceRange[0] && hotel.price <= priceRange[1];
+	});
+
+	// TODO mañana
+	//definir variable wifi
+	//y cada una de las amenities para hacer funcionar el filtered
+	// const dataFilteredByAmenities = dataFilteredByRangePrice.filter((hotel) => {
+	// 	return hotel.wifi === wifi || hotel.pet === pet;
+	// });
+
+	console.log(dataFilteredByRangePrice);
 	return (
 		<>
 			<Header></Header>
@@ -183,7 +202,14 @@ function Hotels({ data }) {
 							<div className="filtered-box-container">
 								<p className="filtered__title">Filtered by: </p>
 								<div className="filtered__line"></div>
-								<FilterComponent></FilterComponent>
+								<FilterComponent
+									data={data}
+									onStarsSelected={(val) => {
+										console.log("funcion", val);
+										setStarsSelected(val);
+									}}
+									onPriceRangeSelected={setPriceRange}
+								></FilterComponent>
 							</div>
 							<div className="filtered-box-container-2">
 								<div className="filtered__btn-container">
@@ -196,13 +222,22 @@ function Hotels({ data }) {
 									/>
 								</div>
 								<div className="filtered__line"></div>
-								{opened && <FilterComponent />}
+								{opened && (
+									<FilterComponent
+										data={data}
+										onStarsSelected={(val) => {
+											console.log("funcion", val);
+											setStarsSelected(val);
+										}}
+										onPriceRangeSelected={setPriceRange}
+									/>
+								)}
 							</div>
 						</FilteredContainer>
 					</div>
 					<div className="div3">
 						<CardsContainer>
-							{data.map((hotel) => {
+							{dataFilteredByRangePrice.map((hotel) => {
 								return (
 									<HotelDetailsCards
 										key={hotel.id}

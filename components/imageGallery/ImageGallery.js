@@ -108,8 +108,6 @@ function ImageGallery({ sliderImg }) {
 					className="mySwiper2"
 				>
 					{sliderArray.map((image, i) => {
-						console.log(image);
-
 						return (
 							<SwiperSlide key={i}>
 								<Image
@@ -133,8 +131,6 @@ function ImageGallery({ sliderImg }) {
 					className="mySwiper"
 				>
 					{sliderArray.map((image, i) => {
-						console.log(image);
-
 						return (
 							<SwiperSlide key={i}>
 								<Image
