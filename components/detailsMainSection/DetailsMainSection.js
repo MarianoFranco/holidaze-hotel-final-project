@@ -4,6 +4,8 @@ import { Icon } from "@iconify/react";
 import ImageGallery from "../imageGallery/ImageGallery";
 import Image from "next/image";
 import StarsIcon from "../../components/starsIcon/StarsIcon";
+import Button from "../../components/button/Button";
+import Link from "next/link";
 
 const DetailsSectionContainer = styled.div`
 	max-width: 1440px;
@@ -47,15 +49,40 @@ const AddressContainer = styled.div`
 const MainContainer = styled.div`
 	padding: var(--size-md) var(--size-md);
 	border: solid 1px red;
+	display: flex;
+	gap: var(--size);
 `;
 
 const GalleryContainer = styled.div`
-	border: solid 1px blue;
-	width: 700px;
-	height: 500px;
+	width: 800px;
+	height: 664px;
 	padding: 0px;
 `;
-
+const CardContainer = styled.div`
+	max-width: 556px;
+	width: 556px;
+	height: 250px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.btn__text {
+		padding: 20px;
+	}
+`;
+const ImageContainer = styled.div`
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border: solid 1px red;
+	border-radius: 10px;
+	z-index: -100;
+	top: 0;
+	left: 0;
+`;
+const ImageComponent = styled(Image)`
+	border-radius: 10px;
+`;
 function DetailsMainSection({ data }) {
 	const [thumbsSwiper, setThumbsSwiper] = useState(null);
 	console.log(data.SliderImages);
@@ -84,7 +111,28 @@ function DetailsMainSection({ data }) {
 					<ImageGallery sliderImg={data.SliderImages}></ImageGallery>
 				</GalleryContainer>
 				<div>
-					<div>map picture</div>
+					<CardContainer>
+						<ImageContainer>
+							<ImageComponent
+								src="/images/map-image.jpg"
+								layout="fill"
+								objectFit="cover"
+								objectPosition="center center"
+							></ImageComponent>
+						</ImageContainer>
+						<Link href="http://maps.google.com/maps">
+							<a className="card__link">
+								<Button
+									text="Show on map"
+									btnCategory="secondary"
+									typeOfButton="link"
+									color="blue"
+									className="card__btn"
+								/>
+							</a>
+						</Link>
+					</CardContainer>
+
 					<div>Total Price</div>
 				</div>
 			</MainContainer>

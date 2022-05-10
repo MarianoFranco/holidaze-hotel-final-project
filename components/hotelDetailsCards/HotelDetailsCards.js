@@ -32,7 +32,7 @@ const CardContainer = styled.div`
 
 const GalleryContainer = styled.div`
 	width: 230px;
-	height: 140px;
+	height: 170px;
 	margin: var(--size-md);
 `;
 

@@ -95,6 +95,8 @@ function FilterComponent({
 
 	const [toggleWifi, setToggleWifi] = useState(false);
 	const [toggleSpa, setToggleSpa] = useState(false);
+	console.log(toggleWifi);
+	console.log(toggleSpa);
 
 	return (
 		<>
@@ -215,7 +217,7 @@ function FilterComponent({
 				<Accordion.Item label="PopularFilters" iconPosition="right">
 					<CheckboksItem
 						label="WiFi included"
-						checked={!toggleWifi}
+						checked={toggleWifi}
 						onChange={() => {
 							toggleWifi
 								? setToggleWifi(false)
@@ -228,7 +230,7 @@ function FilterComponent({
 					<CheckboksItem label="Parking" />
 					<CheckboksItem
 						label="Spa"
-						checked={!toggleSpa}
+						checked={toggleSpa}
 						onChange={() => {
 							toggleSpa
 								? setToggleSpa(false)

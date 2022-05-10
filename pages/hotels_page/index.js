@@ -177,9 +177,8 @@ function Hotels({ data }) {
 	//y cada una de las amenities para hacer funcionar el filtered
 	const dataFilteredByAmenities = dataFilteredByRangePrice.filter((hotel) => {
 		return (
-			wifiSelected === false ||
-			// hotel.amenities.wifi === wifiSelected ||
-			hotel.amenities.spa === spaSelected
+			(wifiSelected === true && hotel.amenities.wifi === wifiSelected) ||
+			(spaSelected === true && hotel.amenities.spa === spaSelected)
 		);
 	});
 
