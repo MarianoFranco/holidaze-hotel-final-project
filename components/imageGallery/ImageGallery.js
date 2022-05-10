@@ -51,7 +51,7 @@ const Gallery = styled.div`
 		height: 100%;
 		width: 100%;
 
-		margin: 8px 0;
+		margin: 0px 0 8px;
 	}
 
 	.mySwiper {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import ImageGallery from "../imageGallery/ImageGallery";
@@ -6,6 +6,9 @@ import Image from "next/image";
 import StarsIcon from "../../components/starsIcon/StarsIcon";
 import Button from "../../components/button/Button";
 import Link from "next/link";
+import { NumberInput } from "@mantine/core";
+
+import { DateRangePicker, DatePicker } from "@mantine/dates";
 
 const DetailsSectionContainer = styled.div`
 	max-width: 1440px;
@@ -58,6 +61,12 @@ const GalleryContainer = styled.div`
 	height: 664px;
 	padding: 0px;
 `;
+
+const DataContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+`;
 const CardContainer = styled.div`
 	max-width: 556px;
 	width: 556px;
@@ -67,14 +76,14 @@ const CardContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	.btn__text {
-		padding: 20px;
+		padding: 16px 24px;
 	}
 `;
 const ImageContainer = styled.div`
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	border: solid 1px red;
+	border: solid 1px rgba(255, 255, 255, 0.2);
 	border-radius: 10px;
 	z-index: -100;
 	top: 0;
@@ -83,9 +92,72 @@ const ImageContainer = styled.div`
 const ImageComponent = styled(Image)`
 	border-radius: 10px;
 `;
+
+const BookingDataContainer = styled.div`
+	width: 556px;
+	height: 398px;
+	border: solid 1px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	padding: var(--size-md);
+`;
+const CheckInOutContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	gap: var(--size-md);
+`;
+const InputComponent = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	.input__text {
+		color: var(--color-black);
+		font-size: var(--font-size);
+		font-weight: 600;
+	}
+`;
+const InputCustomized = styled.div`
+	position: relative;
+	width: 162px;
+	height: 55px;
+
+	.input__icon {
+		position: absolute;
+		top: 12px;
+		right: 12px;
+		font-size: 30px;
+		color: var(--color-secondary);
+	}
+	.input__line {
+		background-color: var(--color-secondary);
+		width: 1px;
+		height: 55px;
+		position: absolute;
+		top: 0;
+		left: 111px;
+	}
+`;
+
+const InputContainer = styled(DatePicker)`
+	.mantine-DatePicker-input {
+		border: solid 1px var(--color-secondary);
+		height: 55px;
+		font-size: var(--font-size);
+	}
+	.mantine-DatePicker-rightSection {
+		display: none;
+	}
+`;
+const GuestContainer = styled.div``;
 function DetailsMainSection({ data }) {
 	const [thumbsSwiper, setThumbsSwiper] = useState(null);
-	console.log(data.SliderImages);
+
+	const [value, setValue] = useState([Date, Date]);
+
+	const ref = useRef("current");
+
+	//Consultar sobre como puedo sumarle el valor al total
+	console.log(ref.current.value);
+	const [numberOfGuest, setNumberOfGuest] = useState(1);
 
 	return (
 		<DetailsSectionContainer>
@@ -110,7 +182,7 @@ function DetailsMainSection({ data }) {
 				<GalleryContainer>
 					<ImageGallery sliderImg={data.SliderImages}></ImageGallery>
 				</GalleryContainer>
-				<div>
+				<DataContainer>
 					<CardContainer>
 						<ImageContainer>
 							<ImageComponent
@@ -132,9 +204,64 @@ function DetailsMainSection({ data }) {
 							</a>
 						</Link>
 					</CardContainer>
-
-					<div>Total Price</div>
-				</div>
+					<BookingDataContainer>
+						<div>
+							<CheckInOutContainer>
+								<InputComponent>
+									<p className="input__text">Check in:</p>
+									<InputCustomized>
+										<InputContainer
+											placeholder="Pick date"
+											value={value}
+											onChange={setValue}
+										></InputContainer>
+										<div className="input__line"></div>
+										<Icon
+											icon="bx:calendar"
+											className="input__icon"
+										/>
+									</InputCustomized>
+								</InputComponent>
+								<InputComponent>
+									<p className="input__text">Check out:</p>
+									<InputCustomized>
+										<InputContainer
+											placeholder="Pick date"
+											value={value}
+											onChange={setValue}
+										></InputContainer>
+										<div className="input__line"></div>
+										<Icon
+											icon="bx:calendar"
+											className="input__icon"
+										/>
+									</InputCustomized>
+								</InputComponent>
+							</CheckInOutContainer>
+							<GuestContainer>
+								<NumberInput
+									ref={ref}
+									defaultValue={1}
+									placeholder="Guest"
+									label="Guest: "
+								/>
+								<div>Rooms</div>
+							</GuestContainer>
+						</div>
+						<div>
+							<span>Total Booking:</span>
+							<span>Price</span>
+						</div>
+						<div>
+							<Button
+								text="Book Now"
+								btnCategory="primary"
+								typeOfButton="link"
+								color="blue"
+							/>
+						</div>
+					</BookingDataContainer>
+				</DataContainer>
 			</MainContainer>
 		</DetailsSectionContainer>
 	);
