@@ -155,13 +155,15 @@ export async function getStaticProps() {
 }
 function Hotels({ data }) {
 	const [opened, toggleOpened] = useState(false);
-	console.log(opened);
+
 	const showFiltered = () => {
 		opened ? toggleOpened(false) : toggleOpened(true);
 	};
 
 	const [starsSelected, setStarsSelected] = useState(null);
 	const [priceRange, setPriceRange] = useState([0, 10000]);
+	const [wifiSelected, setWifiSelected] = useState(false);
+	const [spaSelected, setSpaSelected] = useState(false);
 
 	const starsDataFiltered = data.filter((hotel) => {
 		return starsSelected === null || hotel.stars === starsSelected;
@@ -173,11 +175,14 @@ function Hotels({ data }) {
 	// TODO mañana
 	//definir variable wifi
 	//y cada una de las amenities para hacer funcionar el filtered
-	// const dataFilteredByAmenities = dataFilteredByRangePrice.filter((hotel) => {
-	// 	return hotel.wifi === wifi || hotel.pet === pet;
-	// });
+	const dataFilteredByAmenities = dataFilteredByRangePrice.filter((hotel) => {
+		return (
+			wifiSelected === false ||
+			// hotel.amenities.wifi === wifiSelected ||
+			hotel.amenities.spa === spaSelected
+		);
+	});
 
-	console.log(dataFilteredByRangePrice);
 	return (
 		<>
 			<Header></Header>
@@ -209,6 +214,8 @@ function Hotels({ data }) {
 										setStarsSelected(val);
 									}}
 									onPriceRangeSelected={setPriceRange}
+									onWifiSelected={setWifiSelected}
+									onSpaSelected={setSpaSelected}
 								></FilterComponent>
 							</div>
 							<div className="filtered-box-container-2">
@@ -230,6 +237,8 @@ function Hotels({ data }) {
 											setStarsSelected(val);
 										}}
 										onPriceRangeSelected={setPriceRange}
+										onWifiSelected={setWifiSelected}
+										onSpaSelected={setSpaSelected}
 									/>
 								)}
 							</div>
@@ -237,7 +246,7 @@ function Hotels({ data }) {
 					</div>
 					<div className="div3">
 						<CardsContainer>
-							{dataFilteredByRangePrice.map((hotel) => {
+							{dataFilteredByAmenities.map((hotel) => {
 								return (
 									<HotelDetailsCards
 										key={hotel.id}

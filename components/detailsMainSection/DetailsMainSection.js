@@ -1,18 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import ImageGallery from "../imageGallery/ImageGallery";
 import Image from "next/image";
 import StarsIcon from "../../components/starsIcon/StarsIcon";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
-
-// import required modules
-import { FreeMode, Navigation, Thumbs } from "swiper";
 
 const DetailsSectionContainer = styled.div`
 	max-width: 1440px;
@@ -58,9 +49,11 @@ const MainContainer = styled.div`
 	border: solid 1px red;
 `;
 
-const Gallery = styled.div`
+const GalleryContainer = styled.div`
+	border: solid 1px blue;
 	width: 700px;
-	height: 700px;
+	height: 500px;
+	padding: 0px;
 `;
 
 function DetailsMainSection({ data }) {
@@ -87,210 +80,9 @@ function DetailsMainSection({ data }) {
 				</AddressContainer>
 			</TextContainer>
 			<MainContainer>
-				<div>
-					<Gallery>
-						<Swiper
-							style={{
-								"--swiper-navigation-color":
-									"var(--color-primary)",
-								"--swiper-pagination-color":
-									"var(--color-primary)",
-							}}
-							loop={true}
-							spaceBetween={8}
-							navigation={true}
-							thumbs={{ swiper: thumbsSwiper }}
-							modules={[FreeMode, Navigation, Thumbs]}
-							className="mySwiper2"
-						>
-							{data.SliderImages.map((image) => {
-								const firstLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img1}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-								const secondLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img2}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-								const thirdLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img3}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-								const fourthLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img4}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-								const fifthLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img5}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-
-								return (
-									<div key={image.id}>
-										<SwiperSlide>
-											<Image
-												src={image.Img1}
-												layout="fill"
-												loader={firstLoader}
-												alt={image.title}
-											/>
-										</SwiperSlide>
-										<SwiperSlide>
-											<Image
-												src={image.Img2}
-												loader={secondLoader}
-												layout="fill"
-												alt={image.title}
-											/>
-										</SwiperSlide>
-										<SwiperSlide>
-											<Image
-												src={image.Img3}
-												loader={thirdLoader}
-												layout="fill"
-												alt={image.title}
-											/>
-										</SwiperSlide>
-										<SwiperSlide>
-											<Image
-												src={image.Img4}
-												loader={fourthLoader}
-												layout="fill"
-												alt={image.title}
-											/>
-										</SwiperSlide>
-										<SwiperSlide>
-											<Image
-												src={image.Img5}
-												loader={fifthLoader}
-												layout="fill"
-												alt={image.title}
-											/>
-										</SwiperSlide>
-									</div>
-								);
-							})}
-						</Swiper>
-						<Swiper
-							onSwiper={setThumbsSwiper}
-							loop={true}
-							spaceBetween={8}
-							slidesPerView={4}
-							freeMode={true}
-							watchSlidesProgress={true}
-							modules={[FreeMode, Navigation, Thumbs]}
-							className="mySwiper"
-						>
-							{data.SliderImages.map((image) => {
-								const firstLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img1}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-								const secondLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img2}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-								const thirdLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img3}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-								const fourthLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img4}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-								const fifthLoader = ({
-									width = 100,
-									quality = 100,
-								}) => {
-									return `${image.Img5}?w=${width}&q=${
-										quality || 75
-									}`;
-								};
-
-								return (
-									<div key={image.id}>
-										<SwiperSlide>
-											<Image
-												src={image.Img1}
-												layout="fill"
-												loader={firstLoader}
-												alt={image.title}
-											/>
-										</SwiperSlide>
-										<SwiperSlide>
-											<Image
-												src={image.Img2}
-												loader={secondLoader}
-												layout="fill"
-												alt={image.title}
-											/>
-										</SwiperSlide>
-										<SwiperSlide>
-											<Image
-												src={image.Img3}
-												loader={thirdLoader}
-												layout="fill"
-												alt={image.title}
-											/>
-										</SwiperSlide>
-										<SwiperSlide>
-											<Image
-												src={image.Img4}
-												loader={fourthLoader}
-												layout="fill"
-												alt={image.title}
-											/>
-										</SwiperSlide>
-										<SwiperSlide>
-											<Image
-												src={image.Img5}
-												loader={fifthLoader}
-												layout="fill"
-												alt={image.title}
-											/>
-										</SwiperSlide>
-									</div>
-								);
-							})}
-						</Swiper>
-					</Gallery>
-				</div>
+				<GalleryContainer>
+					<ImageGallery sliderImg={data.SliderImages}></ImageGallery>
+				</GalleryContainer>
 				<div>
 					<div>map picture</div>
 					<div>Total Price</div>

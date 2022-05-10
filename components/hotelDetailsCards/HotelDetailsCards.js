@@ -16,13 +16,14 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
 const CardContainer = styled.div`
-	min-height: 256px;
+	height: 256px;
 	background-color: #eeeeee;
 	border-radius: 10px;
 	border: solid 1px var(--color-tertiary);
 	display: flex;
 	position: relative;
 	@media ${device.laptop} {
+		height: 100%;
 		flex-direction: column;
 		gap: var(--size-md);
 		align-items: center;
@@ -95,26 +96,27 @@ const Line = styled.div`
 	width: 1px;
 	background-color: var(--color-black);
 	height: 90%;
-	margin: auto;
+	margin: auto var(--size-md);
 	opacity: 0.2;
 
 	@media ${device.laptop} {
 		width: 80%;
 		background-color: var(--color-black);
 		height: 1px;
-		margin: auto;
+		margin: var(--size-md);
 		opacity: 0.2;
 	}
 `;
 
 const TotalContainer = styled.div`
 	width: 100%;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	padding: var(--size);
-	gap: var(--size-lg);
+
 	.total__icon-container {
 		align-self: flex-end;
 		font-size: 32px;
@@ -126,14 +128,16 @@ const TotalContainer = styled.div`
 	}
 	.total__price-container {
 		align-self: flex-end;
-		margin: 0 50px;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-end;
 		gap: 8px;
+
+		margin: 0 10%;
 		@media ${device.laptop} {
 			align-self: center;
 			align-items: center;
+			right: 0px;
 		}
 	}
 	.total__total-price {
@@ -145,14 +149,24 @@ const TotalContainer = styled.div`
 	.total__btn-container {
 		max-width: 208px;
 		width: 100%;
-		height: 64px;
+		min-height: 64px;
+		align-self: flex-end;
+		margin: var(--size) 10% 0;
+
 		@media ${device.laptop} {
 			max-width: 100%;
+
+			margin: var(--size-md) 0px;
+		}
+	}
+	.btn__text {
+		text-align: center;
+		@media ${device.laptopL} {
+			padding: var(--size);
 		}
 	}
 `;
 
-const BookButton = styled(Button)``;
 function HotelDetailsCards({
 	id,
 	title,

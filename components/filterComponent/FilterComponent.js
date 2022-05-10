@@ -82,13 +82,19 @@ const CheckboksItem = styled(Checkbox)`
 		color: var(--color-secondary);
 	}
 `;
-function FilterComponent({ data, onStarsSelected, onPriceRangeSelected }) {
+function FilterComponent({
+	onStarsSelected,
+	onPriceRangeSelected,
+	onWifiSelected,
+	onSpaSelected,
+}) {
 	const [value, setValue] = useState([0, 10000]);
 
 	const [stars, setStars] = useState(5);
-	const [wifi, setWifi] = useState(true);
-
 	const [starsSelected, setStarsSelected] = useState(5);
+
+	const [toggleWifi, setToggleWifi] = useState(false);
+	const [toggleSpa, setToggleSpa] = useState(false);
 
 	return (
 		<>
@@ -209,13 +215,27 @@ function FilterComponent({ data, onStarsSelected, onPriceRangeSelected }) {
 				<Accordion.Item label="PopularFilters" iconPosition="right">
 					<CheckboksItem
 						label="WiFi included"
-						checked={wifi}
-						onChange={setWifi}
+						checked={!toggleWifi}
+						onChange={() => {
+							toggleWifi
+								? setToggleWifi(false)
+								: setToggleWifi(true);
+							onWifiSelected(toggleWifi);
+						}}
 					/>
 					<CheckboksItem label="Breakfast included" />
 					<CheckboksItem label="Pet friendly" />
 					<CheckboksItem label="Parking" />
-					<CheckboksItem label="Spa" />
+					<CheckboksItem
+						label="Spa"
+						checked={!toggleSpa}
+						onChange={() => {
+							toggleSpa
+								? setToggleSpa(false)
+								: setToggleSpa(true);
+							onSpaSelected(toggleSpa);
+						}}
+					/>
 					<CheckboksItem label="Gym" />
 				</Accordion.Item>
 			</AccordionContainer>

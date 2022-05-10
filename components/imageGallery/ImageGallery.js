@@ -13,7 +13,6 @@ import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 
 const Gallery = styled.div`
-	width: 100%;
 	height: 100%;
 
 	margin: var(--size-md);
