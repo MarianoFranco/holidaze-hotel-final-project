@@ -7,6 +7,7 @@ import StarsIcon from "../../components/starsIcon/StarsIcon";
 import Button from "../../components/button/Button";
 import Link from "next/link";
 import { NumberInput } from "@mantine/core";
+import { InputDate } from "../inputs/Inputs";
 
 import { DateRangePicker, DatePicker } from "@mantine/dates";
 
@@ -149,8 +150,6 @@ const InputContainer = styled(DatePicker)`
 `;
 const GuestContainer = styled.div``;
 function DetailsMainSection({ data }) {
-	const [thumbsSwiper, setThumbsSwiper] = useState(null);
-
 	const [value, setValue] = useState([Date, Date]);
 
 	const ref = useRef("current");
@@ -207,36 +206,8 @@ function DetailsMainSection({ data }) {
 					<BookingDataContainer>
 						<div>
 							<CheckInOutContainer>
-								<InputComponent>
-									<p className="input__text">Check in:</p>
-									<InputCustomized>
-										<InputContainer
-											placeholder="Pick date"
-											value={value}
-											onChange={setValue}
-										></InputContainer>
-										<div className="input__line"></div>
-										<Icon
-											icon="bx:calendar"
-											className="input__icon"
-										/>
-									</InputCustomized>
-								</InputComponent>
-								<InputComponent>
-									<p className="input__text">Check out:</p>
-									<InputCustomized>
-										<InputContainer
-											placeholder="Pick date"
-											value={value}
-											onChange={setValue}
-										></InputContainer>
-										<div className="input__line"></div>
-										<Icon
-											icon="bx:calendar"
-											className="input__icon"
-										/>
-									</InputCustomized>
-								</InputComponent>
+								<InputDate labelMessage="Check In: " />
+								<InputDate labelMessage="Check Out: " />
 							</CheckInOutContainer>
 							<GuestContainer>
 								<NumberInput

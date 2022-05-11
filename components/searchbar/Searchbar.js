@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Icon from "../input/Input";
+import { Input } from "../inputs/Inputs";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
 
@@ -53,19 +53,19 @@ function Searchbar() {
 		<SearchContainer>
 			<form>
 				<div className="form__data-container">
-					<Icon
+					<Input
 						labelText="Select your hotel"
 						icon="carbon:location-company"
 						placeholder="Choose your destination"
 					/>
 					<div className="form__line"></div>
-					<Icon
+					<Input
 						labelText="Arrival - Depature"
 						icon="bx:calendar"
 						placeholder="Add data"
 					/>
 					<div className="form__line"></div>
-					<Icon
+					<Input
 						labelText="Visitors"
 						icon="fluent:guest-add-20-regular"
 						placeholder="Add guest"
