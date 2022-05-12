@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Icon } from "@iconify/react";
 import styled from "styled-components";
 import { device } from "../../styles/breakpoints";
 import { DateRangePicker, DatePicker } from "@mantine/dates";
+import { NumberInput } from "@mantine/core";
 
 const InputsContainer = styled.div`
 	display: flex;
@@ -33,14 +34,18 @@ const Icons = styled(Icon)`
 	font-size: 34px;
 	margin-right: 8px;
 `;
-export function Input({ labelText, icon, placeholder }) {
+export function Input({ labelText, icon, placeholder, onKeyUpFunction }) {
 	return (
 		<InputsContainer>
 			<label className="form__label">
 				<Icons icon={icon} />
 				{labelText}
 			</label>
-			<input placeholder={placeholder} className="form__input" />
+			<input
+				placeholder={placeholder}
+				className="form__input"
+				onKeyUp={onKeyUpFunction}
+			/>
 		</InputsContainer>
 	);
 }
@@ -57,7 +62,8 @@ const InputDateContainer = styled.div`
 `;
 const InputDateCustomized = styled.div`
 	position: relative;
-	width: 162px;
+	width: 100%;
+	max-width: 162px;
 	height: 55px;
 
 	.input__icon {
@@ -73,7 +79,7 @@ const InputDateCustomized = styled.div`
 		height: 55px;
 		position: absolute;
 		top: 0;
-		left: 111px;
+		left: 67%;
 	}
 `;
 
@@ -108,7 +114,71 @@ export function InputDate({ labelMessage }) {
 		</>
 	);
 }
+const InputOptionCustomized = styled.div`
+	position: relative;
+	max-width: 162px;
+`;
 
-export function InputOption() {
-	return <></>;
+const InputOptionContainer = styled(NumberInput)`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	.mantine-NumberInput-label {
+		color: var(--color-black);
+		font-size: var(--font-size);
+		font-weight: 600;
+		margin: 0;
+	}
+	.mantine-NumberInput-unstyledVariant {
+		border: solid 1px var(--color-secondary);
+		position: relative;
+		height: 55px;
+		padding-left: 16px;
+		font-size: var(--font-size);
+		border-radius: 10px;
+	}
+`;
+
+const OptionIconsContainer = styled.div`
+	position: absolute;
+	bottom: 4px;
+	right: 12px;
+	display: flex;
+	flex-direction: column;
+	color: var(--color-secondary);
+	font-size: 24px;
+`;
+export function InputOption({ labelMessage }) {
+	const [numberOfGuest, setNumberOfGuest] = useState(1);
+
+	const Increment = () => {
+		setNumberOfGuest(numberOfGuest + 1);
+	};
+	const Decrement = () => {
+		let value = 1;
+
+		if (numberOfGuest <= value) {
+			value = 2;
+		} else {
+			value = numberOfGuest;
+		}
+		setNumberOfGuest(value - 1);
+	};
+	return (
+		<>
+			<InputOptionCustomized>
+				<InputOptionContainer
+					value={numberOfGuest}
+					onChange={(val) => setNumberOfGuest(val)}
+					placeholder={labelMessage}
+					variant="unstyled"
+					label={labelMessage}
+				/>
+				<OptionIconsContainer>
+					<Icon icon="bx:up-arrow" onClick={() => Increment()} />
+					<Icon icon="bx:down-arrow" onClick={() => Decrement()} />
+				</OptionIconsContainer>
+			</InputOptionCustomized>
+		</>
+	);
 }

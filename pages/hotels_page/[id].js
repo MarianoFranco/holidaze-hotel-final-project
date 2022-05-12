@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import DetailsMainSection from "../../components/detailsMainSection/DetailsMainSection";
+import DetailsAmenitiesSection from "../../components/detailsAmenitiesSection/DetailsAmenitiesSection";
 
 export async function getStaticPaths() {
 	try {
@@ -37,6 +38,7 @@ function HotelResults({ data }) {
 			<Header />
 			<main>
 				<DetailsMainSection data={data} />
+				<DetailsAmenitiesSection data={data} />
 			</main>
 			<Footer />
 		</>

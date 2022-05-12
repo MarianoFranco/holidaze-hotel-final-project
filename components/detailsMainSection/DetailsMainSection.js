@@ -6,10 +6,9 @@ import Image from "next/image";
 import StarsIcon from "../../components/starsIcon/StarsIcon";
 import Button from "../../components/button/Button";
 import Link from "next/link";
-import { NumberInput } from "@mantine/core";
-import { InputDate } from "../inputs/Inputs";
+import { InputDate, InputOption } from "../inputs/Inputs";
 
-import { DateRangePicker, DatePicker } from "@mantine/dates";
+import { device } from "../../styles/breakpoints";
 
 const DetailsSectionContainer = styled.div`
 	max-width: 1440px;
@@ -17,14 +16,24 @@ const DetailsSectionContainer = styled.div`
 `;
 const TextContainer = styled.div`
 	padding: var(--size-xl) var(--size-md) var(--size-md);
+	@media ${device.tablet} {
+		padding: var(--size-lg) var(--size) var(--size);
+	}
 `;
 const TitleContainer = styled.div`
 	display: flex;
 	align-items: flex-end;
+	flex-wrap: wrap;
 	gap: var(--size-md);
+	@media ${device.tablet} {
+		gap: var(--size);
+	}
 	.hotel__title {
 		font-size: var(--font-size-xl);
 		font-weight: 600;
+		@media ${device.tablet} {
+			font-size: var(--font-size-lg);
+		}
 	}
 	.hotel__icons-container {
 		display: flex;
@@ -32,13 +41,18 @@ const TitleContainer = styled.div`
 		font-size: 39px;
 		color: var(--color-secondary);
 		padding: 12px 0;
+		@media ${device.tablet} {
+			font-size: 23px;
+		}
 	}
 `;
 const AddressContainer = styled.div`
 	display: flex;
 	align-items: center;
 	gap: var(--size);
-
+	@media ${device.tablet} {
+		margin: 16px 0 0;
+	}
 	.address__icon {
 		font-size: 32px;
 		color: var(--color-secondary);
@@ -52,32 +66,72 @@ const AddressContainer = styled.div`
 
 const MainContainer = styled.div`
 	padding: var(--size-md) var(--size-md);
-	border: solid 1px red;
+
 	display: flex;
 	gap: var(--size);
+
+	@media ${device.laptop} {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	@media ${device.tablet} {
+		padding: var(--size) var(--size);
+	}
 `;
 
 const GalleryContainer = styled.div`
-	width: 800px;
-	height: 664px;
+	max-width: 800px;
+	min-height: 664px;
+	max-height: 664px;
 	padding: 0px;
+	width: 60%;
+	@media ${device.laptop} {
+		width: 100%;
+	}
+	@media ${device.tablet} {
+		max-width: 553px;
+		min-height: 464px;
+	}
+	@media ${device.mobile} {
+		max-width: 353px;
+		min-height: 264px;
+	}
 `;
 
 const DataContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	width: 100%;
+
+	@media ${device.laptop} {
+		flex-direction: row;
+		justify-content: center;
+	}
+	@media ${device.tablet} {
+		flex-direction: column;
+		align-items: center;
+	}
 `;
 const CardContainer = styled.div`
 	max-width: 556px;
-	width: 556px;
-	height: 250px;
+	width: 100%;
+	min-height: 250px;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding: var(--size-md);
+
+	@media ${device.laptop} {
+		max-width: 356px;
+	}
+	@media ${device.tablet} {
+		max-width: 556px;
+	}
 	.btn__text {
 		padding: 16px 24px;
+		text-align: center;
 	}
 `;
 const ImageContainer = styled.div`
@@ -95,68 +149,68 @@ const ImageComponent = styled(Image)`
 `;
 
 const BookingDataContainer = styled.div`
-	width: 556px;
-	height: 398px;
+	max-width: 556px;
+	width: 100%;
+	min-height: 398px;
 	border: solid 1px rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
 	padding: var(--size-md);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	@media ${device.mobile} {
+		padding: var(--size-sm);
+	}
+
+	.booking__inputs-container {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+
+		@media ${device.mobile} {
+			gap: 8px;
+		}
+	}
+	.booking__price-container {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+		justify-content: center;
+		@media ${device.mobile} {
+			gap: 48px;
+		}
+	}
+	.booking__total-text {
+		font-size: var(--font-size);
+		font-weight: 500;
+	}
+	.booking__price {
+		font-size: var(--font-size-lg);
+		font-weight: 700;
+		@media ${device.mobile} {
+			font-size: var(--font-size-md);
+		}
+	}
+	.booking__btn-container {
+		max-width: 349px;
+		width: 100%;
+		height: 70px;
+	}
 `;
 const CheckInOutContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	gap: var(--size-md);
-`;
-const InputComponent = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	.input__text {
-		color: var(--color-black);
-		font-size: var(--font-size);
-		font-weight: 600;
-	}
-`;
-const InputCustomized = styled.div`
-	position: relative;
-	width: 162px;
-	height: 55px;
 
-	.input__icon {
-		position: absolute;
-		top: 12px;
-		right: 12px;
-		font-size: 30px;
-		color: var(--color-secondary);
-	}
-	.input__line {
-		background-color: var(--color-secondary);
-		width: 1px;
-		height: 55px;
-		position: absolute;
-		top: 0;
-		left: 111px;
+	@media ${device.mobile} {
+		gap: var(--size);
 	}
 `;
 
-const InputContainer = styled(DatePicker)`
-	.mantine-DatePicker-input {
-		border: solid 1px var(--color-secondary);
-		height: 55px;
-		font-size: var(--font-size);
-	}
-	.mantine-DatePicker-rightSection {
-		display: none;
-	}
-`;
-const GuestContainer = styled.div``;
+const GuestContainer = styled(CheckInOutContainer)``;
 function DetailsMainSection({ data }) {
 	const [value, setValue] = useState([Date, Date]);
-
-	const ref = useRef("current");
-
-	//Consultar sobre como puedo sumarle el valor al total
-	console.log(ref.current.value);
-	const [numberOfGuest, setNumberOfGuest] = useState(1);
 
 	return (
 		<DetailsSectionContainer>
@@ -204,26 +258,25 @@ function DetailsMainSection({ data }) {
 						</Link>
 					</CardContainer>
 					<BookingDataContainer>
-						<div>
+						<div className="booking__inputs-container">
 							<CheckInOutContainer>
 								<InputDate labelMessage="Check In: " />
 								<InputDate labelMessage="Check Out: " />
 							</CheckInOutContainer>
 							<GuestContainer>
-								<NumberInput
-									ref={ref}
-									defaultValue={1}
-									placeholder="Guest"
-									label="Guest: "
-								/>
-								<div>Rooms</div>
+								<InputOption labelMessage="Guest: " />
+								<InputOption labelMessage="Rooms: " />
 							</GuestContainer>
 						</div>
-						<div>
-							<span>Total Booking:</span>
-							<span>Price</span>
+						<div className="booking__price-container">
+							<span className="booking__total-text">
+								Total Booking:
+							</span>
+							<span className="booking__price">
+								{data.price} Nok
+							</span>
 						</div>
-						<div>
+						<div className="booking__btn-container">
 							<Button
 								text="Book Now"
 								btnCategory="primary"

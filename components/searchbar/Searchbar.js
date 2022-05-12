@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Input } from "../inputs/Inputs";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
+import Link from "next/link";
 
 const SearchContainer = styled.div`
 	max-width: 1126px;
@@ -49,6 +50,8 @@ const SearchBtnContainer = styled.div`
 `;
 
 function Searchbar() {
+	const [hotelName, setHotelName] = useState("");
+	console.log(hotelName);
 	return (
 		<SearchContainer>
 			<form>
@@ -57,6 +60,16 @@ function Searchbar() {
 						labelText="Select your hotel"
 						icon="carbon:location-company"
 						placeholder="Choose your destination"
+						value={hotelName}
+						onKeyUpFunction={(e) => {
+							if (e.code === "Backspace") {
+								setHotelName(
+									hotelName.slice(0, hotelName.length - 1)
+								);
+							} else {
+								setHotelName(hotelName + e.key);
+							}
+						}}
 					/>
 					<div className="form__line"></div>
 					<Input
@@ -71,13 +84,25 @@ function Searchbar() {
 						placeholder="Add guest"
 					/>
 					<SearchBtnContainer>
-						<Button
-							text="Search"
-							icon="bx:search-alt"
-							btnCategory="primary"
-							color="blue"
-							typeOfButton="button"
-						></Button>
+						<Link
+							href={{
+								pathname: `/hotels_page/`,
+								query: {
+									hotel: hotelName,
+								},
+							}}
+							passHref
+						>
+							<a>
+								<Button
+									text="Search"
+									icon="bx:search-alt"
+									btnCategory="primary"
+									color="blue"
+									typeOfButton="link"
+								></Button>
+							</a>
+						</Link>
 					</SearchBtnContainer>
 				</div>
 			</form>

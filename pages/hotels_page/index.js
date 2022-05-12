@@ -140,7 +140,8 @@ const CardsContainer = styled.div`
 	flex-direction: column;
 	gap: 16px;
 `;
-export async function getStaticProps() {
+export async function getStaticProps(context) {
+	console.log("context", context.params);
 	try {
 		let res = await fetch("http://localhost:1337/hotels/");
 		let data = await res.json();
@@ -153,6 +154,7 @@ export async function getStaticProps() {
 		console.error(error);
 	}
 }
+
 function Hotels({ data }) {
 	const [opened, toggleOpened] = useState(false);
 
@@ -164,6 +166,7 @@ function Hotels({ data }) {
 	const [priceRange, setPriceRange] = useState([0, 10000]);
 	const [wifiSelected, setWifiSelected] = useState(false);
 	const [spaSelected, setSpaSelected] = useState(false);
+	const [petSelected, setPetSelected] = useState(false);
 
 	const starsDataFiltered = data.filter((hotel) => {
 		return starsSelected === null || hotel.stars === starsSelected;
@@ -177,10 +180,21 @@ function Hotels({ data }) {
 	//y cada una de las amenities para hacer funcionar el filtered
 	const dataFilteredByAmenities = dataFilteredByRangePrice.filter((hotel) => {
 		return (
-			(wifiSelected === true && hotel.amenities.wifi === wifiSelected) ||
-			(spaSelected === true && hotel.amenities.spa === spaSelected)
+			(!wifiSelected || hotel.amenities.wifi === wifiSelected) &&
+			(!spaSelected || hotel.amenities.spa === spaSelected) &&
+			(!petSelected || hotel.amenities.pets === petSelected)
 		);
 	});
+
+	// console.log(document.location.href);
+
+	console.log(
+		data,
+		wifiSelected,
+		spaSelected,
+		dataFilteredByRangePrice,
+		dataFilteredByAmenities
+	);
 
 	return (
 		<>
@@ -215,6 +229,7 @@ function Hotels({ data }) {
 									onPriceRangeSelected={setPriceRange}
 									onWifiSelected={setWifiSelected}
 									onSpaSelected={setSpaSelected}
+									onPetSelected={setPetSelected}
 								></FilterComponent>
 							</div>
 							<div className="filtered-box-container-2">
@@ -238,6 +253,7 @@ function Hotels({ data }) {
 										onPriceRangeSelected={setPriceRange}
 										onWifiSelected={setWifiSelected}
 										onSpaSelected={setSpaSelected}
+										onPetSelected={setPetSelected}
 									/>
 								)}
 							</div>

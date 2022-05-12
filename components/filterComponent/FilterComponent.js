@@ -87,6 +87,7 @@ function FilterComponent({
 	onPriceRangeSelected,
 	onWifiSelected,
 	onSpaSelected,
+	onPetSelected,
 }) {
 	const [value, setValue] = useState([0, 10000]);
 
@@ -95,9 +96,10 @@ function FilterComponent({
 
 	const [toggleWifi, setToggleWifi] = useState(false);
 	const [toggleSpa, setToggleSpa] = useState(false);
+	const [togglePet, setTogglePet] = useState(false);
 	console.log(toggleWifi);
 	console.log(toggleSpa);
-
+	console.log(togglePet);
 	return (
 		<>
 			<AccordionContainer>
@@ -219,23 +221,28 @@ function FilterComponent({
 						label="WiFi included"
 						checked={toggleWifi}
 						onChange={() => {
-							toggleWifi
-								? setToggleWifi(false)
-								: setToggleWifi(true);
-							onWifiSelected(toggleWifi);
+							const newToggle = toggleWifi ? false : true;
+							setToggleWifi(newToggle);
+							onWifiSelected(newToggle);
 						}}
 					/>
 					<CheckboksItem label="Breakfast included" />
-					<CheckboksItem label="Pet friendly" />
+					<CheckboksItem
+						label="Pet friendly"
+						checked={togglePet}
+						onChange={() => {
+							setTogglePet(newToggle);
+							onPetSelected(newToggle);
+						}}
+					/>
 					<CheckboksItem label="Parking" />
 					<CheckboksItem
 						label="Spa"
 						checked={toggleSpa}
 						onChange={() => {
-							toggleSpa
-								? setToggleSpa(false)
-								: setToggleSpa(true);
-							onSpaSelected(toggleSpa);
+							const newToggle = toggleSpa ? false : true;
+							setToggleSpa(newToggle);
+							onSpaSelected(newToggle);
 						}}
 					/>
 					<CheckboksItem label="Gym" />
