@@ -42,7 +42,7 @@ function OurSelectionSection({ hotel_data }) {
 	const filteredHotel = hotel_data.filter(function (hotel) {
 		return hotel.featured === true;
 	});
-	console.log("our selection", filteredHotel);
+
 	return (
 		<>
 			<OurSelectionContainer>

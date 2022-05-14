@@ -1,6 +1,5 @@
 import { createGlobalStyle } from "styled-components";
 
-
 const GlobalStyle = createGlobalStyle`
 :root{  
     --font-body: Merriweather, Arial, sans-serif;
@@ -35,6 +34,7 @@ const GlobalStyle = createGlobalStyle`
     /*COLORS WITH OPACITY*/
 
     --color-tertiary-80: rgba(46, 101, 140, 0.8);
+    --color-black-90: rgba(0, 25, 44, 0.9);
 
     /* Animation speed */
     --speed-base: 300ms;

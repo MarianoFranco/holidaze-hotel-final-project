@@ -47,6 +47,7 @@ const BtnElement = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding: 12px;
 	cursor: pointer;
 
 	.btn__icon {
@@ -95,6 +96,7 @@ const SecBtnElement = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding: 12px;
 	cursor: pointer;
 	.btn__icon {
 		font-size: 34px;
@@ -102,13 +104,21 @@ const SecBtnElement = styled.button`
 	}
 `;
 
-function Button({ text, icon, btnCategory, typeOfButton, color, onClick }) {
+function Button({
+	text,
+	icon,
+	btnCategory,
+	typeOfButton,
+	color,
+	onClick,
+	type,
+}) {
 	if (btnCategory === "primary") {
 		if (color === "blue") {
 			if (typeOfButton === "button") {
 				return (
 					<BtnContainer color={color}>
-						<BtnElement color={color} onClick={onClick}>
+						<BtnElement color={color} onClick={onClick} type={type}>
 							{text}
 							<Icon icon={icon} className="btn__icon" />
 						</BtnElement>

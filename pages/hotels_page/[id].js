@@ -3,6 +3,8 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import DetailsMainSection from "../../components/detailsMainSection/DetailsMainSection";
 import DetailsAmenitiesSection from "../../components/detailsAmenitiesSection/DetailsAmenitiesSection";
+import DetailsEnquirySection from "../../components/detailsEnquirySection/DetailsEnquirySection";
+import DetailsAboutHotelSection from "../../components/detailsAboutHotelSection/DetailsAboutHotelSection";
 
 export async function getStaticPaths() {
 	try {
@@ -39,6 +41,8 @@ function HotelResults({ data }) {
 			<main>
 				<DetailsMainSection data={data} />
 				<DetailsAmenitiesSection data={data} />
+				<DetailsEnquirySection data={data} />
+				<DetailsAboutHotelSection data={data} />
 			</main>
 			<Footer />
 		</>

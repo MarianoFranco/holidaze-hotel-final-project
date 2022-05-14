@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
+import { device } from "../../styles/breakpoints";
 
 const DetailsAmenitiesContainer = styled.div`
 	max-width: 1440px;
@@ -17,10 +18,16 @@ const AmenitiesDataContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	gap: 16px;
+	@media ${device.tablet} {
+		flex-direction: column;
+	}
 	.amenities__description {
 		width: 60%;
 		font-family: var(--font-body);
 		line-height: 3rem;
+		@media ${device.tablet} {
+			width: 100%;
+		}
 	}
 	.amenities__information {
 		width: 40%;
@@ -28,12 +35,18 @@ const AmenitiesDataContainer = styled.div`
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
+		@media ${device.tablet} {
+			width: 100%;
+		}
 	}
 	.amenities__icons-container {
 		display: flex;
 		gap: 25px;
 		padding: 0 var(--size-lg);
 		align-self: start;
+		@media ${device.tablet} {
+			align-self: center;
+		}
 	}
 	.amenities__icon-container {
 		display: flex;
@@ -80,6 +93,7 @@ const TimeComponent = styled.div`
 	.time__schedule {
 		font-size: var(--font-size-md);
 		font-weight: 500;
+		text-align: center;
 	}
 `;
 function DetailsAmenitiesSection({ data }) {
