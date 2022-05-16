@@ -13,4 +13,8 @@ function MyApp({ Component, pageProps }) {
 	);
 }
 
+export const getServerSideProps = async (ctx) => {
+	console.log(ctx, "222");
+};
+
 export default MyApp;

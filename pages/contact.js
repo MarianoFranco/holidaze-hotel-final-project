@@ -4,9 +4,16 @@ import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
+import { Formik, Form, useField } from "formik";
+import * as Yup from "yup";
+import Button from "../components/button/Button";
+import { device } from "../styles/breakpoints";
+
+const Main = styled.main`
+	position: relative;
+`;
 
 const ContactContainer = styled.div`
-	min-height: 90vh;
 	position: relative;
 	display: flex;
 	gap: 24px;
@@ -14,10 +21,22 @@ const ContactContainer = styled.div`
 	max-width: 1440px;
 	margin: auto;
 	align-items: center;
-`;
+	@media ${device.tablet} {
+		flex-direction: column;
 
-const ImageBackground = styled(Image)`
+		padding: var(--size-md);
+	}
+`;
+const ImageContainer = styled.div`
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
 	z-index: -100;
+	@media ${device.tablet} {
+		height: 744px;
+	}
 `;
 
 const ContactData = styled.div`
@@ -26,10 +45,16 @@ const ContactData = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
+	@media ${device.tablet} {
+		width: 100%;
+	}
 	.contact__title {
 		font-size: var(--font-size-xxl);
 		max-width: 471px;
 		color: var(--color-secondary);
+		@media ${device.tablet} {
+			font-size: var(--font-size-xl);
+		}
 	}
 	.contact__subtitle {
 		font-size: var(--font-size-md);
@@ -41,6 +66,9 @@ const ContactData = styled.div`
 		display: flex;
 		flex-direction: column;
 		gap: 48px;
+		@media ${device.tablet} {
+			gap: 32px;
+		}
 	}
 	.data-container {
 		display: flex;
@@ -55,6 +83,9 @@ const ContactData = styled.div`
 		color: var(--color-white);
 		font-size: var(--font-size-md);
 		font-family: var(--font-headings);
+		@media ${device.tablet} {
+			font-size: var(--font-size);
+		}
 	}
 `;
 
@@ -62,18 +93,213 @@ const ContactForm = styled.div`
 	width: 50%;
 	max-width: 600px;
 	height: 670px;
-	border: solid 1px red;
+	padding: var(--size-lg);
+	background-color: var(--color-black-90);
+	border-radius: 15px;
+	box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.4);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	@media ${device.tablet} {
+		width: 100%;
+		padding: var(--size-sm);
+		height: 696px;
+	}
+	.form__title {
+		color: var(--color-primary);
+		font-size: var(--font-size-lg);
+		@media ${device.tablet} {
+			font-size: var(--font-size-md);
+		}
+	}
 `;
+const FormContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-md);
+
+	@media ${device.tablet} {
+		padding: 0 var(--size);
+	}
+	.inputs-container {
+		display: flex;
+		gap: 16px;
+		@media ${device.tablet} {
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+	}
+	.input-radio-container {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		color: var(--color-primary);
+		@media ${device.tablet} {
+			align-items: center;
+		}
+	}
+	.btn-container {
+		align-self: end;
+		width: 100%;
+		max-width: 267px;
+		height: 74px;
+		@media ${device.tablet} {
+			max-width: 300px;
+		}
+	}
+`;
+const InputContainer = styled.div`
+	width: 100%;
+	max-width: 200px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	.text-input {
+		background: none;
+		border: solid 1px var(--color-primary);
+		width: 100%;
+		height: 44px;
+		padding-left: var(--size);
+		border-radius: 10px;
+		font-family: var(--font-headings);
+	}
+	.text-input-with-icon {
+		padding-left: 50px;
+	}
+
+	.text-input__icon {
+		position: absolute;
+		left: 16px;
+		top: 10px;
+		font-size: 24px;
+		color: var(--color-primary);
+	}
+	.error {
+		background-color: #fe0000;
+		border-radius: 10px;
+		opacity: 0.7;
+		color: var(--color-white);
+		padding: var(--size-sm);
+		font-family: var(--font-headings);
+		font-size: var(--font-size);
+		font-weight: 500;
+	}
+`;
+const RadioInputContainer = styled.div`
+	color: var(--color-primary);
+
+	gap: 16px 42px;
+	display: flex;
+	.radio-input {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+	}
+`;
+const TextAreaContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	.text-box-input {
+		width: 100%;
+		min-height: 140px;
+		background: none;
+		border-radius: 10px;
+		padding: var(--size);
+		font-family: var(--font-headings);
+		border: solid 1px var(--color-primary);
+	}
+	.error {
+		background-color: #fe0000;
+		border-radius: 10px;
+		opacity: 0.7;
+		color: var(--color-white);
+		padding: var(--size-sm);
+		font-family: var(--font-headings);
+		font-size: var(--font-size);
+		font-weight: 500;
+	}
+`;
+
 function Contact() {
+	const MyTextInput = ({ label, ...props }) => {
+		// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
+		// which we can spread on <input>. We can use field meta to show an error
+		// message if the field is invalid and it has been touched (i.e. visited)
+		const [field, meta] = useField(props);
+		console.log(props.icon);
+		if (props.icon) {
+			return (
+				<>
+					<Icon icon={props.icon} className="text-input__icon" />
+					<input
+						className="text-input text-input-with-icon"
+						{...field}
+						{...props}
+					/>
+					{meta.touched && meta.error ? (
+						<div className="error">{meta.error}</div>
+					) : null}
+				</>
+			);
+		} else {
+			return (
+				<>
+					<input className="text-input" {...field} {...props} />
+					{meta.touched && meta.error ? (
+						<div className="error">{meta.error}</div>
+					) : null}
+				</>
+			);
+		}
+	};
+	const MyRadioInput = ({ children, ...props }) => {
+		// React treats radios and checkbox inputs differently other input types, select, and textarea.
+		// Formik does this too! When you specify `type` to useField(), it will
+		// return the correct bag of props for you -- a `checked` prop will be included
+		// in `field` alongside `name`, `value`, `onChange`, and `onBlur`
+		const [field, meta] = useField({ ...props, type: "radio" });
+		return (
+			<div>
+				<label className="radio-input">
+					<input type="radio" {...field} {...props} />
+					<span className="text-input">{props.label}</span>
+				</label>
+				{meta.touched && meta.error ? (
+					<div className="error">{meta.error}</div>
+				) : null}
+			</div>
+		);
+	};
+
+	const MyTextAreaInput = ({ label, ...props }) => {
+		// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
+		// which we can spread on <input>. We can use field meta to show an error
+		// message if the field is invalid and it has been touched (i.e. visited)
+		const [field, meta] = useField(props);
+		console.log(props);
+		return (
+			<>
+				<textarea className="text-box-input" {...field} {...props} />
+				{meta.touched && meta.error ? (
+					<div className="error">{meta.error}</div>
+				) : null}
+			</>
+		);
+	};
 	return (
 		<>
 			<Header />
-			<main>
-				<ImageBackground
-					src="/images/contact_portrait.jpg"
-					layout="fill"
-					objectFit="cover"
-				/>
+			<Main>
+				<ImageContainer>
+					<Image
+						src="/images/contact_portrait.jpg"
+						layout="fill"
+						objectFit="cover"
+					/>
+				</ImageContainer>
 				<ContactContainer>
 					<ContactData>
 						<h1 className="contact__title">Contact us</h1>
@@ -111,9 +337,112 @@ function Contact() {
 							</div>
 						</div>
 					</ContactData>
-					<ContactForm>Have some questions</ContactForm>
+					<ContactForm>
+						<h2 className="form__title">Have some questions</h2>
+						<Formik
+							initialValues={{
+								name: "",
+								lastName: "",
+								email: "",
+								message: "",
+								picked: "",
+							}}
+							validationSchema={Yup.object({
+								name: Yup.string()
+									.min(3, "Must be 3 characters as minimun")
+									.required("Required"),
+
+								email: Yup.string()
+									.email("Invalid email address")
+									.required("Required"),
+
+								message: Yup.string()
+									.min(10, "Must be 10 characters as minimun")
+									.required("Required"),
+							})}
+							onSubmit={(values, { setSubmitting }) => {
+								setTimeout(() => {
+									alert(JSON.stringify(values, null, 2));
+									setSubmitting(false);
+								}, 400);
+							}}
+						>
+							<Form>
+								<FormContainer>
+									<div className="inputs-container">
+										<InputContainer>
+											<MyTextInput
+												name="name"
+												type="text"
+												placeholder="Name"
+											/>
+										</InputContainer>
+										<InputContainer>
+											<MyTextInput
+												name="lastName"
+												type="text"
+												placeholder="Last name"
+											/>
+										</InputContainer>
+									</div>
+									<div className="inputs-container">
+										<InputContainer>
+											<MyTextInput
+												name="email"
+												type="email"
+												placeholder="Email"
+												icon="ant-design:mail-outlined"
+											/>
+										</InputContainer>
+										<InputContainer>
+											<MyTextInput
+												name="phone"
+												type="text"
+												placeholder="Telephone"
+												icon="ant-design:phone-outlined"
+											/>
+										</InputContainer>
+									</div>
+									<div className="input-radio-container">
+										<p className="radio__text-message">
+											Are you already a client of us?
+										</p>
+										<RadioInputContainer>
+											<MyRadioInput
+												type="radio"
+												value="Yes"
+												label="Yes"
+												name="picked"
+											></MyRadioInput>
+											<MyRadioInput
+												type="radio"
+												value="Yes"
+												label="No"
+												name="picked"
+											></MyRadioInput>
+										</RadioInputContainer>
+									</div>
+									<TextAreaContainer className="text-area-container">
+										<MyTextAreaInput
+											name="message"
+											placeholder="Write your message here..."
+										/>
+									</TextAreaContainer>
+									<div className="btn-container">
+										<Button
+											text="Send Message"
+											btnCategory="primary"
+											color="yellow"
+											typeOfButton="button"
+											type="submit"
+										></Button>
+									</div>
+								</FormContainer>
+							</Form>
+						</Formik>
+					</ContactForm>
 				</ContactContainer>
-			</main>
+			</Main>
 			<Footer />
 		</>
 	);

@@ -136,7 +136,7 @@ function Button({
 			if (typeOfButton === "button") {
 				return (
 					<BtnContainer color={color}>
-						<BtnElement color={color} onClick={onClick}>
+						<BtnElement color={color} onClick={onClick} type={type}>
 							{text}
 							<Icon icon={icon} className="btn__icon" />
 						</BtnElement>
@@ -156,7 +156,11 @@ function Button({
 			if (typeOfButton === "button") {
 				return (
 					<SecBtnContainer color={color}>
-						<SecBtnElement color={color} onClick={onClick}>
+						<SecBtnElement
+							color={color}
+							onClick={onClick}
+							type={type}
+						>
 							{text}
 							<Icon icon={icon} className="btn__icon" />
 						</SecBtnElement>
@@ -174,7 +178,11 @@ function Button({
 			if (typeOfButton === "button") {
 				return (
 					<SecBtnContainer color={color}>
-						<SecBtnElement color={color} onClick={onClick}>
+						<SecBtnElement
+							color={color}
+							onClick={onClick}
+							type={type}
+						>
 							{text}
 							<Icon icon={icon} className="btn__icon" />
 						</SecBtnElement>

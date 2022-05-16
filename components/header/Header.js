@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Navigation from "../navigation/Navigation";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import Link from "next/link";
 import { device } from "../../styles/breakpoints";
 import { createStyles, Burger, Transition, Paper } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
+import { getStorageItem } from "../../utils/localStorageHelper/LocalStorageHelper";
 
 const HeaderElement = styled.header`
 	background-color: var(--color-secondary);
@@ -20,15 +21,13 @@ const HeaderContainer = styled.div`
 	max-width: 1440px;
 	width: 100%;
 
-	.header__logo-contaner{
-		z-index:30;
+	.header__logo-contaner {
+		z-index: 30;
 	}
 	.header__navigation-container {
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
-
-	
 	}
 `;
 
@@ -48,6 +47,21 @@ const LoginLink = styled.a`
 	font-size: var(--font-size-md);
 `;
 
+const LogoutBtn = styled.button`
+	color: var(--color-white);
+	font-weight: 500;
+	font-size: var(--font-size-md);
+	background: none;
+	width: 114px;
+	height: 53px;
+	padding: var(--size-md);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	cursor: pointer;
+`;
+
 const BurgerIcon = styled(Burger)`
 	display: none;
 	@media ${device.laptop} {
@@ -59,25 +73,32 @@ const ButtonsGroup = styled.div`
 	display: flex;
 	align-items: center;
 	@media ${device.laptop} {
-		display: ${(props) => (props.opened ? "flex" : "none")};	
-		flex-direction: column;		
+		display: ${(props) => (props.opened ? "flex" : "none")};
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		position: absolute;
-		top:0;
-		left:0;
-		width:100%;
-		height:100%;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 		z-index: 20;
-		background-color: var(--color-secondary)
+		background-color: var(--color-secondary);
 	}
 `;
 
-
-
-function Header() {
+function Header({ user }) {
 	const [opened, toggleOpened] = useBooleanToggle(false);
-	
+	const [loggedIn, setLoggedIn] = useState(null);
+	useEffect(() => {
+		const identifier = getStorageItem("loggedIn");
+		setLoggedIn(identifier);
+	}, []);
+	console.log("header", loggedIn);
+	const handleLogout = () => {
+		localStorage.removeItem("loggedIn");
+		setLoggedIn(null);
+	};
 	return (
 		<>
 			<HeaderElement>
@@ -96,17 +117,25 @@ function Header() {
 					</div>
 					<div className="header__navigation-container">
 						<ButtonsGroup opened={opened}>
-							<Navigation />
-							<ButtonContainer>
-								<Link href="/" passHref>
-									<LoginLink>Login</LoginLink>
-								</Link>
-							</ButtonContainer>
+							<Navigation loggedIn={loggedIn} />
+							{loggedIn ? (
+								<ButtonContainer>
+									<LogoutBtn onClick={handleLogout}>
+										Logout
+									</LogoutBtn>
+								</ButtonContainer>
+							) : (
+								<ButtonContainer>
+									<Link href="/login" passHref>
+										<LoginLink>Login</LoginLink>
+									</Link>
+								</ButtonContainer>
+							)}
 						</ButtonsGroup>
 						<BurgerIcon
 							opened={opened}
-							onClick={() => toggleOpened()}
-						/>					
+							onClick={() => toggleOpened(opened)}
+						/>
 					</div>
 				</HeaderContainer>
 			</HeaderElement>

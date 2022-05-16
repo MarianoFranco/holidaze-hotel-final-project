@@ -7,14 +7,13 @@ const NavBar = styled.nav`
 	.nav__list-container {
 		display: flex;
 		margin: 0 var(--size-md);
-		@media ${device.laptop} {			
+		@media ${device.laptop} {
 			flex-direction: column;
 		}
 	}
 	.nav__list {
 		list-style: none;
 	}
-	
 `;
 const StyledLink = styled.a`
 	color: ${(props) =>
@@ -62,23 +61,36 @@ const navList = [
 		path: "/contact",
 		title: "Contact us",
 	},
+	{
+		path: "/admin",
+		title: "Admin",
+		loggedInRequired: true,
+	},
 ];
 
-function Navigation() {
+function Navigation({ loggedIn }) {
 	const router = useRouter();
+	const loggedInBool = Boolean(loggedIn);
+
+	console.log("loggedIn", loggedIn, loggedInBool);
 	return (
 		<>
 			<NavBar>
 				<ul className="nav__list-container">
-					{navList.map(({ path, title }) => (
-						<li key={title} className="nav__list">
-							<Link href={path} passHref>
-								<StyledLink pathName={router.pathname}>
-									{title}
-								</StyledLink>
-							</Link>
-						</li>
-					))}
+					{navList.map(({ path, title, loggedInRequired }) => {
+						return (
+							(!loggedInRequired === true ||
+								loggedInRequired === loggedInBool) && (
+								<li key={title} className="nav__list">
+									<Link href={path} passHref>
+										<StyledLink pathName={router.pathname}>
+											{title}
+										</StyledLink>
+									</Link>
+								</li>
+							)
+						);
+					})}
 				</ul>
 			</NavBar>
 		</>

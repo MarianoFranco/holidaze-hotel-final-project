@@ -68,7 +68,7 @@ const ButtonContainer = styled.div`
 	width: 264px;
 	height: 72px;
 `;
-function ContactSection() {
+function IndexContactSection() {
 	return (
 		<ContactSectionWrapper>
 			<ImageContainer>
@@ -102,4 +102,4 @@ function ContactSection() {
 	);
 }
 
-export default ContactSection;
+export default IndexContactSection;

@@ -5,7 +5,7 @@ import FeaturedSection from "../components/featuredSection/FeaturedSection";
 import OurSelectionSection from "../components/ourSelectionSection/OurSelectionSection";
 import MostSoldSection from "../components/mostSoldSection/MostSoldSection";
 import FaqSection from "../components/faqSection/FaqSection";
-import ContactSection from "../components/contactSection/ContactSection";
+import IndexContactSection from "../components/indexContactSection/IndexContactSection";
 import Footer from "../components/footer/Footer";
 
 export async function getStaticProps() {
@@ -30,7 +30,7 @@ export default function Home({ data }) {
 				<OurSelectionSection hotel_data={data} />
 				<MostSoldSection hotel_data={data}></MostSoldSection>
 				<FaqSection></FaqSection>
-				<ContactSection />
+				<IndexContactSection />
 			</main>
 			<Footer></Footer>
 		</>
