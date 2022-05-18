@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
@@ -8,7 +8,7 @@ import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 import Button from "../components/button/Button";
 import { device } from "../styles/breakpoints";
-
+import axios from "axios";
 const Main = styled.main`
 	position: relative;
 `;
@@ -224,10 +224,64 @@ const TextAreaContainer = styled.div`
 `;
 
 function Contact({ jwt }) {
-	console.log(jwt);
+	const [userData, setUserData] = useState({
+		name: "",
+		lastName: "",
+		email: "",
+		message: "",
+		phone: "",
+		client: "Yes",
+		message: "",
+	});
+	const [errorData, setErrorData] = useState({
+		name: "",
+		lastName: "",
+		email: "",
+		message: "",
+		phone: "",
+		client: "Yes",
+		message: "",
+	});
+
+	const [confirmationMessage, setConfirmationMessage] = useState("");
+
 	const handleChange = (e) => {
-		console.log("valor aca");
+		//e.preventDefault();
+		const { name, value } = e.target;
+
+		setUserData({ ...userData, [name]: value });
 	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (userData.message.length < 5) {
+			setErrorData({
+				message: "Your message needs to be at least 5 characters",
+			});
+		} else {
+			setErrorData({
+				message: "",
+			});
+		}
+		try {
+			let newMessage = {
+				name: userData.name,
+				last_name: userData.lastName,
+				email: userData.email,
+				phone: userData.phone,
+				already_client: userData.client === "Yes" ? true : false,
+				message: userData.message,
+			};
+			let response = await axios.post(
+				`http://localhost:1337/messages`,
+				newMessage
+			);
+			setUserData({ name: "", email: "", message: "" });
+			setConfirmationMessage("Your message was sent successfully");
+		} catch (err) {
+			console.log("err", err);
+		}
+	};
+
 	return (
 		<>
 			<Header jwt={jwt} />
@@ -279,7 +333,7 @@ function Contact({ jwt }) {
 					</ContactData>
 					<ContactForm>
 						<h2 className="form__title">Have some questions</h2>
-						<form>
+						<form onSubmit={handleSubmit}>
 							<FormContainer>
 								<div className="inputs-container">
 									<InputContainer>
@@ -289,10 +343,13 @@ function Contact({ jwt }) {
 											placeholder="Name"
 											onChange={handleChange}
 											className="text-input"
+											value={userData.name}
 										/>
 
-										{false && (
-											<div className="error">error</div>
+										{errorData.message && (
+											<div className="error">
+												{errorData.message}
+											</div>
 										)}
 									</InputContainer>
 									<InputContainer>
@@ -302,6 +359,7 @@ function Contact({ jwt }) {
 											placeholder="Last name"
 											onChange={handleChange}
 											className="text-input"
+											value={userData.lastName}
 										/>
 
 										{false && (
@@ -317,10 +375,11 @@ function Contact({ jwt }) {
 										/>
 										<input
 											className="text-input text-input-with-icon"
-											name="identifier"
+											name="email"
 											type="email"
 											placeholder="Email"
 											onChange={handleChange}
+											value={userData.email}
 										/>
 
 										{false && (
@@ -338,6 +397,7 @@ function Contact({ jwt }) {
 											placeholder="Telephone"
 											onChange={handleChange}
 											className="text-input text-input-with-icon"
+											value={userData.phone}
 										/>
 
 										{false && (
@@ -356,16 +416,12 @@ function Contact({ jwt }) {
 													type="radio"
 													value="Yes"
 													name="client"
+													onChange={handleChange}
 												/>
 												<label className="text-input">
 													Yes
 												</label>
 											</label>
-											{false && (
-												<div className="error">
-													{meta.error}
-												</div>
-											)}
 										</div>
 										<div>
 											<label className="radio-input">
@@ -373,16 +429,12 @@ function Contact({ jwt }) {
 													type="radio"
 													value="No"
 													name="client"
+													onChange={handleChange}
 												/>
 												<label className="text-input">
 													No
 												</label>
 											</label>
-											{false && (
-												<div className="error">
-													{meta.error}
-												</div>
-											)}
 										</div>
 									</RadioInputContainer>
 								</div>
@@ -391,6 +443,8 @@ function Contact({ jwt }) {
 										className="text-box-input"
 										name="message"
 										placeholder="Write your message here..."
+										value={userData.message}
+										onChange={handleChange}
 									/>
 									{false && (
 										<div className="error">
@@ -407,6 +461,7 @@ function Contact({ jwt }) {
 										type="submit"
 									></Button>
 								</div>
+								<div>{confirmationMessage}</div>
 							</FormContainer>
 						</form>
 					</ContactForm>

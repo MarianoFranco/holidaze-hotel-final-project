@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import Navigation from "../navigation/Navigation";
 import Image from "next/image";
@@ -90,14 +91,13 @@ const ButtonsGroup = styled.div`
 function Header({ user, jwt }) {
 	console.log(jwt);
 	const [opened, toggleOpened] = useBooleanToggle(false);
-
-	const handleLogout = () => {
-		e.preventDefault();
+	const router = useRouter();
+	const handleLogout = async () => {
 		try {
-			axios.post("/api/logout");
+			await axios.post("/api/logout");
 			router.push("/");
 		} catch (err) {
-			console.log(err.response.data);
+			console.log(err);
 		}
 	};
 	return (

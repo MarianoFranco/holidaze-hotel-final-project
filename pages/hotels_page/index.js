@@ -178,13 +178,19 @@ function Hotels({ data, jwt }) {
 	// TODO mañana
 	//definir variable wifi
 	//y cada una de las amenities para hacer funcionar el filtered
-	const dataFilteredByAmenities = dataFilteredByRangePrice.filter((hotel) => {
+	let dataFilteredByAmenities = dataFilteredByRangePrice.filter((hotel) => {
 		return (
 			(!wifiSelected || hotel.amenities.wifi === wifiSelected) &&
 			(!spaSelected || hotel.amenities.spa === spaSelected) &&
 			(!petSelected || hotel.amenities.pets === petSelected)
 		);
 	});
+
+	// TODO
+	// change equal for includes(...)
+	// dataFilteredByAmenities = dataFilteredByAmenities.filter(
+	// 	(hotel) => hotel.Title === "Hotel Scandic"
+	// );
 
 	// console.log(document.location.href);
 

@@ -6,13 +6,22 @@ import "slick-carousel/slick/slick-theme.css";
 import { parseCookies } from "nookies";
 
 function MyApp({ Component, pageProps }) {
-	console.log("pageProps", pageProps);
+	//console.log("pageProps", pageProps);
 	return (
 		<>
 			<GlobalStyle></GlobalStyle>
 			<Component {...pageProps} />
 		</>
 	);
+}
+
+function redirectUser(ctx, location) {
+	if (ctx.req) {
+		ctx.res.redirect(302, location);
+		ctx.res.end();
+	} else {
+		Router.push(location);
+	}
 }
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
@@ -24,7 +33,7 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 	}
 
 	// if (!jwt) {
-	// 	if (ctx.pathname === "/payed-articles") {
+	// 	if (ctx.pathname.includes("/hotels_page/edit")) {
 	// 		redirectUser(ctx, "/login");
 	// 	}
 	// }

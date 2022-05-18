@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import * as Yup from "yup";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
+import axios from "axios";
 
 const EnquirySectionContainer = styled.div`
 	position: relative;
@@ -135,6 +136,18 @@ const TextAreaContainer = styled.div`
 	}
 `;
 function DetailsEnquirySection() {
+	const [userData, setUserData] = useState({
+		name: "",
+		email: "",
+		message: "",
+	});
+	const [errorData, setErrorData] = useState({
+		name: "",
+		email: "",
+		message: "",
+	});
+	const [confirmationMessage, setConfirmationMessage] = useState("");
+
 	const handleChange = (e) => {
 		//e.preventDefault();
 		const { name, value } = e.target;
@@ -143,17 +156,27 @@ function DetailsEnquirySection() {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (userData.message.length < 5) {
+			setErrorData({
+				message: "Your message needs to be at least 5 characters",
+			});
+		} else {
+			setErrorData({
+				message: "",
+			});
+		}
 		try {
 			let newMessage = {
-				name: name.value,
-				email: email.value,
-				message: message.value,
+				name: userData.name,
+				email: userData.email,
+				message: userData.message,
 			};
 			let response = await axios.post(
-				`http://localhost:1337/messages`,
-				newProduct
+				`http://localhost:1337/hotel-messages`,
+				newMessage
 			);
-			console.log(response);
+			setUserData({ name: "", email: "", message: "" });
+			setConfirmationMessage("Your message was sent successfully");
 		} catch (err) {
 			console.log("err", err);
 		}
@@ -181,6 +204,7 @@ function DetailsEnquirySection() {
 										placeholder="Name"
 										onChange={handleChange}
 										className="text-input"
+										value={userData.name}
 									/>
 
 									{false && (
@@ -194,10 +218,11 @@ function DetailsEnquirySection() {
 									/>
 									<input
 										className="text-input text-input-with-icon"
-										name="identifier"
+										name="email"
 										type="email"
 										placeholder="Email"
 										onChange={handleChange}
+										value={userData.email}
 									/>
 
 									{false && (
@@ -206,7 +231,18 @@ function DetailsEnquirySection() {
 								</InputContainer>
 							</div>
 							<TextAreaContainer className="text-area-container">
-								<textarea className="text-box-input" />
+								{/* <InputWithError validate={() => userData.message.length > 5} /> */}
+								<textarea
+									className="text-box-input"
+									name="message"
+									onChange={handleChange}
+									value={userData.message}
+								/>
+								{errorData.message && (
+									<div className="error">
+										{errorData.message}
+									</div>
+								)}
 							</TextAreaContainer>
 							<Button
 								text="Contact Hotel"
@@ -215,6 +251,7 @@ function DetailsEnquirySection() {
 								typeOfButton="button"
 								type="submit"
 							></Button>
+							<div>{confirmationMessage}</div>
 						</FormContainer>
 					</form>
 				</BoxDataContainer>

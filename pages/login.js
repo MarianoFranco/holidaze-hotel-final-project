@@ -151,7 +151,7 @@ const Error = styled(ErrorMessage)`
 	font-weight: 500;
 `;
 
-function Login(jwt = { jwt }) {
+function Login({ jwt }) {
 	const router = useRouter();
 	const [userData, setUserData] = useState({
 		identifier: "",
