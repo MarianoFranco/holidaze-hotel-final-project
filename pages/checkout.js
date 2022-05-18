@@ -166,7 +166,7 @@ const InputContainer = styled.div`
 	}
 `;
 
-function Checkout() {
+function Checkout({ jwt }) {
 	const MyTextInput = ({ label, ...props }) => {
 		// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
 		// which we can spread on <input>. We can use field meta to show an error
@@ -200,7 +200,7 @@ function Checkout() {
 	};
 	return (
 		<>
-			<Header></Header>
+			<Header jwt={jwt}></Header>
 			<main>
 				<CheckoutSectionContainer>
 					<SummaryContainer>

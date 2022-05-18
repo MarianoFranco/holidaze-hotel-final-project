@@ -21,10 +21,11 @@ export async function getStaticProps() {
 	}
 }
 
-export default function Home({ data }) {
+export default function Home({ data, jwt }) {
+	console.log(jwt);
 	return (
 		<>
-			<Header />
+			<Header jwt={jwt} />
 			<main>
 				<Hero />
 				<FeaturedSection hotel_data={data}></FeaturedSection>

@@ -7,7 +7,7 @@ import { device } from "../../styles/breakpoints";
 import { createStyles, Burger, Transition, Paper } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
 import { getStorageItem } from "../../utils/localStorageHelper/LocalStorageHelper";
-
+import axios from "axios";
 const HeaderElement = styled.header`
 	background-color: var(--color-secondary);
 `;
@@ -87,17 +87,18 @@ const ButtonsGroup = styled.div`
 	}
 `;
 
-function Header({ user }) {
+function Header({ user, jwt }) {
+	console.log(jwt);
 	const [opened, toggleOpened] = useBooleanToggle(false);
-	const [loggedIn, setLoggedIn] = useState(null);
-	useEffect(() => {
-		const identifier = getStorageItem("loggedIn");
-		setLoggedIn(identifier);
-	}, []);
 
 	const handleLogout = () => {
-		localStorage.removeItem("loggedIn");
-		setLoggedIn(null);
+		e.preventDefault();
+		try {
+			axios.post("/api/logout");
+			router.push("/");
+		} catch (err) {
+			console.log(err.response.data);
+		}
 	};
 	return (
 		<>
@@ -117,8 +118,8 @@ function Header({ user }) {
 					</div>
 					<div className="header__navigation-container">
 						<ButtonsGroup opened={opened}>
-							<Navigation loggedIn={loggedIn} />
-							{loggedIn ? (
+							<Navigation loggedIn={jwt} />
+							{jwt ? (
 								<ButtonContainer>
 									<LogoutBtn onClick={handleLogout}>
 										Logout

@@ -34,10 +34,10 @@ export async function getStaticProps({ params }) {
 	}
 }
 
-function HotelResults({ data }) {
+function HotelResults({ data, jwt }) {
 	return (
 		<>
-			<Header />
+			<Header jwt={jwt} />
 			<main>
 				<DetailsMainSection data={data} />
 				<DetailsAmenitiesSection data={data} />

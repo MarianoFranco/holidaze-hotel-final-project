@@ -5,11 +5,11 @@ import nookies from "nookies";
 import axios from "axios";
 import Button from "../components/button/Button";
 
-function Admin({ user, req }) {
+function Admin({ user, req, jwt }) {
 	console.log(user);
 	return (
 		<>
-			<Header user={user} />
+			<Header user={user} jwt={jwt} />
 			<main>
 				<h1>Welcome {user.email}</h1>
 				<div className="line"></div>

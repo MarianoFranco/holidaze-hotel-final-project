@@ -155,7 +155,7 @@ export async function getStaticProps(context) {
 	}
 }
 
-function Hotels({ data }) {
+function Hotels({ data, jwt }) {
 	const [opened, toggleOpened] = useState(false);
 
 	const showFiltered = () => {
@@ -198,7 +198,7 @@ function Hotels({ data }) {
 
 	return (
 		<>
-			<Header></Header>
+			<Header jwt={jwt}></Header>
 			<MainSection>
 				<SearchSection>
 					<Searchbar />

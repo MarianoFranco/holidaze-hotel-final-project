@@ -223,13 +223,14 @@ const TextAreaContainer = styled.div`
 	}
 `;
 
-function Contact() {
+function Contact({ jwt }) {
+	console.log(jwt);
 	const handleChange = (e) => {
 		console.log("valor aca");
 	};
 	return (
 		<>
-			<Header />
+			<Header jwt={jwt} />
 			<Main>
 				<ImageContainer>
 					<Image
