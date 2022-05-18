@@ -114,88 +114,40 @@ function Button({
 	type,
 }) {
 	if (btnCategory === "primary") {
-		if (color === "blue") {
-			if (typeOfButton === "button") {
-				return (
-					<BtnContainer color={color}>
-						<BtnElement color={color} onClick={onClick} type={type}>
-							{text}
-							<Icon icon={icon} className="btn__icon" />
-						</BtnElement>
-					</BtnContainer>
-				);
-			} else {
-				return (
-					<BtnContainer color={color} target="_blank">
-						<span className="btn__text">{text}</span>
+		if (typeOfButton === "button") {
+			return (
+				<BtnContainer color={color}>
+					<BtnElement color={color} onClick={onClick} type={type}>
+						{text}
 						<Icon icon={icon} className="btn__icon" />
-					</BtnContainer>
-				);
-			}
+					</BtnElement>
+				</BtnContainer>
+			);
 		} else {
-			if (typeOfButton === "button") {
-				return (
-					<BtnContainer color={color}>
-						<BtnElement color={color} onClick={onClick} type={type}>
-							{text}
-							<Icon icon={icon} className="btn__icon" />
-						</BtnElement>
-					</BtnContainer>
-				);
-			} else {
-				return (
-					<BtnContainer color={color}>
-						<span className="btn__text">{text}</span>
-						<Icon icon={icon} className="btn__icon" />
-					</BtnContainer>
-				);
-			}
+			return (
+				<BtnContainer color={color} target="_blank">
+					<span className="btn__text">{text}</span>
+					<Icon icon={icon} className="btn__icon" />
+				</BtnContainer>
+			);
 		}
 	} else {
-		if (color === "blue") {
-			if (typeOfButton === "button") {
-				return (
-					<SecBtnContainer color={color}>
-						<SecBtnElement
-							color={color}
-							onClick={onClick}
-							type={type}
-						>
-							{text}
-							<Icon icon={icon} className="btn__icon" />
-						</SecBtnElement>
-					</SecBtnContainer>
-				);
-			} else {
-				return (
-					<SecBtnContainer color={color}>
-						<span className="btn__text">{text}</span>
+		if (typeOfButton === "button") {
+			return (
+				<SecBtnContainer color={color}>
+					<SecBtnElement color={color} onClick={onClick} type={type}>
+						{text}
 						<Icon icon={icon} className="btn__icon" />
-					</SecBtnContainer>
-				);
-			}
+					</SecBtnElement>
+				</SecBtnContainer>
+			);
 		} else {
-			if (typeOfButton === "button") {
-				return (
-					<SecBtnContainer color={color}>
-						<SecBtnElement
-							color={color}
-							onClick={onClick}
-							type={type}
-						>
-							{text}
-							<Icon icon={icon} className="btn__icon" />
-						</SecBtnElement>
-					</SecBtnContainer>
-				);
-			} else {
-				return (
-					<SecBtnContainer color={color}>
-						<span className="btn__text">{text}</span>
-						<Icon icon={icon} className="btn__icon" />
-					</SecBtnContainer>
-				);
-			}
+			return (
+				<SecBtnContainer color={color}>
+					<span className="btn__text">{text}</span>
+					<Icon icon={icon} className="btn__icon" />
+				</SecBtnContainer>
+			);
 		}
 	}
 }

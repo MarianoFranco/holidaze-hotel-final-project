@@ -12,6 +12,7 @@ export async function getStaticProps() {
 	try {
 		let res = await fetch("http://localhost:1337/hotels/");
 		let data = await res.json();
+
 		return {
 			props: { data },
 		};

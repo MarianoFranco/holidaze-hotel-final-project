@@ -17,6 +17,7 @@ const login = async (req, res) => {
 			maxAge: 30 * 24 * 60 * 60,
 			path: "/",
 		});
+        
 
 		res.status(200).end();
 	} catch (e) {

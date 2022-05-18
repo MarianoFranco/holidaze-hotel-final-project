@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
@@ -135,54 +134,30 @@ const TextAreaContainer = styled.div`
 		font-weight: 500;
 	}
 `;
-function DetailsEnquirySection({ data }) {
-	const MyTextInput = ({ label, ...props }) => {
-		// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-		// which we can spread on <input>. We can use field meta to show an error
-		// message if the field is invalid and it has been touched (i.e. visited)
-		const [field, meta] = useField(props);
-		console.log(props.icon);
-		if (props.icon) {
-			return (
-				<>
-					<Icon icon={props.icon} className="text-input__icon" />
-					<input
-						className="text-input text-input-with-icon"
-						{...field}
-						{...props}
-					/>
-					{meta.touched && meta.error ? (
-						<div className="error">{meta.error}</div>
-					) : null}
-				</>
+function DetailsEnquirySection() {
+	const handleChange = (e) => {
+		//e.preventDefault();
+		const { name, value } = e.target;
+
+		setUserData({ ...userData, [name]: value });
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			let newMessage = {
+				name: name.value,
+				email: email.value,
+				message: message.value,
+			};
+			let response = await axios.post(
+				`http://localhost:1337/messages`,
+				newProduct
 			);
-		} else {
-			return (
-				<>
-					<input className="text-input" {...field} {...props} />
-					{meta.touched && meta.error ? (
-						<div className="error">{meta.error}</div>
-					) : null}
-				</>
-			);
+			console.log(response);
+		} catch (err) {
+			console.log("err", err);
 		}
 	};
-	const MyTextAreaInput = ({ label, ...props }) => {
-		// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-		// which we can spread on <input>. We can use field meta to show an error
-		// message if the field is invalid and it has been touched (i.e. visited)
-		const [field, meta] = useField(props);
-		console.log(props);
-		return (
-			<>
-				<textarea className="text-box-input" {...field} {...props} />
-				{meta.touched && meta.error ? (
-					<div className="error">{meta.error}</div>
-				) : null}
-			</>
-		);
-	};
-
 	return (
 		<EnquirySectionContainer>
 			<ImageContainer>
@@ -196,69 +171,52 @@ function DetailsEnquirySection({ data }) {
 			<DataContainer>
 				<BoxDataContainer>
 					<h2 className="box__title">Have some questions?</h2>
-					<Formik
-						initialValues={{
-							name: "",
-							email: "",
-							message: "",
-						}}
-						validationSchema={Yup.object({
-							name: Yup.string()
-								.min(3, "Must be 3 characters as minimun")
-								.required("Required"),
-
-							email: Yup.string()
-								.email("Invalid email address")
-								.required("Required"),
-
-							message: Yup.string()
-								.min(10, "Must be 10 characters as minimun")
-								.required("Required"),
-						})}
-						onSubmit={(values, { setSubmitting }) => {
-							setTimeout(() => {
-								alert(JSON.stringify(values, null, 2));
-								setSubmitting(false);
-							}, 400);
-						}}
-					>
-						<Form>
-							<FormContainer>
-								<div className="inputs-container">
-									<InputContainer>
-										<MyTextInput
-											label="First Name: "
-											name="name"
-											type="text"
-											placeholder="Name"
-										/>
-									</InputContainer>
-									<InputContainer>
-										<MyTextInput
-											label="Email:  "
-											name="email"
-											type="email"
-											placeholder="Email"
-											icon="ant-design:mail-outlined"
-										/>
-									</InputContainer>
-								</div>
-								<TextAreaContainer className="text-area-container">
-									<MyTextAreaInput
-										name="message"
-										placeholder="Your questions here..."
+					<form onSubmit={handleSubmit}>
+						<FormContainer>
+							<div className="inputs-container">
+								<InputContainer>
+									<input
+										name="name"
+										type="text"
+										placeholder="Name"
+										onChange={handleChange}
+										className="text-input"
 									/>
-								</TextAreaContainer>
-								<Button
-									text="Contact Hotel"
-									btnCategory="primary"
-									color="yellow"
-									typeOfButton="button"
-									type="submit"
-								></Button>
-							</FormContainer>
-						</Form>
-					</Formik>
+
+									{false && (
+										<div className="error">error</div>
+									)}
+								</InputContainer>
+								<InputContainer>
+									<Icon
+										icon="ant-design:mail-outlined"
+										className="text-input__icon"
+									/>
+									<input
+										className="text-input text-input-with-icon"
+										name="identifier"
+										type="email"
+										placeholder="Email"
+										onChange={handleChange}
+									/>
+
+									{false && (
+										<div className="error">error</div>
+									)}
+								</InputContainer>
+							</div>
+							<TextAreaContainer className="text-area-container">
+								<textarea className="text-box-input" />
+							</TextAreaContainer>
+							<Button
+								text="Contact Hotel"
+								btnCategory="primary"
+								color="yellow"
+								typeOfButton="button"
+								type="submit"
+							></Button>
+						</FormContainer>
+					</form>
 				</BoxDataContainer>
 			</DataContainer>
 		</EnquirySectionContainer>

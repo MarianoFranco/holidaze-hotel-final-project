@@ -5,7 +5,7 @@ import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import { Formik, Form, useField, ErrorMessage } from "formik";
+import { Formik, Form, useField, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
 import Button from "../components/button/Button";
 import { device } from "../styles/breakpoints";
@@ -140,6 +140,17 @@ const InputContainer = styled.div`
 	}
 `;
 
+const Error = styled(ErrorMessage)`
+	background-color: #fe0000;
+	border-radius: 10px;
+	opacity: 0.7;
+	color: var(--color-white);
+	padding: var(--size-sm);
+	font-family: var(--font-headings);
+	font-size: var(--font-size);
+	font-weight: 500;
+`;
+
 function Login() {
 	const router = useRouter();
 	const [userData, setUserData] = useState({
@@ -160,7 +171,6 @@ function Login() {
 	const handleChange = (e) => {
 		//e.preventDefault();
 		const { name, value } = e.target;
-		console.log("CUALQUIER", value);
 
 		setUserData({ ...userData, [name]: value });
 	};
@@ -175,6 +185,7 @@ function Login() {
 							src="/images/login-portrait.jpg"
 							layout="fill"
 							objectFit="cover"
+							alt="image"
 						/>
 					</ImageContainer>
 					<ContactFormContainer>
@@ -184,80 +195,50 @@ function Login() {
 								Welcome back! Please enter your details.
 							</p>
 						</div>
-						<Formik
-							initialValues={{
-								identifier: "",
-								password: "",
-							}}
-							validationSchema={Yup.object({
-								identifier: Yup.string()
-									.email("Invalid email address")
-									.required("Required"),
+						<form onSubmit={handleSubmit}>
+							<FormContainer>
+								<div className="inputs-container">
+									<InputContainer>
+										<Icon
+											icon="ant-design:mail-outlined"
+											className="text-input__icon"
+										/>
+										<input
+											className="text-input text-input-with-icon"
+											name="identifier"
+											type="email"
+											placeholder="Email"
+											onChange={handleChange}
+										/>
 
-								password: Yup.string()
-									.min(3, "Must be 10 characters as minimun")
-									.required("Required"),
-							})}
-							onSubmit={(values, { setSubmitting }) => {
-								setTimeout(() => {
-									alert(JSON.stringify(values, null, 2));
-									setSubmitting(false);
-								}, 400);
-							}}
-						>
-							{(props) => (
-								<Form onSubmit={handleSubmit}>
-									<FormContainer>
-										<div className="inputs-container">
-											<InputContainer>
-												<Icon
-													icon="ant-design:mail-outlined"
-													className="text-input__icon"
-												/>
-												<input
-													className="text-input text-input-with-icon"
-													name="identifier"
-													type="email"
-													placeholder="Email"
-													onChange={handleChange}
-												/>
-												{false && (
-													<div className="error">
-														error
-													</div>
-												)}
-											</InputContainer>
-											<InputContainer>
-												<input
-													className="text-input "
-													name="password"
-													type="password"
-													placeholder="password"
-													onChange={handleChange}
-												/>
-												{false && (
-													<div className="error">
-														error
-													</div>
-												)}
-											</InputContainer>
-											<p className="password-text">
-												Forgot username / Password
-											</p>
-										</div>
-										<div className="btn-container">
-											<Button
-												text="Login"
-												btnCategory="primary"
-												color="yellow"
-												typeOfButton="button"
-												type="submit"
-											></Button>
-										</div>
-									</FormContainer>
-								</Form>
-							)}
-						</Formik>
+										{false && (
+											<div className="error">error</div>
+										)}
+									</InputContainer>
+									<InputContainer>
+										<input
+											className="text-input "
+											name="password"
+											type="password"
+											placeholder="password"
+											onChange={handleChange}
+										/>
+										{false && (
+											<div className="error">error</div>
+										)}
+									</InputContainer>
+								</div>
+								<div className="btn-container">
+									<Button
+										text="Login"
+										btnCategory="primary"
+										color="yellow"
+										typeOfButton="button"
+										type="submit"
+									></Button>
+								</div>
+							</FormContainer>
+						</form>
 					</ContactFormContainer>
 				</ContactContainer>
 			</main>

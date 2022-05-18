@@ -94,7 +94,7 @@ function Header({ user }) {
 		const identifier = getStorageItem("loggedIn");
 		setLoggedIn(identifier);
 	}, []);
-	console.log("header", loggedIn);
+
 	const handleLogout = () => {
 		localStorage.removeItem("loggedIn");
 		setLoggedIn(null);

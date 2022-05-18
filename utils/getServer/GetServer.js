@@ -1,3 +1,5 @@
+import nookies from "nookies";
+
 const getServerSideProps = async (ctx) => {
 	const cookies = nookies.get(ctx);
 	let user = null;

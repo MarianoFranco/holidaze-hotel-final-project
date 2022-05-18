@@ -224,70 +224,8 @@ const TextAreaContainer = styled.div`
 `;
 
 function Contact() {
-	const MyTextInput = ({ label, ...props }) => {
-		// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-		// which we can spread on <input>. We can use field meta to show an error
-		// message if the field is invalid and it has been touched (i.e. visited)
-		const [field, meta] = useField(props);
-		console.log(props.icon);
-		if (props.icon) {
-			return (
-				<>
-					<Icon icon={props.icon} className="text-input__icon" />
-					<input
-						className="text-input text-input-with-icon"
-						{...field}
-						{...props}
-					/>
-					{meta.touched && meta.error ? (
-						<div className="error">{meta.error}</div>
-					) : null}
-				</>
-			);
-		} else {
-			return (
-				<>
-					<input className="text-input" {...field} {...props} />
-					{meta.touched && meta.error ? (
-						<div className="error">{meta.error}</div>
-					) : null}
-				</>
-			);
-		}
-	};
-	const MyRadioInput = ({ children, ...props }) => {
-		// React treats radios and checkbox inputs differently other input types, select, and textarea.
-		// Formik does this too! When you specify `type` to useField(), it will
-		// return the correct bag of props for you -- a `checked` prop will be included
-		// in `field` alongside `name`, `value`, `onChange`, and `onBlur`
-		const [field, meta] = useField({ ...props, type: "radio" });
-		return (
-			<div>
-				<label className="radio-input">
-					<input type="radio" {...field} {...props} />
-					<span className="text-input">{props.label}</span>
-				</label>
-				{meta.touched && meta.error ? (
-					<div className="error">{meta.error}</div>
-				) : null}
-			</div>
-		);
-	};
-
-	const MyTextAreaInput = ({ label, ...props }) => {
-		// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-		// which we can spread on <input>. We can use field meta to show an error
-		// message if the field is invalid and it has been touched (i.e. visited)
-		const [field, meta] = useField(props);
-		console.log(props);
-		return (
-			<>
-				<textarea className="text-box-input" {...field} {...props} />
-				{meta.touched && meta.error ? (
-					<div className="error">{meta.error}</div>
-				) : null}
-			</>
-		);
+	const handleChange = (e) => {
+		console.log("valor aca");
 	};
 	return (
 		<>
@@ -298,6 +236,7 @@ function Contact() {
 						src="/images/contact_portrait.jpg"
 						layout="fill"
 						objectFit="cover"
+						alt="image"
 					/>
 				</ImageContainer>
 				<ContactContainer>
@@ -339,107 +278,136 @@ function Contact() {
 					</ContactData>
 					<ContactForm>
 						<h2 className="form__title">Have some questions</h2>
-						<Formik
-							initialValues={{
-								name: "",
-								lastName: "",
-								email: "",
-								message: "",
-								picked: "",
-							}}
-							validationSchema={Yup.object({
-								name: Yup.string()
-									.min(3, "Must be 3 characters as minimun")
-									.required("Required"),
-
-								email: Yup.string()
-									.email("Invalid email address")
-									.required("Required"),
-
-								message: Yup.string()
-									.min(10, "Must be 10 characters as minimun")
-									.required("Required"),
-							})}
-							onSubmit={(values, { setSubmitting }) => {
-								setTimeout(() => {
-									alert(JSON.stringify(values, null, 2));
-									setSubmitting(false);
-								}, 400);
-							}}
-						>
-							<Form>
-								<FormContainer>
-									<div className="inputs-container">
-										<InputContainer>
-											<MyTextInput
-												name="name"
-												type="text"
-												placeholder="Name"
-											/>
-										</InputContainer>
-										<InputContainer>
-											<MyTextInput
-												name="lastName"
-												type="text"
-												placeholder="Last name"
-											/>
-										</InputContainer>
-									</div>
-									<div className="inputs-container">
-										<InputContainer>
-											<MyTextInput
-												name="email"
-												type="email"
-												placeholder="Email"
-												icon="ant-design:mail-outlined"
-											/>
-										</InputContainer>
-										<InputContainer>
-											<MyTextInput
-												name="phone"
-												type="text"
-												placeholder="Telephone"
-												icon="ant-design:phone-outlined"
-											/>
-										</InputContainer>
-									</div>
-									<div className="input-radio-container">
-										<p className="radio__text-message">
-											Are you already a client of us?
-										</p>
-										<RadioInputContainer>
-											<MyRadioInput
-												type="radio"
-												value="Yes"
-												label="Yes"
-												name="picked"
-											></MyRadioInput>
-											<MyRadioInput
-												type="radio"
-												value="Yes"
-												label="No"
-												name="picked"
-											></MyRadioInput>
-										</RadioInputContainer>
-									</div>
-									<TextAreaContainer className="text-area-container">
-										<MyTextAreaInput
-											name="message"
-											placeholder="Write your message here..."
+						<form>
+							<FormContainer>
+								<div className="inputs-container">
+									<InputContainer>
+										<input
+											name="name"
+											type="text"
+											placeholder="Name"
+											onChange={handleChange}
+											className="text-input"
 										/>
-									</TextAreaContainer>
-									<div className="btn-container">
-										<Button
-											text="Send Message"
-											btnCategory="primary"
-											color="yellow"
-											typeOfButton="button"
-											type="submit"
-										></Button>
-									</div>
-								</FormContainer>
-							</Form>
-						</Formik>
+
+										{false && (
+											<div className="error">error</div>
+										)}
+									</InputContainer>
+									<InputContainer>
+										<input
+											name="lastName"
+											type="text"
+											placeholder="Last name"
+											onChange={handleChange}
+											className="text-input"
+										/>
+
+										{false && (
+											<div className="error">error</div>
+										)}
+									</InputContainer>
+								</div>
+								<div className="inputs-container">
+									<InputContainer>
+										<Icon
+											icon="ant-design:mail-outlined"
+											className="text-input__icon"
+										/>
+										<input
+											className="text-input text-input-with-icon"
+											name="identifier"
+											type="email"
+											placeholder="Email"
+											onChange={handleChange}
+										/>
+
+										{false && (
+											<div className="error">error</div>
+										)}
+									</InputContainer>
+									<InputContainer>
+										<Icon
+											icon="ant-design:phone-outlined"
+											className="text-input__icon"
+										/>
+										<input
+											name="phone"
+											type="text"
+											placeholder="Telephone"
+											onChange={handleChange}
+											className="text-input text-input-with-icon"
+										/>
+
+										{false && (
+											<div className="error">error</div>
+										)}
+									</InputContainer>
+								</div>
+								<div className="input-radio-container">
+									<p className="radio__text-message">
+										Are you already a client of us?
+									</p>
+									<RadioInputContainer>
+										<div>
+											<label className="radio-input">
+												<input
+													type="radio"
+													value="Yes"
+													name="client"
+												/>
+												<label className="text-input">
+													Yes
+												</label>
+											</label>
+											{false && (
+												<div className="error">
+													{meta.error}
+												</div>
+											)}
+										</div>
+										<div>
+											<label className="radio-input">
+												<input
+													type="radio"
+													value="No"
+													name="client"
+												/>
+												<label className="text-input">
+													No
+												</label>
+											</label>
+											{false && (
+												<div className="error">
+													{meta.error}
+												</div>
+											)}
+										</div>
+									</RadioInputContainer>
+								</div>
+								<TextAreaContainer className="text-area-container">
+									<textarea
+										className="text-box-input"
+										name="message"
+										placeholder="Write your message here..."
+									/>
+									{false && (
+										<div className="error">
+											{meta.error}
+										</div>
+									)}
+								</TextAreaContainer>
+								<div className="btn-container">
+									<Button
+										text="Send Message"
+										btnCategory="primary"
+										color="yellow"
+										typeOfButton="button"
+										type="submit"
+									></Button>
+								</div>
+							</FormContainer>
+						</form>
 					</ContactForm>
 				</ContactContainer>
 			</Main>
