@@ -49,17 +49,13 @@ const SearchBtnContainer = styled.div`
 	}
 `;
 
-function Searchbar({ hotelNameValue }) {
+function Searchbar({ hotelNameValue, onValueSubmited }) {
 	const [hotelName, setHotelName] = useState("");
-	console.log(hotelName);
+	console.log(hotelNameValue);
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		console.log("submited");
-	};
 	return (
 		<SearchContainer>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={onValueSubmited}>
 				<div className="form__data-container">
 					<Input
 						labelText="Select your hotel"
@@ -75,7 +71,6 @@ function Searchbar({ hotelNameValue }) {
 								setHotelName(hotelName + e.key);
 							}
 						}}
-						hotelNameValue={hotelName}
 					/>
 					<div className="form__line"></div>
 					<Input

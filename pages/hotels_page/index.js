@@ -197,6 +197,11 @@ function Hotels({ data, jwt }) {
 	// console.log(document.location.href);
 	const [hotelValue, setHotelNameValue] = useState("");
 	console.log(hotelValue);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setHotelNameValue;
+	};
+
 	console.log(
 		data,
 		wifiSelected,
@@ -210,7 +215,10 @@ function Hotels({ data, jwt }) {
 			<Header jwt={jwt}></Header>
 			<MainSection>
 				<SearchSection>
-					<Searchbar hotelNameValue={setHotelNameValue} />
+					<Searchbar
+						hotelNameValue={hotelValue}
+						onValueSubmited={handleSubmit}
+					/>
 				</SearchSection>
 				<Title>Hotels Results</Title>
 				<ResultsContainer>
