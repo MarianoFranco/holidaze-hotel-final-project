@@ -49,12 +49,17 @@ const SearchBtnContainer = styled.div`
 	}
 `;
 
-function Searchbar() {
+function Searchbar({ hotelNameValue }) {
 	const [hotelName, setHotelName] = useState("");
+	console.log(hotelName);
 
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		console.log("submited");
+	};
 	return (
 		<SearchContainer>
-			<form>
+			<form onSubmit={handleSubmit}>
 				<div className="form__data-container">
 					<Input
 						labelText="Select your hotel"
@@ -70,6 +75,7 @@ function Searchbar() {
 								setHotelName(hotelName + e.key);
 							}
 						}}
+						hotelNameValue={hotelName}
 					/>
 					<div className="form__line"></div>
 					<Input
@@ -84,25 +90,14 @@ function Searchbar() {
 						placeholder="Add guest"
 					/>
 					<SearchBtnContainer>
-						<Link
-							href={{
-								pathname: `/hotels_page/`,
-								query: {
-									hotel: hotelName,
-								},
-							}}
-							passHref
-						>
-							<a>
-								<Button
-									text="Search"
-									icon="bx:search-alt"
-									btnCategory="primary"
-									color="blue"
-									typeOfButton="link"
-								></Button>
-							</a>
-						</Link>
+						<Button
+							text="Search"
+							icon="bx:search-alt"
+							btnCategory="primary"
+							color="blue"
+							typeOfButton="button"
+							type="submit"
+						></Button>
 					</SearchBtnContainer>
 				</div>
 			</form>

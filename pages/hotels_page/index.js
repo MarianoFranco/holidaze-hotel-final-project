@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
 import Searchbar from "../../components/searchbar/Searchbar";
@@ -190,12 +190,13 @@ function Hotels({ data, jwt }) {
 
 	// TODO
 	// change equal for includes(...)
-	dataFilteredByAmenities = dataFilteredByAmenities.filter((hotel) =>
-		hotel.Title.toLowerCase().includes(hotelName)
-	);
+	// dataFilteredByAmenities = dataFilteredByAmenities.filter((hotel) =>
+	// 	hotel.Title.toLowerCase().includes(hotelName)
+	// );
 
 	// console.log(document.location.href);
-
+	const [hotelValue, setHotelNameValue] = useState("");
+	console.log(hotelValue);
 	console.log(
 		data,
 		wifiSelected,
@@ -209,7 +210,7 @@ function Hotels({ data, jwt }) {
 			<Header jwt={jwt}></Header>
 			<MainSection>
 				<SearchSection>
-					<Searchbar />
+					<Searchbar hotelNameValue={setHotelNameValue} />
 				</SearchSection>
 				<Title>Hotels Results</Title>
 				<ResultsContainer>
