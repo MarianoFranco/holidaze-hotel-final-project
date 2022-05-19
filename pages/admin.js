@@ -7,59 +7,149 @@ import Button from "../components/button/Button";
 import { BASE_URL } from "../utils/config/config";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import Image from "next/image";
+
+import { Tabs, Table } from "@mantine/core";
 
 const Icono = styled(Icon)`
 	font-size: 40px;
 `;
-
-function Admin({ user, messages, hotels, jwt }) {
+const LinkContainer = styled.div`
+	width: 300px;
+	height: 70px;
+`;
+function Admin({ user, messages, hotels, hotelMessages, jwt }) {
 	console.log(user);
+	console.log(hotelMessages);
+
+	const loader = ({ src, width = 100, quality = 100 }) => {
+		return `${src}?w=${width}&q=${quality || 75}`;
+	};
+	const handleClick = async (e) => {
+		console.log("el click funciona");
+	};
+
 	return (
 		<>
 			<Header user={user} jwt={jwt} />
 			<main>
 				<h1>Welcome {user.email}</h1>
 				<div className="line"></div>
-				<Button
-					text="Add new hotel"
-					icon="bx:message-square-add"
-					btnCategory="primary"
-					color="blue"
-					typeOfButton="button"
-				></Button>
-				<div>
-					<div>Menu</div>
-					<div>
-						cards con los datos
-						{hotels.map((hotel) => {
-							return (
-								<div key={hotel.id}>
-									<h3>{hotel.Title}</h3>
-									<div>
-										<Link
-											href={`/hotels_page/edit/${hotel.id}`}
-										>
-											<a>
-												<Icono
-													icon="akar-icons:edit"
-													className="icon"
-												/>
-											</a>
-										</Link>
-									</div>
-								</div>
-							);
-						})}
-						messages
-						{messages.map((message) => {
-							return (
-								<div key={message.id}>
-									<h3>{message.name}</h3>
-								</div>
-							);
-						})}
-					</div>
-				</div>
+				<LinkContainer>
+					<Link href="/add_hotel">
+						<a>
+							<Button
+								text="Add new hotel"
+								icon="bx:message-square-add"
+								btnCategory="primary"
+								color="blue"
+								typeOfButton="link"
+							></Button>
+						</a>
+					</Link>
+				</LinkContainer>
+
+				<Tabs tabPadding="xl" orientation="vertical">
+					<Tabs.Tab label="Hotels">
+						<Table highlightOnHover verticalSpacing="xl">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Featured</th>
+									<th>Image</th>
+									<th>Edit</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								{hotels.map((element) => (
+									<tr key={element.id}>
+										<td>{element.id}</td>
+										<td>{element.Title}</td>
+										<td>
+											{element.featured ? "Yes" : "No"}
+										</td>
+										<td>
+											<Image
+												src={element.cardImage}
+												width="150px"
+												height="100px"
+												loader={loader}
+												alt={`Image of ${element.Title} in ${element.Address} `}
+											></Image>
+										</td>
+										<td>
+											<Link href={`/edit/${element.id}`}>
+												<a>
+													<Icono
+														icon="akar-icons:edit"
+														className="icon"
+													/>
+												</a>
+											</Link>
+										</td>
+										<td>
+											<Icono
+												icon="ant-design:delete-filled"
+												onClick={handleClick}
+											/>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</Table>
+					</Tabs.Tab>
+					<Tabs.Tab label="Contact Messages">
+						<Table highlightOnHover verticalSpacing="xl">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Last Name</th>
+									<th>Email</th>
+									<th>Phone</th>
+									<th>Message</th>
+								</tr>
+							</thead>
+							<tbody>
+								{messages.map((element) => (
+									<tr key={element.id}>
+										<td>{element.id}</td>
+										<td>{element.name}</td>
+										<td>{element.last_name}</td>
+										<td>{element.email}</td>
+										<td>{element.phone}</td>
+										<td>{element.message}</td>
+									</tr>
+								))}
+							</tbody>
+						</Table>
+					</Tabs.Tab>
+					<Tabs.Tab label="Hotel Messages">
+						<Table highlightOnHover verticalSpacing="xl">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Email</th>
+									<th>Message</th>
+								</tr>
+							</thead>
+							<tbody>
+								{hotelMessages.map((element) => (
+									<tr key={element.id}>
+										<td>{element.id}</td>
+										<td>{element.name}</td>
+										<td>{element.email}</td>
+										<td>{element.message}</td>
+										<td>{element.created_at}</td>
+									</tr>
+								))}
+							</tbody>
+						</Table>
+					</Tabs.Tab>
+				</Tabs>
 			</main>
 		</>
 	);
@@ -70,6 +160,7 @@ export const getServerSideProps = async (ctx) => {
 	let user = null;
 	let messages = [];
 	let hotels = [];
+	let hotelMessages = [];
 
 	if (cookies?.jwt) {
 		try {
@@ -86,14 +177,24 @@ export const getServerSideProps = async (ctx) => {
 					},
 				}
 			);
-			const { data: dataHotels } = await axios.get(
-				`${BASE_URL}/hotels`,
-				{}
+			const { data: dataHotels } = await axios.get(`${BASE_URL}/hotels`, {
+				headers: {
+					Authorization: `Bearer ${cookies.jwt}`,
+				},
+			});
+			const { data: dataHotelMessages } = await axios.get(
+				`${BASE_URL}/hotel-messages`,
+				{
+					headers: {
+						Authorization: `Bearer ${cookies.jwt}`,
+					},
+				}
 			);
-			console.log("messages $$$$$", dataMessages);
+			console.log("messages $$$$$", dataHotelMessages);
 			user = data;
 			messages = dataMessages;
 			hotels = dataHotels;
+			hotelMessages = dataHotelMessages;
 		} catch (e) {
 			console.log(e);
 		}
@@ -113,6 +214,7 @@ export const getServerSideProps = async (ctx) => {
 			user,
 			messages,
 			hotels,
+			hotelMessages,
 		},
 	};
 };

@@ -9,6 +9,8 @@ import Footer from "../../components/footer/Footer";
 import Link from "next/link";
 import { device } from "../../styles/breakpoints";
 import Button from "../../components/button/Button";
+import { filteringAnArray } from "../../utils/filteringAnArray/filterinAnArray";
+
 const MainSection = styled.main`
 	max-width: 1440px;
 	margin: auto;
@@ -188,9 +190,9 @@ function Hotels({ data, jwt }) {
 
 	// TODO
 	// change equal for includes(...)
-	// dataFilteredByAmenities = dataFilteredByAmenities.filter(
-	// 	(hotel) => hotel.Title === "Hotel Scandic"
-	// );
+	dataFilteredByAmenities = dataFilteredByAmenities.filter((hotel) =>
+		hotel.Title.toLowerCase().includes(hotelName)
+	);
 
 	// console.log(document.location.href);
 
@@ -229,7 +231,6 @@ function Hotels({ data, jwt }) {
 								<FilterComponent
 									data={data}
 									onStarsSelected={(val) => {
-										console.log("funcion", val);
 										setStarsSelected(val);
 									}}
 									onPriceRangeSelected={setPriceRange}

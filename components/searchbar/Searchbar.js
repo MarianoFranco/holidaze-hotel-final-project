@@ -51,7 +51,7 @@ const SearchBtnContainer = styled.div`
 
 function Searchbar() {
 	const [hotelName, setHotelName] = useState("");
-	console.log(hotelName);
+
 	return (
 		<SearchContainer>
 			<form>

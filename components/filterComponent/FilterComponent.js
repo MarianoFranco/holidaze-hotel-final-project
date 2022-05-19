@@ -97,9 +97,7 @@ function FilterComponent({
 	const [toggleWifi, setToggleWifi] = useState(false);
 	const [toggleSpa, setToggleSpa] = useState(false);
 	const [togglePet, setTogglePet] = useState(false);
-	console.log(toggleWifi);
-	console.log(toggleSpa);
-	console.log(togglePet);
+
 	return (
 		<>
 			<AccordionContainer>
