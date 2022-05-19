@@ -52,10 +52,12 @@ const SearchBtnContainer = styled.div`
 function Searchbar({ hotelNameValue, onValueSubmited }) {
 	const [hotelName, setHotelName] = useState("");
 	console.log(hotelNameValue);
-
+	function handleSubmit() {
+		onValueSubmited;
+	}
 	return (
 		<SearchContainer>
-			<form onSubmit={onValueSubmited}>
+			<form onSubmit={handleSubmit}>
 				<div className="form__data-container">
 					<Input
 						labelText="Select your hotel"
@@ -85,6 +87,16 @@ function Searchbar({ hotelNameValue, onValueSubmited }) {
 						placeholder="Add guest"
 					/>
 					<SearchBtnContainer>
+						{/* <Link
+							href={{
+								pathname: `/hotels_page/`,
+								query: {
+									hotel: hotelName,
+								},
+							}}
+							passHref
+						>
+							<a> */}
 						<Button
 							text="Search"
 							icon="bx:search-alt"
@@ -93,6 +105,8 @@ function Searchbar({ hotelNameValue, onValueSubmited }) {
 							typeOfButton="button"
 							type="submit"
 						></Button>
+						{/* </a>
+						</Link> */}
 					</SearchBtnContainer>
 				</div>
 			</form>

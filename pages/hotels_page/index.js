@@ -191,14 +191,13 @@ function Hotels({ data, jwt }) {
 	// TODO
 	// change equal for includes(...)
 	// dataFilteredByAmenities = dataFilteredByAmenities.filter((hotel) =>
-	// 	hotel.Title.toLowerCase().includes(hotelName)
+	// 	hotel.Title.toLowerCase().includes(hotelValue)
 	// );
 
 	// console.log(document.location.href);
 	const [hotelValue, setHotelNameValue] = useState("");
 	console.log(hotelValue);
-	const handleSubmit = (e) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		setHotelNameValue;
 	};
 
@@ -207,7 +206,8 @@ function Hotels({ data, jwt }) {
 		wifiSelected,
 		spaSelected,
 		dataFilteredByRangePrice,
-		dataFilteredByAmenities
+		dataFilteredByAmenities,
+		hotelValue
 	);
 
 	return (
@@ -263,7 +263,6 @@ function Hotels({ data, jwt }) {
 									<FilterComponent
 										data={data}
 										onStarsSelected={(val) => {
-											console.log("funcion", val);
 											setStarsSelected(val);
 										}}
 										onPriceRangeSelected={setPriceRange}
