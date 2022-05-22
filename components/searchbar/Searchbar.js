@@ -4,6 +4,7 @@ import { Input } from "../inputs/Inputs";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const SearchContainer = styled.div`
 	max-width: 1126px;
@@ -49,12 +50,15 @@ const SearchBtnContainer = styled.div`
 	}
 `;
 
-function Searchbar({ hotelNameValue, onValueSubmited }) {
+function Searchbar({ onSubmitValue }) {
 	const [hotelName, setHotelName] = useState("");
-	console.log(hotelNameValue);
-	function handleSubmit() {
-		onValueSubmited;
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		onSubmitValue(hotelName);
 	}
+	const router = useRouter();
+	console.log(router.query.hotel);
 	return (
 		<SearchContainer>
 			<form onSubmit={handleSubmit}>
@@ -64,14 +68,8 @@ function Searchbar({ hotelNameValue, onValueSubmited }) {
 						icon="carbon:location-company"
 						placeholder="Choose your destination"
 						value={hotelName}
-						onKeyUpFunction={(e) => {
-							if (e.code === "Backspace") {
-								setHotelName(
-									hotelName.slice(0, hotelName.length - 1)
-								);
-							} else {
-								setHotelName(hotelName + e.key);
-							}
+						onChange={(event) => {
+							setHotelName(event.target.value);
 						}}
 					/>
 					<div className="form__line"></div>
@@ -87,26 +85,37 @@ function Searchbar({ hotelNameValue, onValueSubmited }) {
 						placeholder="Add guest"
 					/>
 					<SearchBtnContainer>
-						{/* <Link
-							href={{
-								pathname: `/hotels_page/`,
-								query: {
-									hotel: hotelName,
-								},
-							}}
-							passHref
-						>
-							<a> */}
-						<Button
-							text="Search"
-							icon="bx:search-alt"
-							btnCategory="primary"
-							color="blue"
-							typeOfButton="button"
-							type="submit"
-						></Button>
-						{/* </a>
-						</Link> */}
+						{router.asPath === "/hotels_page" ? (
+							<Button
+								text="Search"
+								icon="bx:search-alt"
+								btnCategory="primary"
+								color="blue"
+								typeOfButton="button"
+								type="submit"
+							></Button>
+						) : (
+							<Link
+								href={{
+									pathname: `/hotels_page/`,
+									query: {
+										hotel: hotelName,
+									},
+								}}
+								passHref
+							>
+								<a>
+									<Button
+										text="Search"
+										icon="bx:search-alt"
+										btnCategory="primary"
+										color="blue"
+										typeOfButton="Link"
+										onClick={handleSubmit}
+									></Button>
+								</a>
+							</Link>
+						)}
 					</SearchBtnContainer>
 				</div>
 			</form>

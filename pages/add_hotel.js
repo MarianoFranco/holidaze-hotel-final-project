@@ -4,7 +4,7 @@ import Header from "../components/header/Header";
 import { Switch } from "@mantine/core";
 import axios from "axios";
 
-function AddHotel({ jwt }) {
+function AddHotel({ token }) {
 	const [featuredCheck, setFeaturedChecked] = useState(false);
 	const [stars, setStars] = useState(5);
 
@@ -57,7 +57,7 @@ function AddHotel({ jwt }) {
 	};
 	return (
 		<>
-			<Header />
+			<Header user={token} />
 			<main>
 				<form onSubmit={handleSubmit}>
 					<div>
@@ -157,5 +157,7 @@ function AddHotel({ jwt }) {
 		</>
 	);
 }
-
+export function getServerSideProps({ req, res, ctx }) {
+	return { props: { token: req.cookies.jwt || "" } };
+}
 export default AddHotel;

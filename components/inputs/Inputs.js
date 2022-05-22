@@ -34,7 +34,13 @@ const Icons = styled(Icon)`
 	font-size: 34px;
 	margin-right: 8px;
 `;
-export function Input({ labelText, icon, placeholder, onKeyUpFunction }) {
+export function Input({
+	labelText,
+	icon,
+	placeholder,
+	onKeyUpFunction,
+	onChange,
+}) {
 	return (
 		<InputsContainer>
 			<label className="form__label">
@@ -45,6 +51,7 @@ export function Input({ labelText, icon, placeholder, onKeyUpFunction }) {
 				placeholder={placeholder}
 				className="form__input"
 				onKeyUp={onKeyUpFunction}
+				onChange={onChange}
 			/>
 		</InputsContainer>
 	);

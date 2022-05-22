@@ -83,7 +83,7 @@ function EditHotel({ data, jwt }) {
 
 	return (
 		<>
-			<Header />
+			<Header user={jwt} />
 			<main>
 				<h1>Edit Hotel</h1>
 				<div>

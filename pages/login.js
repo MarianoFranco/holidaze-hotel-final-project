@@ -163,13 +163,11 @@ function Login({ jwt }) {
 		try {
 			await axios.post("/api/login", { ...userData });
 			router.push("/admin");
-			saveToLocalStorage("loggedIn", userData.identifier);
 		} catch (err) {
 			console.log(err.response.data);
 		}
 	};
 	const handleChange = (e) => {
-		//e.preventDefault();
 		const { name, value } = e.target;
 
 		setUserData({ ...userData, [name]: value });

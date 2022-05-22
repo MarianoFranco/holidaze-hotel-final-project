@@ -37,7 +37,7 @@ export async function getStaticProps({ params }) {
 function HotelResults({ data, jwt }) {
 	return (
 		<>
-			<Header jwt={jwt} />
+			<Header user={jwt} />
 			<main>
 				<DetailsMainSection data={data} />
 				<DetailsAmenitiesSection data={data} />

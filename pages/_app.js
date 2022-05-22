@@ -3,10 +3,10 @@ import GlobalStyle from "../styles/global";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { parseCookies } from "nookies";
+import nookies, { parseCookies } from "nookies";
+import Router from "next/router";
 
 function MyApp({ Component, pageProps }) {
-	//console.log("pageProps", pageProps);
 	return (
 		<>
 			<GlobalStyle></GlobalStyle>
@@ -17,14 +17,14 @@ function MyApp({ Component, pageProps }) {
 
 function redirectUser(ctx, location) {
 	if (ctx.req) {
-		ctx.res.redirect(302, location);
+		ctx.res.writeHead(302, { Location: location });
 		ctx.res.end();
 	} else {
 		Router.push(location);
 	}
 }
 
-MyApp.getInitialProps = async ({ Component, ctx }) => {
+MyApp.getInitialProps = async ({ Component, ctx, req }) => {
 	let pageProps = {};
 	const jwt = parseCookies(ctx).jwt;
 
@@ -32,12 +32,16 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 		pageProps = await Component.getInitialProps(ctx);
 	}
 
-	// if (!jwt) {
-	// 	if (ctx.pathname.includes("/hotels_page/edit")) {
-	// 		redirectUser(ctx, "/login");
-	// 	}
-	// }
-	console.log("pageprops");
+	if (!jwt) {
+		if (
+			ctx.pathname.includes("/edit") ||
+			ctx.pathname.includes("/admin") ||
+			ctx.pathname.includes("/add_hotel")
+		) {
+			redirectUser(ctx, "/login");
+		}
+	}
+
 	pageProps.jwt = jwt;
 	return {
 		pageProps,

@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import Button from "../components/button/Button";
 import { device } from "../styles/breakpoints";
 import axios from "axios";
+import nookies, { parseCookies } from "nookies";
 const Main = styled.main`
 	position: relative;
 `;
@@ -223,7 +224,7 @@ const TextAreaContainer = styled.div`
 	}
 `;
 
-function Contact({ jwt }) {
+function Contact({ user, token, jwt }) {
 	const [userData, setUserData] = useState({
 		name: "",
 		lastName: "",
@@ -281,10 +282,10 @@ function Contact({ jwt }) {
 			console.log("err", err);
 		}
 	};
-
+	console.log("token", token);
 	return (
 		<>
-			<Header jwt={jwt} />
+			<Header user={token} />
 			<Main>
 				<ImageContainer>
 					<Image
@@ -471,5 +472,7 @@ function Contact({ jwt }) {
 		</>
 	);
 }
-
+export function getServerSideProps({ req, res, ctx }) {
+	return { props: { token: req.cookies.jwt || "" } };
+}
 export default Contact;

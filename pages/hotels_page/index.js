@@ -10,6 +10,7 @@ import Link from "next/link";
 import { device } from "../../styles/breakpoints";
 import Button from "../../components/button/Button";
 import { filteringAnArray } from "../../utils/filteringAnArray/filterinAnArray";
+import { parseCookies } from "nookies";
 
 const MainSection = styled.main`
 	max-width: 1440px;
@@ -187,38 +188,20 @@ function Hotels({ data, jwt }) {
 			(!petSelected || hotel.amenities.pets === petSelected)
 		);
 	});
-
+	const [hotelNameValue, setHotelNameValue] = useState("");
 	// TODO
 	// change equal for includes(...)
-	// dataFilteredByAmenities = dataFilteredByAmenities.filter((hotel) =>
-	// 	hotel.Title.toLowerCase().includes(hotelValue)
-	// );
-
-	// console.log(document.location.href);
-	const [hotelValue, setHotelNameValue] = useState("");
-	console.log(hotelValue);
-	const handleSubmit = () => {
-		setHotelNameValue;
-	};
-
-	console.log(
-		data,
-		wifiSelected,
-		spaSelected,
-		dataFilteredByRangePrice,
-		dataFilteredByAmenities,
-		hotelValue
+	dataFilteredByAmenities = dataFilteredByAmenities.filter((hotel) =>
+		hotel.Title.toLowerCase().includes(hotelNameValue.toLowerCase())
 	);
+	console.log("jwt token", jwt);
 
 	return (
 		<>
-			<Header jwt={jwt}></Header>
+			<Header user={jwt}></Header>
 			<MainSection>
 				<SearchSection>
-					<Searchbar
-						hotelNameValue={hotelValue}
-						onValueSubmited={handleSubmit}
-					/>
+					<Searchbar onSubmitValue={setHotelNameValue} />
 				</SearchSection>
 				<Title>Hotels Results</Title>
 				<ResultsContainer>

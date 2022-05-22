@@ -68,11 +68,10 @@ const navList = [
 	},
 ];
 
-function Navigation({ loggedIn }) {
+function Navigation({ user }) {
 	const router = useRouter();
-	const loggedInBool = Boolean(loggedIn);
+	const loggedInBool = Boolean(user);
 
-	console.log("loggedIn", loggedIn, loggedInBool);
 	return (
 		<>
 			<NavBar>

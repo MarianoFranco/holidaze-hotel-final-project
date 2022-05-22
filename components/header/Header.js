@@ -88,8 +88,7 @@ const ButtonsGroup = styled.div`
 	}
 `;
 
-function Header({ user, jwt }) {
-	console.log(jwt);
+function Header({ user }) {
 	const [opened, toggleOpened] = useBooleanToggle(false);
 	const router = useRouter();
 	const handleLogout = async () => {
@@ -118,8 +117,8 @@ function Header({ user, jwt }) {
 					</div>
 					<div className="header__navigation-container">
 						<ButtonsGroup opened={opened}>
-							<Navigation loggedIn={jwt} />
-							{jwt ? (
+							<Navigation user={user} />
+							{user ? (
 								<ButtonContainer>
 									<LogoutBtn onClick={handleLogout}>
 										Logout
