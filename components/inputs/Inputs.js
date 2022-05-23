@@ -155,11 +155,12 @@ const OptionIconsContainer = styled.div`
 	color: var(--color-secondary);
 	font-size: 24px;
 `;
-export function InputOption({ labelMessage }) {
+export function InputOption({ labelMessage, onClickInArrow }) {
 	const [numberOfGuest, setNumberOfGuest] = useState(1);
 
 	const Increment = () => {
 		setNumberOfGuest(numberOfGuest + 1);
+		onClickInArrow(numberOfGuest + 1);
 	};
 	const Decrement = () => {
 		let value = 1;
@@ -170,6 +171,7 @@ export function InputOption({ labelMessage }) {
 			value = numberOfGuest;
 		}
 		setNumberOfGuest(value - 1);
+		onClickInArrow(value - 1);
 	};
 	return (
 		<>

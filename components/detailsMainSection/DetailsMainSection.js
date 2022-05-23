@@ -277,12 +277,16 @@ function DetailsMainSection({ data }) {
 							</span>
 						</div>
 						<div className="booking__btn-container">
-							<Button
-								text="Book Now"
-								btnCategory="primary"
-								typeOfButton="link"
-								color="blue"
-							/>
+							<Link href="/checkout">
+								<a>
+									<Button
+										text="Book Now"
+										btnCategory="primary"
+										typeOfButton="link"
+										color="blue"
+									/>
+								</a>
+							</Link>
 						</div>
 					</BookingDataContainer>
 				</DataContainer>

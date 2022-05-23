@@ -26,7 +26,7 @@ const BtnContainer = styled.div`
 			? "linear-gradient(90deg, var(--color-secondary) 0%, var(--color-black) 100%)"
 			: "linear-gradient(90deg, var(--color-primary) 0%, #FFF3E7 100%)"};
 	width: 100%;
-
+	opacity: ${(props) => (props.disabled ? "0.4" : "1")};
 	.btn__icon {
 		font-size: 34px;
 		margin-left: var(--size);
@@ -48,6 +48,7 @@ const BtnElement = styled.button`
 	align-items: center;
 	justify-content: center;
 	padding: 12px;
+
 	cursor: pointer;
 
 	.btn__icon {
@@ -112,12 +113,18 @@ function Button({
 	color,
 	onClick,
 	type,
+	disabled,
 }) {
 	if (btnCategory === "primary") {
 		if (typeOfButton === "button") {
 			return (
-				<BtnContainer color={color}>
-					<BtnElement color={color} onClick={onClick} type={type}>
+				<BtnContainer color={color} disabled={disabled}>
+					<BtnElement
+						color={color}
+						onClick={onClick}
+						type={type}
+						disabled={disabled}
+					>
 						{text}
 						<Icon icon={icon} className="btn__icon" />
 					</BtnElement>
@@ -134,7 +141,7 @@ function Button({
 	} else {
 		if (typeOfButton === "button") {
 			return (
-				<SecBtnContainer color={color}>
+				<SecBtnContainer color={color} disabled={disabled}>
 					<SecBtnElement color={color} onClick={onClick} type={type}>
 						{text}
 						<Icon icon={icon} className="btn__icon" />

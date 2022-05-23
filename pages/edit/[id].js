@@ -30,7 +30,6 @@ export async function getStaticProps(ctx) {
 		let res = await fetch("http://localhost:1337/hotels/" + params.id);
 		let data = await res.json();
 
-		//console.log(data);
 		return {
 			props: { data },
 		};

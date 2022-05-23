@@ -234,7 +234,7 @@ function HotelDetailsCards({
 						<span>per night</span>
 					</div>
 					<div className="total__btn-container">
-						<Link href="#" passHref>
+						<Link href={`/checkout/${id}`} passHref>
 							<a>
 								<Button
 									className="total__btn"

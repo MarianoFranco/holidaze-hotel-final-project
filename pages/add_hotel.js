@@ -8,10 +8,6 @@ import Button from "../components/button/Button";
 const SectionContainer = styled.div`
 	max-width: 1440px;
 	margin: auto;
-
-	.success {
-		background-color: green;
-	}
 `;
 const HeaderSectionContainer = styled.div`
 	.title {
@@ -70,6 +66,8 @@ const GalleryContainer = styled.div`
 		justify-content: center;
 	}
 `;
+
+const ImageAltContainer = styled(GalleryContainer)``;
 
 const InputData = styled.div`
 	max-width: 339px;
@@ -147,7 +145,6 @@ function AddHotel({ token }) {
 	const [confirmationMessage, setConfirmationMessage] = useState("");
 
 	const handleChange = (e) => {
-		//e.preventDefault();
 		const { name, value } = e.target;
 
 		setUserData({ ...userData, [name]: value });
@@ -382,6 +379,73 @@ function AddHotel({ token }) {
 										</InputData>
 									</div>
 								</GalleryContainer>
+								<ImageAltContainer>
+									<h2 className="gallery__title">
+										Description of the image gallery
+									</h2>
+									<div className="gallery__inputs-container">
+										<InputData>
+											<label className="input__label">
+												Description of the image 1
+											</label>
+											<input
+												name="town"
+												type="text"
+												onChange={handleChange}
+												value={userData.town}
+												className="input__text-box"
+											/>
+										</InputData>
+										<InputData>
+											<label className="input__label">
+												Description of the image 2
+											</label>
+											<input
+												name="town"
+												type="text"
+												onChange={handleChange}
+												value={userData.town}
+												className="input__text-box"
+											/>
+										</InputData>
+										<InputData>
+											<label className="input__label">
+												Description of the image 3
+											</label>
+											<input
+												name="town"
+												type="text"
+												onChange={handleChange}
+												value={userData.town}
+												className="input__text-box"
+											/>
+										</InputData>
+										<InputData>
+											<label className="input__label">
+												Description of the image 4
+											</label>
+											<input
+												name="town"
+												type="text"
+												onChange={handleChange}
+												value={userData.town}
+												className="input__text-box"
+											/>
+										</InputData>
+										<InputData>
+											<label className="input__label">
+												Description of the image 5
+											</label>
+											<input
+												name="town"
+												type="text"
+												onChange={handleChange}
+												value={userData.town}
+												className="input__text-box"
+											/>
+										</InputData>
+									</div>
+								</ImageAltContainer>
 							</DataContainer>
 							<AmenitiesContainer>
 								<h3>Amenities and featured options</h3>
