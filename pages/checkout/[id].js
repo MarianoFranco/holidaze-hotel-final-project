@@ -12,24 +12,44 @@ import { device } from "../../styles/breakpoints";
 
 const CheckoutSectionContainer = styled.div`
 	display: flex;
+	@media ${device.tablet} {
+		flex-direction: column;
+	}
 `;
 const SummaryContainer = styled.div`
 	width: 50%;
 	padding: var(--size-xl) var(--size-md);
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
+	@media ${device.tablet} {
+		width: 100%;
+		padding: var(--size-lg) var(--size-sm);
+		min-height: 500px;
+	}
 	.summary__title {
 		font-size: var(--font-size-lg);
 		font-weight: 600;
 		max-width: 400px;
+		margin: 0 var(--size-md);
 	}
 `;
+
+const Message = styled.div`
+	display: ${(props) => (props.deleteCard ? "none" : "block")};
+	align-self: center;
+	margin: auto;
+	font-size: var(--font-size-md);
+	font-weight: 500;
+`;
 const SummaryCard = styled.div`
+	/* display: ${(props) => (props.deleteCard ? "none" : "block")}; */
+
 	border: solid 1px rgba(0, 0, 0, 0.3);
 	border-radius: 10px;
 	max-width: 500px;
 	width: 100%;
-	height: 694px;
+	min-height: 694px;
 	align-self: center;
 	margin: var(--size-md) 0;
 	padding: var(--size-md);
@@ -37,6 +57,7 @@ const SummaryCard = styled.div`
 	flex-direction: column;
 	justify-content: space-around;
 
+	display: ${(props) => (props.deleteCard ? "flex" : "none")};
 	.summary__top-container {
 		display: flex;
 		align-items: center;
@@ -64,6 +85,11 @@ const SummaryCard = styled.div`
 		flex-wrap: wrap;
 		justify-content: space-around;
 		gap: 16px;
+		padding: 16px;
+		@media ${device.tablet} {
+			width: 100%;
+			padding: var(--size-lg) var(--size-sm);
+		}
 	}
 	.summary__total-container {
 		display: flex;
@@ -93,14 +119,32 @@ const SummaryCard = styled.div`
 const MethodPaidContainer = styled(SummaryContainer)`
 	width: 50%;
 	background-color: var(--color-secondary);
-	.summary__title {
+
+	@media ${device.tablet} {
+		width: 100%;
+	}
+
+	.method__title-container {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		margin: 0 var(--size-md);
+	}
+	.method__title {
 		font-size: var(--font-size-lg);
 		font-weight: 600;
 		max-width: 400px;
+		color: var(--color-primary);
+	}
+	.method__subtitle {
+		color: var(--color-primary);
 	}
 `;
 
-const PaymentCard = styled(SummaryCard)``;
+const PaymentCard = styled(SummaryCard)`
+	border: none;
+	display: flex;
+`;
 
 const FormContainer = styled.div`
 	display: flex;
@@ -112,20 +156,22 @@ const FormContainer = styled.div`
 	}
 	.inputs-container {
 		display: flex;
-		flex-direction: column;
-		gap: 16px;
+		justify-content: space-between;
+		gap: var(--size);
+
 		@media ${device.tablet} {
-			flex-wrap: wrap;
-			justify-content: center;
 		}
 	}
-
+	.text__label {
+		color: var(--color-primary);
+		font-size: var(--font-size-md);
+		font-weight: 500;
+	}
 	.btn-container {
 		width: 100%;
 		height: 64px;
 
 		@media ${device.tablet} {
-			max-width: 300px;
 		}
 	}
 `;
@@ -141,6 +187,8 @@ const InputContainer = styled.div`
 		padding-left: var(--size);
 		border-radius: 10px;
 		font-family: var(--font-headings);
+		color: var(--color-primary);
+		font-size: var(--font-size);
 	}
 	.text-input-with-icon {
 		padding-left: 50px;
@@ -162,9 +210,12 @@ const InputContainer = styled.div`
 		font-family: var(--font-headings);
 		font-size: var(--font-size);
 		font-weight: 500;
+		margin-top: var(--size);
 	}
 `;
-
+const SmallInput = styled(InputContainer)`
+	max-width: 150px;
+`;
 export async function getStaticPaths() {
 	try {
 		const res = await fetch("http://localhost:1337/hotels/");
@@ -194,6 +245,7 @@ export async function getStaticProps({ params }) {
 }
 function Checkout({ jwt, data }) {
 	const [inputValue, setInputValue] = useState(1);
+	const [deleteCard, setDeleteCard] = useState(true);
 
 	const loader = ({ src, width = 100, quality = 100 }) => {
 		return `${src}?w=${width}&q=${quality || 75}`;
@@ -214,19 +266,23 @@ function Checkout({ jwt, data }) {
 
 	return (
 		<>
-			<Header jwt={jwt}></Header>
+			<Header user={jwt}></Header>
 			<main>
 				<CheckoutSectionContainer>
 					<SummaryContainer>
 						<h1 className="summary__title">
 							Summary of your reservation
 						</h1>
-						<SummaryCard>
+						<Message deleteCard={deleteCard}>
+							There are no hotels selected
+						</Message>
+						<SummaryCard deleteCard={deleteCard}>
 							<div className="summary__top-container">
 								<h2 className="card__title">{data.Title}</h2>
 								<Icon
 									icon="clarity:window-close-line"
 									className="card__icon"
+									onClick={() => setDeleteCard(false)}
 								/>
 							</div>
 							<div className="summary__image-container">
@@ -278,9 +334,9 @@ function Checkout({ jwt, data }) {
 						</SummaryCard>
 					</SummaryContainer>
 					<MethodPaidContainer>
-						<div>
-							<h2 className="summary__title">Payment Details</h2>
-							<p>
+						<div className="method__title-container">
+							<h2 className="method__title">Payment Details</h2>
+							<p className="method__subtitle">
 								Complete your purchase by providing your payment
 								details
 							</p>
@@ -326,7 +382,7 @@ function Checkout({ jwt, data }) {
 								})}
 								onSubmit={(values, { setSubmitting }) => {
 									console.log(values);
-									handleSubmit(values);
+
 									setTimeout(() => {
 										alert(JSON.stringify(values, null, 2));
 										setSubmitting(false);
@@ -337,53 +393,56 @@ function Checkout({ jwt, data }) {
 									return (
 										<Form>
 											<FormContainer>
+												<label
+													htmlFor="email"
+													className="text__label"
+												>
+													Email address:
+												</label>
+												<InputContainer>
+													<Icon
+														icon="ant-design:mail-outlined"
+														className="text-input__icon"
+													/>
+													<Field
+														className="text-input text-input-with-icon"
+														name="email"
+														type="email"
+														placeholder="Email"
+													/>
+													<ErrorMessage
+														className="error"
+														name="email"
+														component="div"
+													/>
+												</InputContainer>
+
+												<label
+													htmlFor="cardNumer"
+													className="text__label"
+												>
+													Card details:
+												</label>
+												<InputContainer>
+													<Icon
+														icon="ant-design:credit-card-filled"
+														className="text-input__icon"
+													/>
+													<Field
+														className="text-input text-input-with-icon"
+														name="cardNumber"
+														type="tel"
+														placeholder="xxxx xxxx xxxx xxxx"
+													/>
+													<ErrorMessage
+														className="error"
+														name="cardNumber"
+														component="div"
+													/>
+												</InputContainer>
+
 												<div className="inputs-container">
-													<label htmlFor="email">
-														Email address:
-													</label>
-													<InputContainer>
-														<Icon
-															icon="ant-design:mail-outlined"
-															className="text-input__icon"
-														/>
-														<Field
-															className="text-input text-input-with-icon"
-															name="email"
-															type="email"
-															placeholder="Email"
-														/>
-														<ErrorMessage
-															className="error"
-															name="email"
-															component="div"
-														/>
-													</InputContainer>
-												</div>
-												<div className="inputs-container">
-													<label>
-														{" "}
-														Card details:
-													</label>
-													<InputContainer>
-														<Icon
-															icon="ant-design:credit-card-filled"
-															className="text-input__icon"
-														/>
-														<Field
-															className="text-input text-input-with-icon"
-															name="cardNumber"
-															type="tel"
-															placeholder="xxxx xxxx xxxx xxxx"
-														/>
-														<ErrorMessage
-															className="error"
-															name="cardNumber"
-															component="div"
-														/>
-													</InputContainer>
-												</div>
-												<div className="inputs-container">
-													<InputContainer>
+													<SmallInput>
 														<Field
 															className="text-input"
 															name="expirationDate"
@@ -395,8 +454,8 @@ function Checkout({ jwt, data }) {
 															name="expirationDate"
 															component="div"
 														/>
-													</InputContainer>
-													<InputContainer>
+													</SmallInput>
+													<SmallInput>
 														<Field
 															className="text-input"
 															name="cvc"
@@ -408,23 +467,22 @@ function Checkout({ jwt, data }) {
 															name="cvc"
 															component="div"
 														/>
-													</InputContainer>
+													</SmallInput>
 												</div>
-												<div className="inputs-container">
-													<InputContainer>
-														<Field
-															className="text-input"
-															name="cardHolder"
-															type="text"
-															placeholder="Cardholder name"
-														/>
-														<ErrorMessage
-															className="error"
-															name="cardHolder"
-															component="div"
-														/>
-													</InputContainer>
-												</div>
+
+												<InputContainer>
+													<Field
+														className="text-input"
+														name="cardHolder"
+														type="text"
+														placeholder="Cardholder name"
+													/>
+													<ErrorMessage
+														className="error"
+														name="cardHolder"
+														component="div"
+													/>
+												</InputContainer>
 
 												<div className="btn-container">
 													<Button

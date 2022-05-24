@@ -157,13 +157,15 @@ function Admin({ user, messages, hotels, hotelMessages, jwt }) {
 													: "No"}
 											</td>
 											<td className="table__data">
-												<Image
-													src={element.cardImage}
-													width="150px"
-													height="100px"
-													loader={loader}
-													alt={`Image of ${element.Title} in ${element.Address} `}
-												></Image>
+												{element.cardImage && (
+													<Image
+														src={element.cardImage}
+														width="150px"
+														height="100px"
+														loader={loader}
+														alt={`Image of ${element.Title} in ${element.Address} `}
+													></Image>
+												)}
 											</td>
 											<td className="table__data">
 												<Link

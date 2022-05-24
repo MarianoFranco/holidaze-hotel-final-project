@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/header/Header";
 import { Switch } from "@mantine/core";
@@ -8,6 +8,26 @@ import Button from "../components/button/Button";
 const SectionContainer = styled.div`
 	max-width: 1440px;
 	margin: auto;
+	.success {
+		display: ${(props) => (props.confirmationMessage ? "block" : "none")};
+		background-color: green;
+		font-size: var(--font-size-md);
+		padding: 16px;
+		width: 400px;
+		border-radius: 10px;
+		color: white;
+		margin: 16px 0;
+	}
+	.error {
+		display: ${(props) => (props.errorMessage ? "block" : "none")};
+		background-color: red;
+		font-size: var(--font-size-md);
+		padding: 16px;
+		width: 400px;
+		border-radius: 10px;
+		color: white;
+		margin: 16px 0;
+	}
 `;
 const HeaderSectionContainer = styled.div`
 	.title {
@@ -93,6 +113,13 @@ const InputData = styled.div`
 		border: solid 1px var(--color-black);
 		border-radius: 10px;
 		min-height: 200px;
+		padding: var(--size);
+		font-size: var(--size-md);
+	}
+	.form_error {
+		color: red;
+		font-size: var(--size);
+		font-weight: 600;
 	}
 `;
 
@@ -106,6 +133,13 @@ const AmenitiesContainer = styled(DataContainer)`
 `;
 
 const ToggleContainer = styled.div`
+	.mantine-Switch-root {
+		flex-direction: row-reverse;
+		gap: 24px;
+		justify-content: space-between;
+
+		width: 300px;
+	}
 	.mantine-Switch-input {
 		height: 44px;
 		width: 93px;
@@ -124,6 +158,10 @@ const ToggleContainer = styled.div`
 	.mantine-Switch-input:checked::before {
 		transform: translateX(47px);
 	}
+	.mantine-Switch-label {
+		font-size: var(--font-size);
+		font-weight: 700;
+	}
 `;
 const ButtonContainer = styled.div`
 	width: 280px;
@@ -132,17 +170,41 @@ const ButtonContainer = styled.div`
 `;
 function AddHotel({ token }) {
 	const [featuredCheck, setFeaturedChecked] = useState(false);
-	const [stars, setStars] = useState(5);
+	const [spaCheck, setSpaChecked] = useState(false);
+	const [wifiCheck, setWifiChecked] = useState(false);
+	const [breakfastCheck, setBreakfastChecked] = useState(false);
+	const [petCheck, setPetChecked] = useState(false);
+	const [parkingCheck, setParkingChecked] = useState(false);
+	const [gymCheck, setGymChecked] = useState(false);
+	const [stars, setStars] = useState(1);
 
-	const [userData, setUserData] = useState({
+	const initialValues = {
 		title: "",
 		address: "",
 		price: "",
 		imgSrc: "",
 		smallDesc: "",
 		town: "",
-	});
+		hotel_desc: "",
+		amenities_desc: "",
+		galleryImgSrc1: "",
+		galleryImgSrc2: "",
+		galleryImgSrc3: "",
+		galleryImgSrc4: "",
+		galleryImgSrc5: "",
+		galleryImageDesc1: "",
+		galleryImageDesc2: "",
+		galleryImageDesc3: "",
+		galleryImageDesc4: "",
+		galleryImageDesc5: "",
+	};
+
+	const [userData, setUserData] = useState(initialValues);
+	const [formErrors, setFormErrors] = useState({});
+	const [isSubmit, setIsSubmit] = useState(false);
+
 	const [confirmationMessage, setConfirmationMessage] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -151,40 +213,133 @@ function AddHotel({ token }) {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setFormErrors(validate(userData));
+		setIsSubmit(true);
 
-		try {
-			let newHotel = {
-				Title: userData.title,
-				Address: userData.address,
-				stars: stars === null || stars > 5 ? 1 : stars,
-				price: userData.price,
-				cardImage: userData.imgSrc,
-				small_desc: userData.smallDesc,
-				Town: userData.town,
-				featured: featuredCheck,
-			};
-			let response = await axios.post(
-				`http://localhost:1337/hotels`,
-				newHotel
-			);
-			setUserData({
-				title: "",
-				address: "",
-				price: "",
-				imgSrc: "",
-				smallDesc: "",
-				town: "",
-			});
-			setConfirmationMessage("Your hotel was created successfully");
-		} catch (err) {
-			console.log("err", err);
+		if (Object.keys(formErrors).length === 0 && isSubmit) {
+			try {
+				let newHotel = {
+					Title: userData.title,
+					Address: userData.address,
+					stars: stars === null || stars > 5 ? 1 : stars,
+					price: userData.price,
+					cardImage: userData.imgSrc,
+					small_desc: userData.smallDesc,
+					Town: userData.town,
+					featured: featuredCheck,
+					hotel_long_desc: userData.hotel_desc,
+					amenities_desc: userData.amenities_desc,
+					SliderImages: [
+						{
+							Img1: userData.galleryImgSrc1,
+							Img2: userData.galleryImgSrc2,
+							Img3: userData.galleryImgSrc3,
+							Img4: userData.galleryImgSrc4,
+							Img5: userData.galleryImgSrc5,
+						},
+					],
+					img_alt: [
+						{
+							alt_img1: userData.galleryImageDesc1,
+							alt_img2: userData.galleryImageDesc2,
+							alt_img3: userData.galleryImageDesc3,
+							alt_img4: userData.galleryImageDesc4,
+							alt_img5: userData.galleryImageDesc5,
+						},
+					],
+					amenities: {
+						wifi: wifiCheck,
+						breakfast: breakfastCheck,
+						pets: petCheck,
+						parking: parkingCheck,
+						spa: spaCheck,
+						gym: gymCheck,
+					},
+				};
+				let response = await axios.post(
+					`http://localhost:1337/hotel`,
+					newHotel
+				);
+				setUserData({
+					title: "",
+					address: "",
+					price: "",
+					imgSrc: "",
+					smallDesc: "",
+					town: "",
+					hotel_desc: "",
+					amenities_desc: "",
+					galleryImgSrc1: "",
+					galleryImgSrc2: "",
+					galleryImgSrc3: "",
+					galleryImgSrc4: "",
+					galleryImgSrc5: "",
+					galleryImageDesc1: "",
+					galleryImageDesc2: "",
+					galleryImageDesc3: "",
+					galleryImageDesc4: "",
+					galleryImageDesc5: "",
+				});
+				setConfirmationMessage(
+					"Your hotel has been created successfully"
+				);
+				console.log(confirmationMessage);
+				setTimeout(() => {
+					{
+						confirmationMessage;
+						setConfirmationMessage("");
+					}
+				}, 3000);
+				console.log("HOTEL CREADO");
+			} catch (err) {
+				setErrorMessage("Something went wrong, try again later", err);
+				setTimeout(() => {
+					{
+						confirmationMessage;
+						setErrorMessage("");
+					}
+				}, 3000);
+				console.log("FALLO CON EL API");
+			}
+		} else {
+			setErrorMessage("Some elements are required");
+			setTimeout(() => {
+				{
+					confirmationMessage;
+					setConfirmationMessage("");
+				}
+			}, 3000);
+			console.log("HAY ELEMENTOS REQUERIDOS");
 		}
+	};
+
+	useEffect(() => {
+		if (Object.keys(formErrors).length > 0 && isSubmit) {
+			console.log(userData);
+		}
+	}, [formErrors]);
+
+	const validate = (values) => {
+		const errors = {};
+		if (!values.title) {
+			errors.title = "Hotel title is required";
+		}
+		if (!values.imgSrc) {
+			errors.imgSrc = "Image of the portrait is required";
+		}
+		if (!values.price) {
+			errors.price = "Price is required";
+		}
+		return errors;
 	};
 	return (
 		<>
 			<Header user={token} />
 			<main>
-				<SectionContainer>
+				<SectionContainer
+					confirmationMessage={confirmationMessage}
+					errorMessage={errorMessage}
+				>
 					<HeaderSectionContainer>
 						<h1 className="title">Add a new hotel</h1>
 						<div className="line"></div>
@@ -209,6 +364,9 @@ function AddHotel({ token }) {
 											value={userData.title}
 											className="input__text-box"
 										/>
+										<p className="form_error">
+											{formErrors.title}
+										</p>
 									</InputData>
 									<InputData>
 										<label className="input__label">
@@ -244,11 +402,14 @@ function AddHotel({ token }) {
 										</label>
 										<input
 											name="price"
-											type="text"
+											type="number"
 											onChange={handleChange}
 											value={userData.price}
 											className="input__text-box"
 										/>
+										<p className="form_error">
+											{formErrors.price}
+										</p>
 									</InputData>
 									<InputData>
 										<label className="input__label">
@@ -261,6 +422,9 @@ function AddHotel({ token }) {
 											value={userData.imgSrc}
 											className="input__text-box"
 										/>
+										<p className="form_error">
+											{formErrors.imgSrc}
+										</p>
 									</InputData>
 									<InputData>
 										<label className="input__label">
@@ -286,26 +450,27 @@ function AddHotel({ token }) {
 											className="input__text-box"
 										/>
 									</InputData>
-
 									<div className="textarea-container">
 										<InputData>
 											<label className="input__label">
-												Amenities small description
+												Hotel description
 											</label>
 											<textarea
 												className="textarea__text-box"
-												name="amenities_desc"
+												name="hotel_desc"
+												maxLength="250"
 												onChange={handleChange}
-												value={userData.amenities_desc}
+												value={userData.hotel_desc}
 											></textarea>
 										</InputData>
 										<InputData>
 											<label className="input__label">
-												Amenities small description
+												Amenities description
 											</label>
 											<textarea
 												className="textarea__text-box"
 												name="amenities_desc"
+												maxLength="250"
 												onChange={handleChange}
 												value={userData.amenities_desc}
 											></textarea>
@@ -322,10 +487,10 @@ function AddHotel({ token }) {
 												Image Src 1
 											</label>
 											<input
-												name="town"
+												name="galleryImgSrc1"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={userData.galleryImgSrc1}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -334,10 +499,10 @@ function AddHotel({ token }) {
 												Image Src 2
 											</label>
 											<input
-												name="town"
+												name="galleryImgSrc2"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={userData.galleryImgSrc2}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -346,10 +511,10 @@ function AddHotel({ token }) {
 												Image Src 3
 											</label>
 											<input
-												name="town"
+												name="galleryImgSrc3"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={userData.galleryImgSrc3}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -358,10 +523,10 @@ function AddHotel({ token }) {
 												Image Src 4
 											</label>
 											<input
-												name="town"
+												name="galleryImgSrc4"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={userData.galleryImgSrc4}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -370,10 +535,10 @@ function AddHotel({ token }) {
 												Image Src 5
 											</label>
 											<input
-												name="town"
+												name="galleryImgSrc5"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={userData.galleryImgSrc5}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -381,7 +546,7 @@ function AddHotel({ token }) {
 								</GalleryContainer>
 								<ImageAltContainer>
 									<h2 className="gallery__title">
-										Description of the image gallery
+										Gallery images description
 									</h2>
 									<div className="gallery__inputs-container">
 										<InputData>
@@ -389,10 +554,12 @@ function AddHotel({ token }) {
 												Description of the image 1
 											</label>
 											<input
-												name="town"
+												name="galleryImageDesc1"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={
+													userData.galleryImageDesc1
+												}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -401,10 +568,12 @@ function AddHotel({ token }) {
 												Description of the image 2
 											</label>
 											<input
-												name="town"
+												name="galleryImageDesc2"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={
+													userData.galleryImageDesc2
+												}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -413,10 +582,12 @@ function AddHotel({ token }) {
 												Description of the image 3
 											</label>
 											<input
-												name="town"
+												name="galleryImageDesc3"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={
+													userData.galleryImageDesc3
+												}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -425,10 +596,12 @@ function AddHotel({ token }) {
 												Description of the image 4
 											</label>
 											<input
-												name="town"
+												name="galleryImageDesc4"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={
+													userData.galleryImageDesc4
+												}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -437,10 +610,12 @@ function AddHotel({ token }) {
 												Description of the image 5
 											</label>
 											<input
-												name="town"
+												name="galleryImageDesc5"
 												type="text"
 												onChange={handleChange}
-												value={userData.town}
+												value={
+													userData.galleryImageDesc5
+												}
 												className="input__text-box"
 											/>
 										</InputData>
@@ -463,11 +638,11 @@ function AddHotel({ token }) {
 								</ToggleContainer>
 								<ToggleContainer>
 									<Switch
-										name="featured"
-										label="Featured"
-										checked={featuredCheck}
+										name="spa"
+										label="Spa"
+										checked={spaCheck}
 										onChange={(event) =>
-											setFeaturedChecked(
+											setSpaChecked(
 												event.currentTarget.checked
 											)
 										}
@@ -475,11 +650,11 @@ function AddHotel({ token }) {
 								</ToggleContainer>
 								<ToggleContainer>
 									<Switch
-										name="featured"
-										label="Featured"
-										checked={featuredCheck}
+										name="wifi"
+										label="Wifi"
+										checked={wifiCheck}
 										onChange={(event) =>
-											setFeaturedChecked(
+											setWifiChecked(
 												event.currentTarget.checked
 											)
 										}
@@ -487,11 +662,11 @@ function AddHotel({ token }) {
 								</ToggleContainer>
 								<ToggleContainer>
 									<Switch
-										name="featured"
-										label="Featured"
-										checked={featuredCheck}
+										name="breakfast"
+										label="Breakfast"
+										checked={breakfastCheck}
 										onChange={(event) =>
-											setFeaturedChecked(
+											setBreakfastChecked(
 												event.currentTarget.checked
 											)
 										}
@@ -499,11 +674,11 @@ function AddHotel({ token }) {
 								</ToggleContainer>
 								<ToggleContainer>
 									<Switch
-										name="featured"
-										label="Featured"
-										checked={featuredCheck}
+										name="petFriendly"
+										label="Pet Friendly"
+										checked={petCheck}
 										onChange={(event) =>
-											setFeaturedChecked(
+											setPetChecked(
 												event.currentTarget.checked
 											)
 										}
@@ -511,11 +686,11 @@ function AddHotel({ token }) {
 								</ToggleContainer>
 								<ToggleContainer>
 									<Switch
-										name="featured"
-										label="Featured"
-										checked={featuredCheck}
+										name="parking"
+										label="Parking"
+										checked={parkingCheck}
 										onChange={(event) =>
-											setFeaturedChecked(
+											setParkingChecked(
 												event.currentTarget.checked
 											)
 										}
@@ -523,11 +698,11 @@ function AddHotel({ token }) {
 								</ToggleContainer>
 								<ToggleContainer>
 									<Switch
-										name="featured"
-										label="Featured"
-										checked={featuredCheck}
+										name="gym"
+										label="Gym"
+										checked={gymCheck}
 										onChange={(event) =>
-											setFeaturedChecked(
+											setGymChecked(
 												event.currentTarget.checked
 											)
 										}
@@ -536,6 +711,8 @@ function AddHotel({ token }) {
 							</AmenitiesContainer>
 						</FormContainer>
 						<ButtonContainer>
+							<div className="success">{confirmationMessage}</div>
+							<div className="error">{errorMessage}</div>
 							<Button
 								text="Create a Hotel"
 								btnCategory="primary"
@@ -544,8 +721,6 @@ function AddHotel({ token }) {
 								type="submit"
 							></Button>
 						</ButtonContainer>
-
-						<div className="success">{confirmationMessage}</div>
 					</form>
 				</SectionContainer>
 			</main>
