@@ -86,7 +86,7 @@ function ImageGallery({ sliderImg }) {
 			sliderArray.push(image);
 		}
 	});
-	console.log(sliderImg);
+
 	const firstLoader = ({ src, width = 100, quality = 100 }) => {
 		return `${src}?w=${width}&q=${quality || 75}`;
 	};

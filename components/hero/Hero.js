@@ -3,6 +3,9 @@ import Image from "next/image";
 import styled from "styled-components";
 import Searchbar from "../searchbar/Searchbar";
 import { device } from "../../styles/breakpoints";
+import { useRouter } from "next/router";
+import { date } from "yup/lib/locale";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
 	position: relative;
@@ -32,10 +35,10 @@ const TitleContainer = styled.div`
 		font-weight: 700;
 		font-family: var(--font-headings);
 		color: var(--color-primary);
-		@media ${device.laptop} {			
+		@media ${device.laptop} {
 			font-size: var(--font-size-xl);
 		}
-		@media ${device.tablet} {			
+		@media ${device.tablet} {
 			font-size: var(--font-size-lg);
 		}
 	}
@@ -45,13 +48,27 @@ const TitleContainer = styled.div`
 		font-family: var(--font-headings);
 		color: var(--color-white);
 
-		@media ${device.tablet} {			
-			
+		@media ${device.tablet} {
 		}
 	}
 `;
 
 function Hero() {
+	const router = useRouter();
+
+	function onSubmitValue(hotelName, dateValue, guestValue) {
+		const newRange = dateValue.map((date) => {
+			return dayjs(date).format("MM-DD-YYYY");
+		});
+		router.push(
+			"/hotels_page?hotel=" +
+				hotelName +
+				"&dateValue=" +
+				newRange +
+				"&guestValue=" +
+				guestValue
+		);
+	}
 	return (
 		<Wrapper>
 			<div className="img__container">
@@ -69,7 +86,7 @@ function Hero() {
 					Discover the beauty of Bergen with Holidaze
 				</p>
 			</TitleContainer>
-			<Searchbar />
+			<Searchbar onSubmitValue={onSubmitValue} />
 		</Wrapper>
 	);
 }

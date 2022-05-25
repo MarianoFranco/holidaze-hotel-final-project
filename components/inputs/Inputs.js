@@ -40,6 +40,8 @@ export function Input({
 	placeholder,
 	onKeyUpFunction,
 	onChange,
+	value,
+	type,
 }) {
 	return (
 		<InputsContainer>
@@ -52,6 +54,8 @@ export function Input({
 				className="form__input"
 				onKeyUp={onKeyUpFunction}
 				onChange={onChange}
+				value={value || ""}
+				type={type}
 			/>
 		</InputsContainer>
 	);

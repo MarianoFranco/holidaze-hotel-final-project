@@ -4,6 +4,7 @@ import Header from "../components/header/Header";
 import { Switch } from "@mantine/core";
 import axios from "axios";
 import Button from "../components/button/Button";
+import validURL from "../utils/validate/url";
 
 const SectionContainer = styled.div`
 	max-width: 1440px;
@@ -19,7 +20,8 @@ const SectionContainer = styled.div`
 		margin: 16px 0;
 	}
 	.error {
-		display: ${(props) => (props.errorMessage ? "block" : "none")};
+		/* display: ${(props) => (props.errorMessage ? "block" : "none")}; */
+
 		background-color: red;
 		font-size: var(--font-size-md);
 		padding: 16px;
@@ -211,120 +213,94 @@ function AddHotel({ token }) {
 
 		setUserData({ ...userData, [name]: value });
 	};
+	console.log(isSubmit);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setFormErrors(validate(userData));
 		setIsSubmit(true);
-
-		if (Object.keys(formErrors).length === 0 && isSubmit) {
-			try {
-				let newHotel = {
-					Title: userData.title,
-					Address: userData.address,
-					stars: stars === null || stars > 5 ? 1 : stars,
-					price: userData.price,
-					cardImage: userData.imgSrc,
-					small_desc: userData.smallDesc,
-					Town: userData.town,
-					featured: featuredCheck,
-					hotel_long_desc: userData.hotel_desc,
-					amenities_desc: userData.amenities_desc,
-					SliderImages: [
-						{
-							Img1: userData.galleryImgSrc1,
-							Img2: userData.galleryImgSrc2,
-							Img3: userData.galleryImgSrc3,
-							Img4: userData.galleryImgSrc4,
-							Img5: userData.galleryImgSrc5,
-						},
-					],
-					img_alt: [
-						{
-							alt_img1: userData.galleryImageDesc1,
-							alt_img2: userData.galleryImageDesc2,
-							alt_img3: userData.galleryImageDesc3,
-							alt_img4: userData.galleryImageDesc4,
-							alt_img5: userData.galleryImageDesc5,
-						},
-					],
-					amenities: {
-						wifi: wifiCheck,
-						breakfast: breakfastCheck,
-						pets: petCheck,
-						parking: parkingCheck,
-						spa: spaCheck,
-						gym: gymCheck,
-					},
-				};
-				let response = await axios.post(
-					`http://localhost:1337/hotel`,
-					newHotel
-				);
-				setUserData({
-					title: "",
-					address: "",
-					price: "",
-					imgSrc: "",
-					smallDesc: "",
-					town: "",
-					hotel_desc: "",
-					amenities_desc: "",
-					galleryImgSrc1: "",
-					galleryImgSrc2: "",
-					galleryImgSrc3: "",
-					galleryImgSrc4: "",
-					galleryImgSrc5: "",
-					galleryImageDesc1: "",
-					galleryImageDesc2: "",
-					galleryImageDesc3: "",
-					galleryImageDesc4: "",
-					galleryImageDesc5: "",
-				});
-				setConfirmationMessage(
-					"Your hotel has been created successfully"
-				);
-				console.log(confirmationMessage);
-				setTimeout(() => {
-					{
-						confirmationMessage;
-						setConfirmationMessage("");
-					}
-				}, 3000);
-				console.log("HOTEL CREADO");
-			} catch (err) {
-				setErrorMessage("Something went wrong, try again later", err);
-				setTimeout(() => {
-					{
-						confirmationMessage;
-						setErrorMessage("");
-					}
-				}, 3000);
-				console.log("FALLO CON EL API");
-			}
-		} else {
-			setErrorMessage("Some elements are required");
-			setTimeout(() => {
-				{
-					confirmationMessage;
-					setConfirmationMessage("");
-				}
-			}, 3000);
-			console.log("HAY ELEMENTOS REQUERIDOS");
-		}
 	};
 
 	useEffect(() => {
-		if (Object.keys(formErrors).length > 0 && isSubmit) {
-			console.log(userData);
+		if (Object.keys(formErrors).length === 0 && isSubmit) {
+			let newHotel = {
+				Title: userData.title,
+				Address: userData.address,
+				stars: stars === null || stars > 5 ? 1 : stars,
+				price: userData.price,
+				cardImage: userData.imgSrc,
+				small_desc: userData.smallDesc,
+				Town: userData.town,
+				featured: featuredCheck,
+				hotel_long_desc: userData.hotel_desc,
+				amenities_desc: userData.amenities_desc,
+				SliderImages: [
+					{
+						Img1: userData.galleryImgSrc1,
+						Img2: userData.galleryImgSrc2,
+						Img3: userData.galleryImgSrc3,
+						Img4: userData.galleryImgSrc4,
+						Img5: userData.galleryImgSrc5,
+					},
+				],
+				img_alt: [
+					{
+						alt_img1: userData.galleryImageDesc1,
+						alt_img2: userData.galleryImageDesc2,
+						alt_img3: userData.galleryImageDesc3,
+						alt_img4: userData.galleryImageDesc4,
+						alt_img5: userData.galleryImageDesc5,
+					},
+				],
+				amenities: {
+					wifi: wifiCheck,
+					breakfast: breakfastCheck,
+					pets: petCheck,
+					parking: parkingCheck,
+					spa: spaCheck,
+					gym: gymCheck,
+				},
+			};
+
+			// let response = await axios.post(
+			// 	`http://localhost:1337/hotels`,
+			// 	newHotel
+			// )
+			axios
+				.post(`http://localhost:1337/hotel`, newHotel, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				})
+				.then(() => {
+					setUserData(initialValues);
+					setConfirmationMessage(
+						"Your hotel has been created successfully"
+					);
+					console.log(confirmationMessage);
+					setTimeout(() => {
+						setConfirmationMessage("");
+					}, 3000);
+					console.log("HOTEL CREADO");
+				})
+				.catch((err) => {
+					setErrorMessage(
+						"Something went wrong, try again later",
+						err
+					);
+					setTimeout(() => {
+						setErrorMessage("");
+					}, 3000);
+					console.log("FALLO CON EL API");
+				});
 		}
-	}, [formErrors]);
+	}, [formErrors, isSubmit]);
 
 	const validate = (values) => {
 		const errors = {};
 		if (!values.title) {
 			errors.title = "Hotel title is required";
 		}
-		if (!values.imgSrc) {
+		if (!values.imgSrc || !validURL(values.imgSrc)) {
 			errors.imgSrc = "Image of the portrait is required";
 		}
 		if (!values.price) {
@@ -712,7 +688,9 @@ function AddHotel({ token }) {
 						</FormContainer>
 						<ButtonContainer>
 							<div className="success">{confirmationMessage}</div>
-							<div className="error">{errorMessage}</div>
+							{errorMessage && (
+								<div className="error">{errorMessage}</div>
+							)}
 							<Button
 								text="Create a Hotel"
 								btnCategory="primary"

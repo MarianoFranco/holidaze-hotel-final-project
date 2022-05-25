@@ -11,6 +11,8 @@ import { device } from "../../styles/breakpoints";
 import Button from "../../components/button/Button";
 import { filteringAnArray } from "../../utils/filteringAnArray/filterinAnArray";
 import { parseCookies } from "nookies";
+import { useRouter } from "next/router";
+import { SegmentedControl } from "@mantine/core";
 
 const MainSection = styled.main`
 	max-width: 1440px;
@@ -144,12 +146,12 @@ const CardsContainer = styled.div`
 	gap: 16px;
 `;
 export async function getStaticProps(context) {
-	console.log("context", context.params);
+	console.log("context", context);
 	try {
 		let res = await fetch("http://localhost:1337/hotels/");
 		let data = await res.json();
 
-		console.log(data);
+		//console.log(data);
 		return {
 			props: { data },
 		};
@@ -159,6 +161,9 @@ export async function getStaticProps(context) {
 }
 
 function Hotels({ data, jwt }) {
+	//const router = useRouter();
+	//console.log(router, "router");
+
 	const [opened, toggleOpened] = useState(false);
 
 	const showFiltered = () => {
@@ -189,11 +194,30 @@ function Hotels({ data, jwt }) {
 		);
 	});
 	const [hotelNameValue, setHotelNameValue] = useState("");
+	console.log("inputvalue del padre", hotelNameValue);
 	// TODO
 	// change equal for includes(...)
 	dataFilteredByAmenities = dataFilteredByAmenities.filter((hotel) =>
 		hotel.Title.toLowerCase().includes(hotelNameValue.toLowerCase())
 	);
+
+	const [sortValue, setSortValue] = useState("");
+
+	// TODO create sort state
+	const sortBy = sortValue;
+	dataFilteredByAmenities = dataFilteredByAmenities.sort((a, b) => {
+		if (sortBy === "price") {
+			return a.price - b.price;
+		}
+		if (sortBy === "stars") {
+			return a.stars - b.stars;
+		}
+		if (sortBy === "title") {
+			return a.Title.toLowerCase() > b.Title.toLowerCase() ? 1 : -1;
+		}
+	});
+	console.log("estado sort", sortValue);
+
 	console.log("jwt token", jwt);
 
 	return (
@@ -206,14 +230,36 @@ function Hotels({ data, jwt }) {
 				<Title>Hotels Results</Title>
 				<ResultsContainer>
 					<div className="div1">
-						<SortComponent>
+						{/* <SortComponent>
 							<p className="sort__title">Order by: </p>
 							<div className="sort__buttons-container">
-								<SortButton text="Stars" />
-								<SortButton text="Price" />
-								<SortButton text="Alphabetically" />
+								<SortButton
+									text="Stars"
+									value="stars"
+									onClick={() => setSortValue("stars")}
+								/>
+								<SortButton
+									text="Price"
+									value="price"
+									onClick={() => setSortValue("price")}
+								/>
+								<SortButton
+									text="Alphabetically"
+									value="title"
+									onClick={() => setSortValue("title")}
+								/>
 							</div>
-						</SortComponent>
+						</SortComponent> */}
+						<p className="sort__title">Order by: </p>
+						<SegmentedControl
+							value={sortValue}
+							onChange={setSortValue}
+							data={[
+								{ label: "Stars", value: "stars" },
+								{ label: "Price", value: "price" },
+								{ label: "Alphabetically", value: "title" },
+							]}
+						/>
 					</div>
 					<div className="div2">
 						<FilteredContainer>

@@ -221,15 +221,18 @@ function Admin({ user, messages, hotels, hotelMessages, jwt }) {
 								<thead>
 									<tr>
 										<th>ID</th>
+										<th>HotelName</th>
 										<th>Name</th>
 										<th>Email</th>
 										<th>Message</th>
+										<th>Date</th>
 									</tr>
 								</thead>
 								<tbody>
 									{hotelMessages.map((element) => (
 										<tr key={element.id}>
 											<td>{element.id}</td>
+											<td>{element.hotel_name}</td>
 											<td>{element.name}</td>
 											<td>{element.email}</td>
 											<td>{element.message}</td>

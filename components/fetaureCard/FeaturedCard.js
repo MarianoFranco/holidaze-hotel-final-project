@@ -107,14 +107,16 @@ export function FeaturedCards({
 		<>
 			<FeaturedCardsContainer isaportraitcard={isaportraitcard}>
 				<FeaturedImgContaner>
-					<FeaturedImage
-						src={imgSrc}
-						layout="fill"
-						objectFit="cover"
-						alt={imgAlt}
-						isaportraitcard={isaportraitcard}
-						loader={imageLoader}
-					/>
+					{imgSrc && (
+						<FeaturedImage
+							src={imgSrc}
+							layout="fill"
+							objectFit="cover"
+							alt={imgAlt}
+							isaportraitcard={isaportraitcard}
+							loader={imageLoader}
+						/>
+					)}
 				</FeaturedImgContaner>
 				<FeaturedDataContainer isaportraitcard={isaportraitcard}>
 					<h3 className="featured__title">{title}</h3>

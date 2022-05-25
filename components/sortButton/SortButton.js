@@ -29,10 +29,10 @@ const Button = styled.button`
 	}
 `;
 
-function SortButton({ text }) {
+function SortButton({ text, onClick }) {
 	return (
 		<>
-			<Button>
+			<Button onClick={onClick} direction={"up"} color={"red"}>
 				{text}
 				<Icon
 					icon="dashicons:arrow-down-alt2"

@@ -277,7 +277,7 @@ function DetailsMainSection({ data }) {
 							</span>
 						</div>
 						<div className="booking__btn-container">
-							<Link href="/checkout">
+							<Link href={`/checkout/${data.id}`}>
 								<a>
 									<Button
 										text="Book Now"

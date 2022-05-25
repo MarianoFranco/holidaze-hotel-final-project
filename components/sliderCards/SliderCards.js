@@ -138,15 +138,17 @@ function SliderCards({ id, title, imgSrc, imageLoader, stars, town, price }) {
 			<Link href="/" passHref key={id}>
 				<a target="_blank">
 					<CardContainer>
-						<ImgContainer>
-							<ImgElement
-								src={imgSrc}
-								alt="Card Image"
-								layout="fill"
-								objectFit="cover"
-								loader={imageLoader}
-							></ImgElement>
-						</ImgContainer>
+						{imgSrc && (
+							<ImgContainer>
+								<ImgElement
+									src={imgSrc}
+									alt="Card Image"
+									layout="fill"
+									objectFit="cover"
+									loader={imageLoader}
+								></ImgElement>
+							</ImgContainer>
+						)}
 						<DataContainer>
 							<div className="card__icons-container">
 								<StarsIcon stars={stars}></StarsIcon>

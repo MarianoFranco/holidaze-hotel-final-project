@@ -123,6 +123,13 @@ const FormContainer = styled.div`
 	@media ${device.tablet} {
 		padding: 0 var(--size);
 	}
+	.success {
+		text-align: center;
+		color: white;
+		background-color: green;
+		padding: var(--size-sm);
+		border-radius: 10px;
+	}
 	.inputs-container {
 		display: flex;
 		gap: 16px;
@@ -165,6 +172,7 @@ const InputContainer = styled.div`
 		padding-left: var(--size);
 		border-radius: 10px;
 		font-family: var(--font-headings);
+		color: var(--color-primary);
 	}
 	.text-input-with-icon {
 		padding-left: 50px;
@@ -211,6 +219,7 @@ const TextAreaContainer = styled.div`
 		padding: var(--size);
 		font-family: var(--font-headings);
 		border: solid 1px var(--color-primary);
+		color: var(--color-primary);
 	}
 	.error {
 		background-color: #fe0000;
@@ -225,24 +234,17 @@ const TextAreaContainer = styled.div`
 `;
 
 function Contact({ user, token, jwt }) {
-	const [userData, setUserData] = useState({
+	const initialValues = {
 		name: "",
 		lastName: "",
 		email: "",
-		message: "",
 		phone: "",
 		client: "Yes",
 		message: "",
-	});
-	const [errorData, setErrorData] = useState({
-		name: "",
-		lastName: "",
-		email: "",
-		message: "",
-		phone: "",
-		client: "Yes",
-		message: "",
-	});
+	};
+
+	const [userData, setUserData] = useState(initialValues);
+	const [errorData, setErrorData] = useState({});
 
 	const [confirmationMessage, setConfirmationMessage] = useState("");
 
@@ -254,35 +256,49 @@ function Contact({ user, token, jwt }) {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (userData.message.length < 5) {
-			setErrorData({
-				message: "Your message needs to be at least 5 characters",
-			});
-		} else {
-			setErrorData({
-				message: "",
-			});
-		}
-		try {
-			let newMessage = {
-				name: userData.name,
-				last_name: userData.lastName,
-				email: userData.email,
-				phone: userData.phone,
-				already_client: userData.client === "Yes" ? true : false,
-				message: userData.message,
-			};
-			let response = await axios.post(
-				`http://localhost:1337/messages`,
-				newMessage
-			);
-			setUserData({ name: "", email: "", message: "" });
-			setConfirmationMessage("Your message was sent successfully");
-		} catch (err) {
-			console.log("err", err);
-		}
+		const errorData2 = validate(userData);
+		setErrorData(errorData2);
+
+		if (Object.keys(errorData2).length === 0)
+			try {
+				let newMessage = {
+					name: userData.name,
+					last_name: userData.lastName,
+					email: userData.email,
+					phone: userData.phone,
+					already_client: userData.client === "Yes" ? true : false,
+					message: userData.message,
+				};
+				let response = await axios.post(
+					`http://localhost:1337/messages`,
+					newMessage
+				);
+				setUserData(initialValues);
+				setConfirmationMessage("Your message was sent successfully");
+			} catch (err) {
+				console.log("err", err);
+			}
 	};
-	console.log("token", token);
+	const validate = (values) => {
+		const errors = {};
+		if (!values.name) {
+			errors.name = "Hotel title is required";
+		}
+		if (!values.lastName) {
+			errors.lastName = "Hotel title is required";
+		}
+		if (!values.email) {
+			errors.email = "Hotel title is required";
+		}
+		if (!values.message) {
+			errors.message = "Price is required";
+		}
+		if (isNaN(values.phone)) {
+			errors.phone =
+				"Please enter a valid number with 8 digits and no spaces or letters";
+		}
+		return errors;
+	};
 	return (
 		<>
 			<Header user={token} />
@@ -347,9 +363,9 @@ function Contact({ user, token, jwt }) {
 											value={userData.name}
 										/>
 
-										{errorData.message && (
+										{errorData.name && (
 											<div className="error">
-												{errorData.message}
+												{errorData.name}
 											</div>
 										)}
 									</InputContainer>
@@ -363,8 +379,10 @@ function Contact({ user, token, jwt }) {
 											value={userData.lastName}
 										/>
 
-										{false && (
-											<div className="error">error</div>
+										{errorData.lastName && (
+											<div className="error">
+												{errorData.lastName}
+											</div>
 										)}
 									</InputContainer>
 								</div>
@@ -383,8 +401,10 @@ function Contact({ user, token, jwt }) {
 											value={userData.email}
 										/>
 
-										{false && (
-											<div className="error">error</div>
+										{errorData.email && (
+											<div className="error">
+												{errorData.email}
+											</div>
 										)}
 									</InputContainer>
 									<InputContainer>
@@ -394,15 +414,18 @@ function Contact({ user, token, jwt }) {
 										/>
 										<input
 											name="phone"
-											type="text"
+											type="tel"
 											placeholder="Telephone"
+											//pattern="[0-9]{8}"
 											onChange={handleChange}
 											className="text-input text-input-with-icon"
 											value={userData.phone}
 										/>
 
-										{false && (
-											<div className="error">error</div>
+										{errorData.phone && (
+											<div className="error">
+												{errorData.phone}
+											</div>
 										)}
 									</InputContainer>
 								</div>
@@ -462,7 +485,11 @@ function Contact({ user, token, jwt }) {
 										type="submit"
 									></Button>
 								</div>
-								<div>{confirmationMessage}</div>
+								{confirmationMessage && (
+									<div className="success">
+										{confirmationMessage}
+									</div>
+								)}
 							</FormContainer>
 						</form>
 					</ContactForm>

@@ -135,7 +135,8 @@ const TextAreaContainer = styled.div`
 		font-weight: 500;
 	}
 `;
-function DetailsEnquirySection() {
+function DetailsEnquirySection({ data }) {
+	console.log(data);
 	const [userData, setUserData] = useState({
 		name: "",
 		email: "",
@@ -170,6 +171,7 @@ function DetailsEnquirySection() {
 				name: userData.name,
 				email: userData.email,
 				message: userData.message,
+				hotel_name: data.Title,
 			};
 			let response = await axios.post(
 				`http://localhost:1337/hotel-messages`,

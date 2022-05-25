@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Input } from "../inputs/Inputs";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { DateRangePicker } from "@mantine/dates";
+import { Icon } from "@iconify/react";
+import { NumberInput } from "@mantine/core";
+import dayjs from "dayjs";
 
 const SearchContainer = styled.div`
 	max-width: 1126px;
@@ -50,15 +54,79 @@ const SearchBtnContainer = styled.div`
 	}
 `;
 
+const InputDate = styled.div`
+	.form__label {
+		font-size: var(--font-size-md);
+		font-weight: 500;
+		font-family: var(--font-headings);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		margin: 0 0 8px;
+	}
+`;
+
+const Icons = styled(Icon)`
+	font-size: 34px;
+	margin-right: 8px;
+`;
+const DatePickerComponent = styled(DateRangePicker)`
+	.mantine-DateRangePicker-defaultVariant {
+		border: none;
+		color: var(--color-black);
+		border: none;
+		font-size: var(--font-size);
+		font-weight: 400;
+		padding: 8px 0 8px 44px;
+	}
+	.mantine-DateRangePicker-defaultVariant::placeholder {
+		color: black;
+		opacity: 0.7;
+	}
+`;
+const InputGuest = styled.div`
+	.form__label {
+		font-size: var(--font-size-md);
+		font-weight: 500;
+		font-family: var(--font-headings);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		margin: 0 0 8px;
+	}
+`;
+const NumberInputComponent = styled(NumberInput)`
+	.mantine-NumberInput-defaultVariant {
+		border: none;
+		color: var(--color-black);
+		border: none;
+		font-size: var(--font-size);
+		font-weight: 400;
+		padding: 8px 0 8px 44px;
+	}
+`;
 function Searchbar({ onSubmitValue }) {
-	const [hotelName, setHotelName] = useState("");
+	const router = useRouter();
+	const queryDate = router.query.dateValue;
+	const dateRange = queryDate ? queryDate.split(",") : [];
+	const dateRangeMapped = dateRange.map((stringDate) => {
+		return dayjs(stringDate, "MM-DD-YYYY").toDate();
+	});
+
+	const [hotelName, setHotelName] = useState(router.query.hotel || "");
+	const [dateValue, setDateValue] = useState(dateRangeMapped);
+
+	const [guestValue, setGuestValue] = useState(0);
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		onSubmitValue(hotelName);
+		onSubmitValue(hotelName, dateValue, guestValue);
 	}
-	const router = useRouter();
-	console.log(router.query.hotel);
+
+	// useEffect(() => {
+	// 	setHotelName(router.query.hotel);
+	// });
+	const [value, setValue] = useState();
 	return (
 		<SearchContainer>
 			<form onSubmit={handleSubmit}>
@@ -66,26 +134,53 @@ function Searchbar({ onSubmitValue }) {
 					<Input
 						labelText="Select your hotel"
 						icon="carbon:location-company"
-						placeholder="Choose your destination"
+						placeholder={"Choose your destination"}
 						value={hotelName}
 						onChange={(event) => {
 							setHotelName(event.target.value);
 						}}
 					/>
 					<div className="form__line"></div>
-					<Input
-						labelText="Arrival - Depature"
-						icon="bx:calendar"
-						placeholder="Add data"
-					/>
+
+					<InputDate>
+						<label className="form__label">
+							<Icons icon="bx:calendar" />
+							Arrival - Depature
+						</label>
+						<DatePickerComponent
+							placeholder="Add date"
+							value={dateValue}
+							onChange={setDateValue}
+							className="form__input"
+							//inputFormat="DD/MM/YYYY"
+						/>
+					</InputDate>
+
 					<div className="form__line"></div>
-					<Input
-						labelText="Visitors"
-						icon="fluent:guest-add-20-regular"
-						placeholder="Add guest"
-					/>
+
+					<InputGuest>
+						<label className="form__label">
+							<Icons icon="fluent:guest-add-20-regular" />
+							Visitors
+						</label>
+						<NumberInputComponent
+							placeholder="Add guest"
+							max={10}
+							min={0}
+							onChange={(val) => setGuestValue(val)}
+							value={guestValue}
+						/>
+					</InputGuest>
 					<SearchBtnContainer>
-						{router.asPath === "/hotels_page" ? (
+						<Button
+							text="Search"
+							icon="bx:search-alt"
+							btnCategory="primary"
+							color="blue"
+							typeOfButton="button"
+							type="submit"
+						></Button>
+						{/* {router.asPath === "/hotels_page" ? (
 							<Button
 								text="Search"
 								icon="bx:search-alt"
@@ -115,7 +210,7 @@ function Searchbar({ onSubmitValue }) {
 									></Button>
 								</a>
 							</Link>
-						)}
+						)} */}
 					</SearchBtnContainer>
 				</div>
 			</form>
