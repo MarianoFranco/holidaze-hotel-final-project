@@ -71,6 +71,13 @@ const FormContainer = styled.div`
 		display: flex;
 		gap: 16px;
 	}
+	.success {
+		text-align: center;
+		color: white;
+		background-color: green;
+		padding: var(--size-sm);
+		border-radius: 10px;
+	}
 `;
 const InputContainer = styled.div`
 	width: 100%;
@@ -138,52 +145,62 @@ const TextAreaContainer = styled.div`
 	}
 `;
 function DetailsEnquirySection({ data }) {
-	console.log(data);
-	const [userData, setUserData] = useState({
+	const initialValues = {
 		name: "",
 		email: "",
 		message: "",
-	});
-	const [errorData, setErrorData] = useState({
-		name: "",
-		email: "",
-		message: "",
-	});
+	};
+	const [userData, setUserData] = useState(initialValues);
+	const [errorData, setErrorData] = useState({});
 	const [confirmationMessage, setConfirmationMessage] = useState("");
 
 	const handleChange = (e) => {
-		//e.preventDefault();
 		const { name, value } = e.target;
-
 		setUserData({ ...userData, [name]: value });
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (userData.message.length < 5) {
-			setErrorData({
-				message: "Your message needs to be at least 5 characters",
-			});
-		} else {
-			setErrorData({
-				message: "",
-			});
+		const errorData2 = validate(userData);
+		setErrorData(errorData2);
+
+		if (Object.keys(errorData2).length === 0) {
+			try {
+				let newMessage = {
+					name: userData.name,
+					email: userData.email,
+					message: userData.message,
+					hotel_name: data.Title,
+				};
+				let response = await axios.post(
+					`http://localhost:1337/hotel-messages`,
+					newMessage
+				);
+				setUserData(initialValues);
+				setConfirmationMessage("Your message was sent successfully");
+				setTimeout(() => {
+					{
+						setConfirmationMessage("");
+					}
+				}, 3000);
+			} catch (err) {
+				console.log("err", err);
+			}
 		}
-		try {
-			let newMessage = {
-				name: userData.name,
-				email: userData.email,
-				message: userData.message,
-				hotel_name: data.Title,
-			};
-			let response = await axios.post(
-				`http://localhost:1337/hotel-messages`,
-				newMessage
-			);
-			setUserData({ name: "", email: "", message: "" });
-			setConfirmationMessage("Your message was sent successfully");
-		} catch (err) {
-			console.log("err", err);
+	};
+	const validate = (values) => {
+		const errors = {};
+		if (!values.name) {
+			errors.name = "The name required";
 		}
+
+		if (!values.email) {
+			errors.email = "Email is required";
+		}
+		if (!values.message) {
+			errors.message = "Meassage is required";
+		}
+
+		return errors;
 	};
 	return (
 		<EnquirySectionContainer>
@@ -211,8 +228,10 @@ function DetailsEnquirySection({ data }) {
 										value={userData.name}
 									/>
 
-									{false && (
-										<div className="error">error</div>
+									{errorData.name && (
+										<div className="error">
+											{errorData.name}
+										</div>
 									)}
 								</InputContainer>
 								<InputContainer>
@@ -229,8 +248,10 @@ function DetailsEnquirySection({ data }) {
 										value={userData.email}
 									/>
 
-									{false && (
-										<div className="error">error</div>
+									{errorData.email && (
+										<div className="error">
+											{errorData.email}
+										</div>
 									)}
 								</InputContainer>
 							</div>
@@ -255,7 +276,11 @@ function DetailsEnquirySection({ data }) {
 								typeOfButton="button"
 								type="submit"
 							></Button>
-							<div>{confirmationMessage}</div>
+							{confirmationMessage && (
+								<div className="success">
+									{confirmationMessage}
+								</div>
+							)}
 						</FormContainer>
 					</form>
 				</BoxDataContainer>

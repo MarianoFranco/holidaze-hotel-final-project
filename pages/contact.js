@@ -245,13 +245,10 @@ function Contact({ user, token, jwt }) {
 
 	const [userData, setUserData] = useState(initialValues);
 	const [errorData, setErrorData] = useState({});
-
 	const [confirmationMessage, setConfirmationMessage] = useState("");
 
 	const handleChange = (e) => {
-		//e.preventDefault();
 		const { name, value } = e.target;
-
 		setUserData({ ...userData, [name]: value });
 	};
 	const handleSubmit = async (e) => {
@@ -259,7 +256,7 @@ function Contact({ user, token, jwt }) {
 		const errorData2 = validate(userData);
 		setErrorData(errorData2);
 
-		if (Object.keys(errorData2).length === 0)
+		if (Object.keys(errorData2).length === 0) {
 			try {
 				let newMessage = {
 					name: userData.name,
@@ -275,9 +272,16 @@ function Contact({ user, token, jwt }) {
 				);
 				setUserData(initialValues);
 				setConfirmationMessage("Your message was sent successfully");
+				setTimeout(() => {
+					{
+						confirmationMessage;
+						setConfirmationMessage("");
+					}
+				}, 3000);
 			} catch (err) {
 				console.log("err", err);
 			}
+		}
 	};
 	const validate = (values) => {
 		const errors = {};
