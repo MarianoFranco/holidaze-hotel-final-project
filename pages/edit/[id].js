@@ -105,7 +105,7 @@ const InputData = styled.div`
 		border-radius: 10px;
 		background: none;
 		padding: var(--size-md);
-		font-size: var(--font-size-md);
+		font-size: var(--font-size);
 		font-weight: 500;
 	}
 
@@ -115,7 +115,7 @@ const InputData = styled.div`
 		border-radius: 10px;
 		min-height: 200px;
 		padding: var(--size);
-		font-size: var(--size-md);
+		font-size: var(--size);
 	}
 	.form_error {
 		color: red;
@@ -230,11 +230,11 @@ function EditHotel({ data, jwt }) {
 		galleryImgSrc3: data.SliderImages[0].Img3,
 		galleryImgSrc4: data.SliderImages[0].Img4,
 		galleryImgSrc5: data.SliderImages[0].Img5,
-		galleryImageDesc1: data.img_alt[0].alt_img1,
-		galleryImageDesc2: data.img_alt[0].alt_img2,
-		galleryImageDesc3: data.img_alt[0].alt_img3,
-		galleryImageDesc4: data.img_alt[0].alt_img4,
-		galleryImageDesc5: data.img_alt[0].alt_img5,
+		galleryImageDesc1: data.img_alt[0]?.alt_img1,
+		galleryImageDesc2: data.img_alt[0]?.alt_img2,
+		galleryImageDesc3: data.img_alt[0]?.alt_img3,
+		galleryImageDesc4: data.img_alt[0]?.alt_img4,
+		galleryImageDesc5: data.img_alt[0]?.alt_img5,
 	};
 
 	const [hotelData, sethotelData] = useState(initialValues);

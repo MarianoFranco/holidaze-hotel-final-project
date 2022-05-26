@@ -29,6 +29,10 @@ const InputsContainer = styled.div`
 		font-weight: 400;
 		padding: 8px 0 8px 44px;
 	}
+	.form__input:focus-visible {
+		border: none;
+		outline-color: var(--color-secondary);
+	}
 `;
 const Icons = styled(Icon)`
 	font-size: 34px;

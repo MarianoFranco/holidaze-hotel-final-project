@@ -266,7 +266,7 @@ function AddHotel({ token }) {
 			// 	newHotel
 			// )
 			axios
-				.post(`http://localhost:1337/hotel`, newHotel, {
+				.post(`http://localhost:1337/hotels`, newHotel, {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},

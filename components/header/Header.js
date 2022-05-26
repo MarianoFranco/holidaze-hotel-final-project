@@ -134,7 +134,7 @@ function Header({ user }) {
 						</ButtonsGroup>
 						<BurgerIcon
 							opened={opened}
-							onClick={() => toggleOpened(opened)}
+							onClick={() => toggleOpened(!opened)}
 						/>
 					</div>
 				</HeaderContainer>

@@ -83,6 +83,10 @@ const DatePickerComponent = styled(DateRangePicker)`
 		color: black;
 		opacity: 0.7;
 	}
+	.mantine-DateRangePicker-defaultVariant:focus-within {
+		outline: -webkit-focus-ring-color auto 1px;
+		outline-color: var(--color-secondary);
+	}
 `;
 const InputGuest = styled.div`
 	.form__label {
@@ -97,12 +101,17 @@ const InputGuest = styled.div`
 `;
 const NumberInputComponent = styled(NumberInput)`
 	.mantine-NumberInput-defaultVariant {
-		border: none;
+		border: solid 1px var(--color-secondary);
 		color: var(--color-black);
 		border: none;
 		font-size: var(--font-size);
 		font-weight: 400;
 		padding: 8px 0 8px 44px;
+		cursor: pointer;
+	}
+	.mantine-NumberInput-defaultVariant:focus-within {
+		outline: -webkit-focus-ring-color auto 1px;
+		outline-color: var(--color-secondary);
 	}
 `;
 function Searchbar({ onSubmitValue }) {
@@ -112,11 +121,13 @@ function Searchbar({ onSubmitValue }) {
 	const dateRangeMapped = dateRange.map((stringDate) => {
 		return dayjs(stringDate, "MM-DD-YYYY").toDate();
 	});
+	console.log(router);
 
 	const [hotelName, setHotelName] = useState(router.query.hotel || "");
 	const [dateValue, setDateValue] = useState(dateRangeMapped);
-
-	const [guestValue, setGuestValue] = useState(0);
+	const [guestValue, setGuestValue] = useState(
+		parseInt(router.query.guestValue)
+	);
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -126,7 +137,7 @@ function Searchbar({ onSubmitValue }) {
 	// useEffect(() => {
 	// 	setHotelName(router.query.hotel);
 	// });
-	const [value, setValue] = useState();
+
 	return (
 		<SearchContainer>
 			<form onSubmit={handleSubmit}>
@@ -151,13 +162,9 @@ function Searchbar({ onSubmitValue }) {
 							placeholder="Add date"
 							value={dateValue}
 							onChange={setDateValue}
-							className="form__input"
-							//inputFormat="DD/MM/YYYY"
 						/>
 					</InputDate>
-
 					<div className="form__line"></div>
-
 					<InputGuest>
 						<label className="form__label">
 							<Icons icon="fluent:guest-add-20-regular" />
@@ -180,37 +187,6 @@ function Searchbar({ onSubmitValue }) {
 							typeOfButton="button"
 							type="submit"
 						></Button>
-						{/* {router.asPath === "/hotels_page" ? (
-							<Button
-								text="Search"
-								icon="bx:search-alt"
-								btnCategory="primary"
-								color="blue"
-								typeOfButton="button"
-								type="submit"
-							></Button>
-						) : (
-							<Link
-								href={{
-									pathname: `/hotels_page/`,
-									query: {
-										hotel: hotelName,
-									},
-								}}
-								passHref
-							>
-								<a>
-									<Button
-										text="Search"
-										icon="bx:search-alt"
-										btnCategory="primary"
-										color="blue"
-										typeOfButton="Link"
-										onClick={handleSubmit}
-									></Button>
-								</a>
-							</Link>
-						)} */}
 					</SearchBtnContainer>
 				</div>
 			</form>
