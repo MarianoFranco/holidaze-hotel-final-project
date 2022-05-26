@@ -48,7 +48,7 @@ function OurSelectionSection({ hotel_data }) {
 			<OurSelectionContainer>
 				<SectionTitle>Our Selection</SectionTitle>
 				<CardContainer>
-					{filteredHotel.slice(0, 1).map((hotel) => {
+					{filteredHotel.slice(1, 2).map((hotel) => {
 						const secondaryLoader = ({
 							width = 100,
 							quality = 100,
@@ -58,7 +58,10 @@ function OurSelectionSection({ hotel_data }) {
 							}`;
 						};
 						return (
-							<Link href="/" key={hotel.id}>
+							<Link
+								href={`/hotels_page/${hotel.id}`}
+								key={hotel.id}
+							>
 								<a>
 									<FeaturedCards
 										isaportraitcard="true"

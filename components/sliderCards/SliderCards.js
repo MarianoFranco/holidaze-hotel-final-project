@@ -80,6 +80,12 @@ const DataContainer = styled.div`
 			font-size: var(--font-size-md);
 		}
 	}
+	.card__title:hover {
+		color: var(--color-primary);
+		transform: scale(1.005) translateY(-2px);
+		transition: 0.04s;
+		text-decoration: underline;
+	}
 	.card__location {
 		color: var(--color-white);
 		font-size: var(--font-size-md);
@@ -132,59 +138,62 @@ const DataContainer = styled.div`
 		font-weight: 600;
 	}
 `;
+
 function SliderCards({ id, title, imgSrc, imageLoader, stars, town, price }) {
+	console.log(id);
 	return (
 		<>
-			<Link href="/" passHref key={id}>
-				<a target="_blank">
-					<CardContainer>
-						{imgSrc && (
-							<ImgContainer>
-								<ImgElement
-									src={imgSrc}
-									alt="Card Image"
-									layout="fill"
-									objectFit="cover"
-									loader={imageLoader}
-								></ImgElement>
-							</ImgContainer>
-						)}
-						<DataContainer>
-							<div className="card__icons-container">
-								<StarsIcon stars={stars}></StarsIcon>
-							</div>
-							<div className="card__info">
+			<CardContainer key={id}>
+				{imgSrc && (
+					<ImgContainer>
+						<ImgElement
+							src={imgSrc}
+							alt="Card Image"
+							layout="fill"
+							objectFit="cover"
+							loader={imageLoader}
+						></ImgElement>
+					</ImgContainer>
+				)}
+				<DataContainer>
+					<div className="card__icons-container">
+						<StarsIcon stars={stars}></StarsIcon>
+					</div>
+					<div className="card__info">
+						<Link href={`/hotels_page/${id}`}>
+							<a target="_blank">
 								<h3 className="card__title">{title}</h3>
-								<div className="card__location">
-									<Icon
-										icon="carbon:location-filled"
-										className="card__location-icon"
-									/>
-									<span className="card__city-name">
-										{town}
-									</span>
-								</div>
-							</div>
-							<div className="card__book-price">
-								<div className="card__btn-container">
+							</a>
+						</Link>
+
+						<div className="card__location">
+							<Icon
+								icon="carbon:location-filled"
+								className="card__location-icon"
+							/>
+							<span className="card__city-name">{town}</span>
+						</div>
+					</div>
+					<div className="card__book-price">
+						<div className="card__btn-container">
+							<Link href={`/checkout/${id}`}>
+								<a>
 									<Button
 										text="Book Now"
 										btnCategory="primary"
 										color="yellow"
 										typeOfButton="link"
-									></Button>{" "}
-								</div>
-								<div className="card__price-container">
-									<p className="card__price-text">from</p>
-									<p className="card__price-amount">
-										{price} Nok
-									</p>
-								</div>
-							</div>
-						</DataContainer>
-					</CardContainer>
-				</a>
-			</Link>
+									></Button>
+								</a>
+							</Link>
+						</div>
+						<div className="card__price-container">
+							<p className="card__price-text">from</p>
+							<p className="card__price-amount">{price} Nok</p>
+						</div>
+					</div>
+				</DataContainer>
+			</CardContainer>
 		</>
 	);
 }

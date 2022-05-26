@@ -84,9 +84,9 @@ const GalleryContainer = styled.div`
 	min-height: 664px;
 	max-height: 664px;
 	padding: 0px;
-	width: 60%;
+	width: 55%;
 	@media ${device.laptop} {
-		width: 100%;
+		width: 90%;
 	}
 	@media ${device.tablet} {
 		max-width: 553px;
@@ -109,6 +109,7 @@ const DataContainer = styled.div`
 		justify-content: center;
 	}
 	@media ${device.tablet} {
+		width: 100%;
 		flex-direction: column;
 		align-items: center;
 	}
@@ -159,6 +160,9 @@ const BookingDataContainer = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+	@media ${device.laptop} {
+		padding: var(--size-sm);
+	}
 	@media ${device.mobile} {
 		padding: var(--size-sm);
 	}
@@ -210,7 +214,8 @@ const CheckInOutContainer = styled.div`
 
 const GuestContainer = styled(CheckInOutContainer)``;
 function DetailsMainSection({ data }) {
-	const [value, setValue] = useState([Date, Date]);
+	const [guest, setGuest] = useState(1);
+	const [rooms, setRoom] = useState(1);
 
 	return (
 		<DetailsSectionContainer>
@@ -227,7 +232,7 @@ function DetailsMainSection({ data }) {
 						className="address__icon"
 					/>
 					<span className="address__text">
-						1170 Travis Street, Bergen 11708
+						{data.Address && `${data.Address}, ${data.Town}`}
 					</span>
 				</AddressContainer>
 			</TextContainer>
@@ -264,8 +269,14 @@ function DetailsMainSection({ data }) {
 								<InputDate labelMessage="Check Out: " />
 							</CheckInOutContainer>
 							<GuestContainer>
-								<InputOption labelMessage="Guest: " />
-								<InputOption labelMessage="Rooms: " />
+								<InputOption
+									labelMessage="Guest: "
+									onClickInArrow={setGuest}
+								/>
+								<InputOption
+									labelMessage="Rooms: "
+									onClickInArrow={setRoom}
+								/>
 							</GuestContainer>
 						</div>
 						<div className="booking__price-container">
@@ -273,7 +284,7 @@ function DetailsMainSection({ data }) {
 								Total Booking:
 							</span>
 							<span className="booking__price">
-								{data.price} Nok
+								{data.price * rooms} Nok
 							</span>
 						</div>
 						<div className="booking__btn-container">

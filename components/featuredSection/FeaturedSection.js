@@ -92,7 +92,10 @@ function FeaturedSection({ hotel_data }) {
 						};
 						return (
 							<div key={hotel.id} className={`div${count}`}>
-								<Link href="/" passHref>
+								<Link
+									href={`/hotels_page/${hotel.id}`}
+									passHref
+								>
 									<a>
 										<FeaturedCards
 											imgSrc={hotel.cardImage}

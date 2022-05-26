@@ -87,6 +87,7 @@ const InputContainer = styled.div`
 		padding-left: var(--size);
 		border-radius: 10px;
 		font-family: var(--font-headings);
+		color: var(--color-primary);
 	}
 	.text-input-with-icon {
 		padding-left: 50px;
@@ -123,6 +124,7 @@ const TextAreaContainer = styled.div`
 		padding: var(--size);
 		font-family: var(--font-headings);
 		border: solid 1px var(--color-primary);
+		color: var(--color-primary);
 	}
 	.error {
 		background-color: #fe0000;

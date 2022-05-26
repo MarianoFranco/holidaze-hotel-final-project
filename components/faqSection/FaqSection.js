@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import FaqAccordion from "../faqAccordion/FaqAccordion";
 import { device } from "../../styles/breakpoints";
+import questionData from "../../utils/questionData/questionData";
 
 const FaqContainer = styled.div`
 	background-color: var(--color-tertiary);
@@ -28,8 +29,14 @@ const FaqTitle = styled.h2`
 `;
 const AcordionContainer = styled.div`
 	display: flex;
-	align-items: center;
-	justify-content: space-around;
+	gap: 16px;
+	.accordion__col {
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+	}
 	@media ${device.mobile} {
 		flex-direction: column;
 	}
@@ -41,14 +48,24 @@ function FaqSection() {
 				<FaqTitle>Regular question about finding hotel offers</FaqTitle>
 				<AcordionContainer>
 					<div className="accordion__col">
-						<FaqAccordion></FaqAccordion>
-						<FaqAccordion></FaqAccordion>
-						<FaqAccordion></FaqAccordion>
+						{questionData.slice(0, 3).map((data) => (
+							<div className="accordion__col" key={data.id}>
+								<FaqAccordion
+									question={data.question}
+									answer={data.answer}
+								></FaqAccordion>
+							</div>
+						))}
 					</div>
 					<div className="accordion__col">
-						<FaqAccordion></FaqAccordion>
-						<FaqAccordion></FaqAccordion>
-						<FaqAccordion></FaqAccordion>
+						{questionData.slice(3, 6).map((data) => (
+							<div className="accordion__col" key={data.id}>
+								<FaqAccordion
+									question={data.question}
+									answer={data.answer}
+								></FaqAccordion>
+							</div>
+						))}
 					</div>
 				</AcordionContainer>
 			</FaqContainer>

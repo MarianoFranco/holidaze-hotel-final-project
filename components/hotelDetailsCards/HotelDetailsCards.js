@@ -54,6 +54,11 @@ const DataContainer = styled.div`
 		font-size: var(--font-size-md);
 		font-weight: 600;
 	}
+	.data__title:hover {
+		color: var(--color-secondary);
+		transform: scale(1.03) translateY(-1px);
+		transition: all 0.05s ease-in;
+	}
 	.data__icons-container {
 		display: flex;
 		gap: 4px;

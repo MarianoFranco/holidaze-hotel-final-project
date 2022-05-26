@@ -78,7 +78,7 @@ const InputDateContainer = styled.div`
 const InputDateCustomized = styled.div`
 	position: relative;
 	width: 100%;
-	max-width: 162px;
+	max-width: 170px;
 	height: 55px;
 
 	.input__icon {
@@ -131,7 +131,7 @@ export function InputDate({ labelMessage }) {
 }
 const InputOptionCustomized = styled.div`
 	position: relative;
-	max-width: 162px;
+	max-width: 170px;
 `;
 
 const InputOptionContainer = styled(NumberInput)`

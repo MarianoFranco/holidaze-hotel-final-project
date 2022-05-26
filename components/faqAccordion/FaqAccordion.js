@@ -6,11 +6,14 @@ import { device } from "../../styles/breakpoints";
 const AccordionContainer = styled(Accordion)`
 	width: 100%;
 	max-width: 500px;
+	min-height: 105px;
 	border: solid 2px var(--color-primary);
-
 	border-radius: 44px;
 	margin: 26px 0;
 	padding: 0px 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	.accordion__item {
 		border: none;
 		font-size: var(--font-size-md);
@@ -25,6 +28,7 @@ const AccordionContainer = styled(Accordion)`
 	.mantine-Accordion-label {
 		color: var(--color-white);
 		font-size: var(--font-size-md);
+		font-weight: 700;
 	}
 
 	.mantine-Accordion-icon svg {
@@ -34,10 +38,8 @@ const AccordionContainer = styled(Accordion)`
 	}
 `;
 
-function FaqAccordion(props) {
+function FaqAccordion({ question, answer }) {
 	const elementRef = useRef();
-	console.log(elementRef.current);
-	const labelInput = elementRef.current;
 
 	return (
 		<>
@@ -45,10 +47,9 @@ function FaqAccordion(props) {
 				<Accordion.Item
 					controlRef={elementRef}
 					className="accordion__item"
-					label="Which question do you want?"
+					label={question}
 				>
-					Colors, fonts, shadows and many other parts are customizable
-					to fit your design needs.
+					{answer}
 				</Accordion.Item>
 			</AccordionContainer>
 		</>

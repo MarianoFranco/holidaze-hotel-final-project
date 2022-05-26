@@ -126,17 +126,13 @@ function Searchbar({ onSubmitValue }) {
 	const [hotelName, setHotelName] = useState(router.query.hotel || "");
 	const [dateValue, setDateValue] = useState(dateRangeMapped);
 	const [guestValue, setGuestValue] = useState(
-		parseInt(router.query.guestValue)
+		parseInt(router.query.guestValue) || 0
 	);
 
 	function handleSubmit(e) {
 		e.preventDefault();
 		onSubmitValue(hotelName, dateValue, guestValue);
 	}
-
-	// useEffect(() => {
-	// 	setHotelName(router.query.hotel);
-	// });
 
 	return (
 		<SearchContainer>

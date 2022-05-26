@@ -84,7 +84,7 @@ function IndexContactSection() {
 				<TextContainer>
 					<Title>Do you have any questions?</Title>
 					<ButtonContainer>
-						<Link href="/" passHref>
+						<Link href="/contact" passHref>
 							<a>
 								<Button
 									btnCategory="secondary"

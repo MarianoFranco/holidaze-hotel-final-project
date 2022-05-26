@@ -27,9 +27,15 @@ const BtnContainer = styled.div`
 			: "linear-gradient(90deg, var(--color-primary) 0%, #FFF3E7 100%)"};
 	width: 100%;
 	opacity: ${(props) => (props.disabled ? "0.4" : "1")};
+	cursor: pointer;
+
 	.btn__icon {
 		font-size: 34px;
 		margin-left: var(--size);
+	}
+	&:hover {
+		transform: scale(1.03);
+		transition: all ease-in-out 0.05s;
 	}
 `;
 const BtnElement = styled.button`
@@ -55,6 +61,10 @@ const BtnElement = styled.button`
 		font-size: 34px;
 		margin-left: var(--size);
 	}
+	&:hover {
+		transform: scale(1.03);
+		transition: all ease-in-out 0.05s;
+	}
 `;
 
 const SecBtnContainer = styled.div`
@@ -77,9 +87,15 @@ const SecBtnContainer = styled.div`
 			: "var(--color-primary)"};
 	background: none;
 	width: 100%;
+	cursor: pointer;
+
 	.btn__icon {
 		font-size: 34px;
 		margin-left: var(--size);
+	}
+	&:hover {
+		transform: scale(1.03);
+		transition: all ease-in-out 0.05s;
 	}
 `;
 const SecBtnElement = styled.button`
@@ -102,6 +118,10 @@ const SecBtnElement = styled.button`
 	.btn__icon {
 		font-size: 34px;
 		margin-left: var(--size);
+	}
+	&:hover {
+		transform: scale(1.03);
+		transition: all ease-in-out 0.05s;
 	}
 `;
 

@@ -68,13 +68,13 @@ const ResultsContainer = styled.div`
 const SortComponent = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: center;
 
 	@media ${device.laptop} {
 		align-items: flex-start;
 	}
 	@media ${device.tablet} {
 		justify-content: center;
+		flex-direction: column;
 	}
 	.sort__title {
 		font-size: var(--font-size-md);
@@ -85,20 +85,33 @@ const SortComponent = styled.div`
 			padding: 16px 0;
 		}
 		@media ${device.tablet} {
-			font-size: var(--font-size);
 			text-align: center;
-			width: 120px;
-
 			padding: 12px 0;
 		}
 	}
-	.sort__buttons-container {
-		display: flex;
-		gap: 16px;
-		flex-wrap: wrap;
-	}
 
 	@media ${device.laptop} {
+	}
+`;
+const SortButtonsContainer = styled(SegmentedControl)`
+	display: flex;
+	gap: 16px;
+	flex-wrap: wrap;
+	background-color: transparent;
+
+	.mantine-SegmentedControl-active {
+		background-color: var(--color-tertiary);
+		padding: var(--size);
+		height: 50px;
+		padding: 8px 12px;
+	}
+
+	.mantine-SegmentedControl-label {
+		font-size: var(--font-size-md);
+		color: var(--color-secondary);
+	}
+	.mantine-SegmentedControl-labelActive {
+		color: var(--color-white);
 	}
 `;
 const FilteredContainer = styled.div`
@@ -230,36 +243,21 @@ function Hotels({ data, jwt }) {
 				<Title>Hotels Results</Title>
 				<ResultsContainer>
 					<div className="div1">
-						{/* <SortComponent>
+						<SortComponent>
 							<p className="sort__title">Order by: </p>
-							<div className="sort__buttons-container">
-								<SortButton
-									text="Stars"
-									value="stars"
-									onClick={() => setSortValue("stars")}
-								/>
-								<SortButton
-									text="Price"
-									value="price"
-									onClick={() => setSortValue("price")}
-								/>
-								<SortButton
-									text="Alphabetically"
-									value="title"
-									onClick={() => setSortValue("title")}
-								/>
-							</div>
-						</SortComponent> */}
-						<p className="sort__title">Order by: </p>
-						<SegmentedControl
-							value={sortValue}
-							onChange={setSortValue}
-							data={[
-								{ label: "Stars", value: "stars" },
-								{ label: "Price", value: "price" },
-								{ label: "Alphabetically", value: "title" },
-							]}
-						/>
+							<SortButtonsContainer
+								value={sortValue}
+								onChange={setSortValue}
+								data={[
+									{ label: "Stars", value: "stars" },
+									{ label: "Price", value: "price" },
+									{
+										label: "Alphabetically",
+										value: "title",
+									},
+								]}
+							/>
+						</SortComponent>
 					</div>
 					<div className="div2">
 						<FilteredContainer>
