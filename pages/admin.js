@@ -181,7 +181,7 @@ function Admin({ user, messages, hotels, hotelMessages, jwt }) {
 											</td>
 											<td className="table__data">
 												<Link
-													href={`/edit/${element.id}`}
+													href={`/edit_page/${element.id}`}
 												>
 													<a>
 														<Icono
