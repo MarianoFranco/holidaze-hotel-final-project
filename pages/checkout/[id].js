@@ -220,8 +220,10 @@ export async function getStaticPaths() {
 	try {
 		const res = await fetch(`${BASE_URL}/hotels/`);
 		const data = await res.json();
-		const paths = data.map(({ id }) => ({ params: { id: `${id}` } }));
-
+		// const paths = data.map(({ id }) => ({ params: { id: `${id}` } }));
+		const paths = data.map((edit) => ({
+			params: { id: edit.id },
+		}));
 		return {
 			paths,
 			fallback: false,
