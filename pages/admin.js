@@ -99,7 +99,7 @@ function Admin({ user, messages, hotels, hotelMessages, jwt }) {
 		console.log("el click funciona", jwt);
 		if (confirm("Are you sure you want to delete the hotel?")) {
 			let response = await axios.delete(
-				`http://localhost:1337/hotels/${deleteId}`,
+				`${BASE_URL}/hotels/${deleteId}`,
 
 				{
 					headers: {

@@ -7,10 +7,11 @@ import MostSoldSection from "../components/mostSoldSection/MostSoldSection";
 import FaqSection from "../components/faqSection/FaqSection";
 import IndexContactSection from "../components/indexContactSection/IndexContactSection";
 import Footer from "../components/footer/Footer";
+import { BASE_URL } from "../utils/config/config";
 
 export async function getStaticProps() {
 	try {
-		let res = await fetch("http://localhost:1337/hotels/");
+		let res = await fetch(`${BASE_URL}/hotels/`);
 		let data = await res.json();
 
 		return {

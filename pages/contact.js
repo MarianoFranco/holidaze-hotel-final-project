@@ -10,6 +10,7 @@ import Button from "../components/button/Button";
 import { device } from "../styles/breakpoints";
 import axios from "axios";
 import nookies, { parseCookies } from "nookies";
+import { BASE_URL } from "../utils/config/config";
 const Main = styled.main`
 	position: relative;
 `;
@@ -267,7 +268,7 @@ function Contact({ user, token, jwt }) {
 					message: userData.message,
 				};
 				let response = await axios.post(
-					`http://localhost:1337/messages`,
+					`${BASE_URL}/messages`,
 					newMessage
 				);
 				setUserData(initialValues);

@@ -140,7 +140,6 @@ const DataContainer = styled.div`
 `;
 
 function SliderCards({ id, title, imgSrc, imageLoader, stars, town, price }) {
-	console.log(id);
 	return (
 		<>
 			<CardContainer key={id}>

@@ -1,4 +1,5 @@
 import nookies from "nookies";
+import { BASE_URL } from "../config/config";
 
 const getServerSideProps = async (ctx) => {
 	const cookies = nookies.get(ctx);
@@ -6,7 +7,7 @@ const getServerSideProps = async (ctx) => {
 
 	if (cookies?.jwt) {
 		try {
-			const { data } = await axios.get("http://localhost:1337/users/me", {
+			const { data } = await axios.get(`${BASE_URL}/users/me`, {
 				headers: {
 					Authorization: `Bearer ${cookies.jwt}`,
 				},

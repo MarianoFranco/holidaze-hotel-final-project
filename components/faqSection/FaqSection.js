@@ -49,7 +49,7 @@ function FaqSection() {
 				<AcordionContainer>
 					<div className="accordion__col">
 						{questionData.slice(0, 3).map((data) => (
-							<div className="accordion__col" key={data.id}>
+							<div className="accordion__col" key={data.question}>
 								<FaqAccordion
 									question={data.question}
 									answer={data.answer}
@@ -59,7 +59,7 @@ function FaqSection() {
 					</div>
 					<div className="accordion__col">
 						{questionData.slice(3, 6).map((data) => (
-							<div className="accordion__col" key={data.id}>
+							<div className="accordion__col" key={data.question}>
 								<FaqAccordion
 									question={data.question}
 									answer={data.answer}

@@ -5,7 +5,7 @@ import { Switch } from "@mantine/core";
 import axios from "axios";
 import Button from "../../components/button/Button";
 import nookies from "nookies";
-
+import { BASE_URL } from "../../utils/config/config";
 const SectionContainer = styled.div`
 	max-width: 1440px;
 	margin: auto;
@@ -174,7 +174,7 @@ export async function getStaticPaths(ctx) {
 	console.log("GETTT", ctx);
 
 	try {
-		const res = await fetch("http://localhost:1337/hotels/");
+		const res = await fetch(`${BASE_URL}/hotels/`);
 		const data = await res.json();
 		const paths = data.map(({ id }) => ({ params: { id: `${id}` } }));
 
@@ -193,7 +193,7 @@ export async function getStaticProps(ctx) {
 	console.log("GETTT", cookies, cookies?.jwt);
 
 	try {
-		let res = await fetch("http://localhost:1337/hotels/" + params.id);
+		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
 		let data = await res.json();
 
 		return {
@@ -289,8 +289,9 @@ function EditHotel({ data, jwt }) {
 					gym: gymCheck,
 				},
 			};
+
 			let response = await axios.put(
-				`http://localhost:1337/hotels/${data.id}`,
+				`${BASE_URL}/hotels/${data.id}`,
 				updateHotel,
 				{
 					headers: {

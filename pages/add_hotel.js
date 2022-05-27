@@ -5,6 +5,7 @@ import { Switch } from "@mantine/core";
 import axios from "axios";
 import Button from "../components/button/Button";
 import validURL from "../utils/validate/url";
+import { BASE_URL } from "../utils/config/config";
 
 const SectionContainer = styled.div`
 	max-width: 1440px;
@@ -266,7 +267,7 @@ function AddHotel({ token }) {
 			// 	newHotel
 			// )
 			axios
-				.post(`http://localhost:1337/hotels`, newHotel, {
+				.post(`${BASE_URL}/hotels`, newHotel, {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},

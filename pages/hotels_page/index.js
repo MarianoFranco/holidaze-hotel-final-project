@@ -13,6 +13,7 @@ import { filteringAnArray } from "../../utils/filteringAnArray/filterinAnArray";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { SegmentedControl } from "@mantine/core";
+import { BASE_URL } from "../../utils/config/config";
 
 const MainSection = styled.main`
 	max-width: 1440px;
@@ -161,7 +162,7 @@ const CardsContainer = styled.div`
 export async function getStaticProps(context) {
 	console.log("context", context);
 	try {
-		let res = await fetch("http://localhost:1337/hotels/");
+		let res = await fetch(`${BASE_URL}/hotels/`);
 		let data = await res.json();
 
 		//console.log(data);

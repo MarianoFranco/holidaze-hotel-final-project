@@ -6,6 +6,8 @@ import * as Yup from "yup";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
 import axios from "axios";
+import validateEmail from "../../utils/validate/email";
+import { BASE_URL } from "../../utils/config/config";
 
 const EnquirySectionContainer = styled.div`
 	position: relative;
@@ -39,7 +41,7 @@ const DataContainer = styled.div`
 const BoxDataContainer = styled.div`
 	width: 100%;
 	max-width: 562px;
-	height: 491px;
+	min-height: 491px;
 	background-color: var(--color-black-90);
 	border-radius: 15px;
 	display: flex;
@@ -47,6 +49,7 @@ const BoxDataContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	gap: 32px;
+	padding: 10px;
 	@media ${device.tablet} {
 		height: 426px;
 		padding: var(--size);
@@ -172,7 +175,7 @@ function DetailsEnquirySection({ data }) {
 					hotel_name: data.Title,
 				};
 				let response = await axios.post(
-					`http://localhost:1337/hotel-messages`,
+					`${BASE_URL}/hotel-messages`,
 					newMessage
 				);
 				setUserData(initialValues);
@@ -192,14 +195,16 @@ function DetailsEnquirySection({ data }) {
 		if (!values.name) {
 			errors.name = "The name required";
 		}
-
-		if (!values.email) {
-			errors.email = "Email is required";
+		if (!values.email || !validateEmail(values.email)) {
+			errors.email =
+				"Invalid email format, please introduce a valid email address";
 		}
+
 		if (!values.message) {
 			errors.message = "Meassage is required";
 		}
 
+		console.log(validateEmail(values.email));
 		return errors;
 	};
 	return (
@@ -242,7 +247,7 @@ function DetailsEnquirySection({ data }) {
 									<input
 										className="text-input text-input-with-icon"
 										name="email"
-										type="email"
+										type="text"
 										placeholder="Email"
 										onChange={handleChange}
 										value={userData.email}

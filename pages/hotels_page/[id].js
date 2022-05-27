@@ -5,10 +5,11 @@ import DetailsMainSection from "../../components/detailsMainSection/DetailsMainS
 import DetailsAmenitiesSection from "../../components/detailsAmenitiesSection/DetailsAmenitiesSection";
 import DetailsEnquirySection from "../../components/detailsEnquirySection/DetailsEnquirySection";
 import DetailsAboutHotelSection from "../../components/detailsAboutHotelSection/DetailsAboutHotelSection";
+import { BASE_URL } from "../../utils/config/config";
 
 export async function getStaticPaths() {
 	try {
-		const res = await fetch("http://localhost:1337/hotels/");
+		const res = await fetch(`${BASE_URL}/hotels/`);
 		const data = await res.json();
 		const paths = data.map(({ id }) => ({ params: { id: `${id}` } }));
 
@@ -22,7 +23,7 @@ export async function getStaticPaths() {
 }
 export async function getStaticProps({ params }) {
 	try {
-		let res = await fetch("http://localhost:1337/hotels/" + params.id);
+		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
 		let data = await res.json();
 
 		console.log(data);

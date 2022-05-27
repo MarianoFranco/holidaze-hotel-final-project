@@ -9,7 +9,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../../components/button/Button";
 import { device } from "../../styles/breakpoints";
-
+import { BASE_URL } from "../../utils/config/config";
 const CheckoutSectionContainer = styled.div`
 	display: flex;
 	@media ${device.tablet} {
@@ -218,7 +218,7 @@ const SmallInput = styled(InputContainer)`
 `;
 export async function getStaticPaths() {
 	try {
-		const res = await fetch("http://localhost:1337/hotels/");
+		const res = await fetch(`${BASE_URL}/hotels/`);
 		const data = await res.json();
 		const paths = data.map(({ id }) => ({ params: { id: `${id}` } }));
 
@@ -232,7 +232,7 @@ export async function getStaticPaths() {
 }
 export async function getStaticProps({ params }) {
 	try {
-		let res = await fetch("http://localhost:1337/hotels/" + params.id);
+		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
 		let data = await res.json();
 
 		console.log(data);

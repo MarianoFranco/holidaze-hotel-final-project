@@ -1,11 +1,12 @@
 import axios from "axios";
 import { setCookie } from "nookies";
+import { BASE_URL } from "../../utils/config/config";
 
 const login = async (req, res) => {
 	const { password, identifier } = req.body;
 
 	try {
-		const postRes = await axios.post("http://localhost:1337/auth/local", {
+		const postRes = await axios.post(`${BASE_URL}/local`, {
 			identifier,
 			password,
 		});
@@ -17,7 +18,6 @@ const login = async (req, res) => {
 			maxAge: 30 * 24 * 60 * 60,
 			path: "/",
 		});
-        
 
 		res.status(200).end();
 	} catch (e) {
