@@ -202,7 +202,6 @@ function FilterComponent({
 							max={10000}
 							defaultValue={[0, 10000]}
 							onChange={(price) => {
-								console.log("change price", price);
 								setValue(price);
 							}}
 							onChangeEnd={onPriceRangeSelected}

@@ -26,7 +26,6 @@ export async function getStaticProps({ params }) {
 		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
 		let data = await res.json();
 
-		console.log(data);
 		return {
 			props: { data },
 		};

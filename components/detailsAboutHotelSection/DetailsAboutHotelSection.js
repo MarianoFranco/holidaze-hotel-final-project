@@ -66,7 +66,6 @@ const DescriptionContainer = styled.div`
 	}
 `;
 function DetailsAboutHotelSection({ data }) {
-	console.log(data);
 	const loader = ({ src, width = 100, quality = 100 }) => {
 		return `${src}?w=${width}&q=${quality || 75}`;
 	};

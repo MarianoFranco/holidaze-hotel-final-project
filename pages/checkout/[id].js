@@ -235,7 +235,6 @@ export async function getStaticProps({ params }) {
 		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
 		let data = await res.json();
 
-		console.log(data);
 		return {
 			props: { data },
 		};
@@ -381,8 +380,6 @@ function Checkout({ jwt, data }) {
 										.required("Required"),
 								})}
 								onSubmit={(values, { setSubmitting }) => {
-									console.log(values);
-
 									setTimeout(() => {
 										alert(JSON.stringify(values, null, 2));
 										setSubmitting(false);

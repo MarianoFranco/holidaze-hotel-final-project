@@ -42,7 +42,6 @@ function Carousel({ hotel_data }) {
 		],
 	};
 	const sliderRef = useRef();
-	// console.log("carousel", hotel_data);
 
 	return (
 		<>

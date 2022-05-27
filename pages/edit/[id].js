@@ -171,7 +171,7 @@ const ButtonContainer = styled.div`
 `;
 
 export async function getStaticPaths(ctx) {
-	// console.log("GETTT", ctx);
+	console.log("GETTT", ctx);
 
 	try {
 		const res = await fetch(`${BASE_URL}/hotels/`);
@@ -190,7 +190,6 @@ export async function getStaticPaths(ctx) {
 export async function getStaticProps(ctx) {
 	const { params } = ctx;
 	const cookies = nookies.get(ctx);
-	console.log("cookies", cookies, cookies?.jwt);
 
 	try {
 		let res = await fetch(`${BASE_URL}/hotels/` + params.id);

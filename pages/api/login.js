@@ -10,7 +10,6 @@ const login = async (req, res) => {
 			identifier,
 			password,
 		});
-		console.log(postRes);
 
 		setCookie({ res }, "jwt", postRes.data.jwt, {
 			httpOnly: true,

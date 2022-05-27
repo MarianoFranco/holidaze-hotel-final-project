@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import nookies, { parseCookies } from "nookies";
 import Router from "next/router";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
 	return (
@@ -14,11 +15,10 @@ function MyApp({ Component, pageProps }) {
 		</>
 	);
 }
-console.log(Router);
 
 function redirectUser(ctx, location) {
-	console.log("que es esto", ctx.req);
-	if (ctx.req) {
+	// console.log("funcion redirect user", ctx);
+	if (ctx.res) {
 		ctx.res.writeHead(302, { Location: location });
 		ctx.res.end();
 	} else {
@@ -33,7 +33,6 @@ MyApp.getInitialProps = async ({ Component, ctx, req }) => {
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
 	}
-	console.log("app props", ctx);
 
 	if (!jwt) {
 		if (

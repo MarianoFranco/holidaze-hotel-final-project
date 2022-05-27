@@ -121,7 +121,6 @@ function Searchbar({ onSubmitValue }) {
 	const dateRangeMapped = dateRange.map((stringDate) => {
 		return dayjs(stringDate, "MM-DD-YYYY").toDate();
 	});
-	console.log(router);
 
 	const [hotelName, setHotelName] = useState(router.query.hotel || "");
 	const [dateValue, setDateValue] = useState(dateRangeMapped);

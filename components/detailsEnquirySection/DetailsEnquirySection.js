@@ -204,7 +204,6 @@ function DetailsEnquirySection({ data }) {
 			errors.message = "Meassage is required";
 		}
 
-		console.log(validateEmail(values.email));
 		return errors;
 	};
 	return (

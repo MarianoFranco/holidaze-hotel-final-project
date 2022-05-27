@@ -94,9 +94,8 @@ function Admin({ user, messages, hotels, hotelMessages, jwt }) {
 	const loader = ({ src, width = 100, quality = 100 }) => {
 		return `${src}?w=${width}&q=${quality || 75}`;
 	};
-	console.log(hotels);
+
 	const handleClick = async (deleteId) => {
-		console.log("el click funciona", jwt);
 		if (confirm("Are you sure you want to delete the hotel?")) {
 			let response = await axios.delete(
 				`${BASE_URL}/hotels/${deleteId}`,
@@ -313,7 +312,7 @@ export const getServerSideProps = async (ctx) => {
 		return {
 			redirect: {
 				permanent: false,
-				destination: "/",
+				destination: "/login",
 			},
 		};
 	}

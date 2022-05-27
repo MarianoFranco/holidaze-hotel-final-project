@@ -6,6 +6,7 @@ import axios from "axios";
 import Button from "../components/button/Button";
 import validURL from "../utils/validate/url";
 import { BASE_URL } from "../utils/config/config";
+import nookies from "nookies";
 
 const SectionContainer = styled.div`
 	max-width: 1440px;
@@ -171,7 +172,7 @@ const ButtonContainer = styled.div`
 	height: 80px;
 	margin: var(--size-md) var(--size-lg);
 `;
-function AddHotel({ token }) {
+function AddHotel({ jwt }) {
 	const [featuredCheck, setFeaturedChecked] = useState(false);
 	const [spaCheck, setSpaChecked] = useState(false);
 	const [wifiCheck, setWifiChecked] = useState(false);
@@ -214,7 +215,7 @@ function AddHotel({ token }) {
 
 		setUserData({ ...userData, [name]: value });
 	};
-	console.log(isSubmit);
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setFormErrors(validate(userData));
@@ -277,11 +278,10 @@ function AddHotel({ token }) {
 					setConfirmationMessage(
 						"Your hotel has been created successfully"
 					);
-					console.log(confirmationMessage);
+
 					setTimeout(() => {
 						setConfirmationMessage("");
 					}, 3000);
-					console.log("HOTEL CREADO");
 				})
 				.catch((err) => {
 					setErrorMessage(
@@ -291,7 +291,6 @@ function AddHotel({ token }) {
 					setTimeout(() => {
 						setErrorMessage("");
 					}, 3000);
-					console.log("FALLO CON EL API");
 				});
 		}
 	}, [formErrors, isSubmit]);
@@ -311,7 +310,7 @@ function AddHotel({ token }) {
 	};
 	return (
 		<>
-			<Header user={token} />
+			<Header user={jwt} />
 			<main>
 				<SectionContainer
 					confirmationMessage={confirmationMessage}
@@ -707,6 +706,24 @@ function AddHotel({ token }) {
 	);
 }
 export function getServerSideProps({ req, res, ctx }) {
-	return { props: { token: req.cookies.jwt || "" } };
+	return { props: { jwt: req.cookies.jwt || "" } };
 }
+
+// export const getServerSideProps = async (ctx) => {
+// 	const jwt = nookies.get(ctx);
+// 	let user = null;
+
+// 	if (!jwt.jwt) {
+// 		return {
+// 			redirect: {
+// 				permanent: false,
+// 				destination: "/login",
+// 			},
+// 		};
+// 	}
+
+// 	return {
+// 		props: {},
+// 	};
+// };
 export default AddHotel;

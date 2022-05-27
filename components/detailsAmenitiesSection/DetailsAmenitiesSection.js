@@ -97,7 +97,6 @@ const TimeComponent = styled.div`
 	}
 `;
 function DetailsAmenitiesSection({ data }) {
-	console.log(data);
 	return (
 		<>
 			<DetailsAmenitiesContainer>
