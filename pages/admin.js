@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../../components/header/Header";
+import Header from "../components/header/Header";
 import nookies, { parseCookies } from "nookies";
 import axios from "axios";
-import Button from "../../components/button/Button";
-import { BASE_URL } from "../../utils/config/config";
+import Button from "../components/button/Button";
+import { BASE_URL } from "../utils/config/config";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -181,7 +181,7 @@ function Admin({ user, messages, hotels, hotelMessages, jwt }) {
 											</td>
 											<td className="table__data">
 												<Link
-													href={`/admin/${element.id}`}
+													href={`/edit/${element.id}`}
 												>
 													<a>
 														<Icono
