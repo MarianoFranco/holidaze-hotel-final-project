@@ -14,9 +14,11 @@ function MyApp({ Component, pageProps }) {
 		</>
 	);
 }
+console.log(Router);
 
 function redirectUser(ctx, location) {
-	if (ctx.res) {
+	console.log("que es esto", ctx.req);
+	if (ctx.req) {
 		ctx.res.writeHead(302, { Location: location });
 		ctx.res.end();
 	} else {
@@ -31,7 +33,7 @@ MyApp.getInitialProps = async ({ Component, ctx, req }) => {
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
 	}
-	// console.log("app props", ctx);
+	console.log("app props", ctx);
 
 	if (!jwt) {
 		if (
