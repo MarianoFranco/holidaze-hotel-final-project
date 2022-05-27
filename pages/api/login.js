@@ -6,7 +6,7 @@ const login = async (req, res) => {
 	const { password, identifier } = req.body;
 
 	try {
-		const postRes = await axios.post(`${BASE_URL}/local`, {
+		const postRes = await axios.post(`${BASE_URL}/auth/local`, {
 			identifier,
 			password,
 		});

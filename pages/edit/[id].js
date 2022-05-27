@@ -170,7 +170,9 @@ const ButtonContainer = styled.div`
 	margin: var(--size-md) var(--size-lg);
 `;
 
-export async function getStaticPaths() {
+export async function getStaticPaths(ctx) {
+	// console.log("GETTT", ctx);
+
 	try {
 		const res = await fetch(`${BASE_URL}/hotels/`);
 		const data = await res.json();
@@ -188,6 +190,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(ctx) {
 	const { params } = ctx;
 	const cookies = nookies.get(ctx);
+	console.log("cookies", cookies, cookies?.jwt);
 
 	try {
 		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
@@ -201,7 +204,7 @@ export async function getStaticProps(ctx) {
 	}
 }
 
-function Edit({ data, jwt }) {
+function EditHotel({ data, jwt }) {
 	const [featuredCheck, setFeaturedChecked] = useState(data.featured);
 	const [spaCheck, setSpaChecked] = useState(data.amenities.spa);
 	const [wifiCheck, setWifiChecked] = useState(data.amenities.wifi);
@@ -716,4 +719,4 @@ function Edit({ data, jwt }) {
 	);
 }
 
-export default Edit;
+export default EditHotel;

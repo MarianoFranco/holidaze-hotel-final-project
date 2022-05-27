@@ -31,7 +31,7 @@ MyApp.getInitialProps = async ({ Component, ctx, req }) => {
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
 	}
-	//console.log("app props", ctx);
+	// console.log("app props", ctx);
 
 	if (!jwt) {
 		if (

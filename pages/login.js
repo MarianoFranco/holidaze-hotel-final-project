@@ -164,7 +164,7 @@ function Login({ jwt }) {
 			await axios.post("/api/login", { ...userData });
 			router.push("/admin");
 		} catch (err) {
-			console.log(err.response.data);
+			console.log("error", err.response.data);
 		}
 	};
 	const handleChange = (e) => {
