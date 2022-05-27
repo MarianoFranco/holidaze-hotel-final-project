@@ -176,7 +176,9 @@ export async function getStaticPaths(ctx) {
 	try {
 		const res = await fetch(`${BASE_URL}/hotels/`);
 		const data = await res.json();
-		const paths = data.map(({ id }) => ({ params: { id: `${id}` } }));
+		const paths = data.map(({ id }) => ({
+			params: { id: `${id}` },
+		}));
 
 		return {
 			paths,
