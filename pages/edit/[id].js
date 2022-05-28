@@ -174,6 +174,16 @@ const ButtonContainer = styled.div`
 `;
 
 function EditHotel({ data, jwt }) {
+	const router = useRouter();
+	useEffect(() => {
+		// if (!jwt) {
+		// 	location.href = "/login";
+		// }
+		if (!jwt) {
+			router.push("/login");
+		}
+	}, [jwt, router]);
+
 	const [featuredCheck, setFeaturedChecked] = useState(data.featured);
 	const [spaCheck, setSpaChecked] = useState(data.amenities.spa);
 	const [wifiCheck, setWifiChecked] = useState(data.amenities.wifi);
@@ -286,6 +296,7 @@ function EditHotel({ data, jwt }) {
 			}, 3000);
 		}
 	};
+	console.log(jwt);
 
 	return (
 		<>
@@ -707,7 +718,9 @@ export async function getStaticPaths() {
 	}
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps(context) {
+	const { params } = context;
+	console.log(context);
 	try {
 		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
 		let data = await res.json();
