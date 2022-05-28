@@ -10,7 +10,8 @@ import * as Yup from "yup";
 import Button from "../components/button/Button";
 import { device } from "../styles/breakpoints";
 import axios from "axios";
-import { saveToLocalStorage } from "../utils/localStorageHelper/LocalStorageHelper";
+import validateEmail from "../utils/validate/email";
+import valueLength from "../utils/validate/valueLength";
 
 const ContactContainer = styled.div`
 	position: relative;
@@ -27,12 +28,16 @@ const ImageContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	top: 0;
-	left: 0;
 	z-index: -100;
 	@media ${device.tablet} {
 		height: 744px;
 	}
+`;
+const ImageComponent = styled(Image)`
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -100;
 `;
 
 const ContactFormContainer = styled.div`
@@ -100,6 +105,16 @@ const FormContainer = styled.div`
 		color: var(--color-primary);
 		font-weight: 600;
 	}
+	.error {
+		background-color: #fe0000;
+		border-radius: 10px;
+		opacity: 0.7;
+		color: var(--color-white);
+		padding: var(--size-sm);
+		font-family: var(--font-headings);
+		font-size: var(--font-size);
+		font-weight: 500;
+	}
 `;
 const InputContainer = styled.div`
 	width: 100%;
@@ -152,40 +167,68 @@ const Error = styled(ErrorMessage)`
 `;
 
 function Login({ jwt }) {
-	const router = useRouter();
-	const [userData, setUserData] = useState({
+	const initialValues = {
 		identifier: "",
 		password: "",
-	});
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			await axios.post("/api/login", { ...userData });
-			router.push("/admin");
-		} catch (err) {
-			console.log("error", err.response.data);
-		}
 	};
+	const router = useRouter();
+	const [userData, setUserData] = useState(initialValues);
+	const [errorData, setErrorData] = useState({});
+	const [errorMessage, setErrorMessage] = useState("");
+
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 
 		setUserData({ ...userData, [name]: value });
 	};
 
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const errorData2 = validate(userData);
+		setErrorData(errorData2);
+
+		if (Object.keys(errorData2).length === 0) {
+			try {
+				await axios.post("/api/login", { ...userData });
+				router.push("/admin");
+			} catch (err) {
+				setErrorMessage("User not registered. Introduce a valid user");
+				setTimeout(() => {
+					{
+						setErrorMessage("");
+					}
+				}, 3000);
+			}
+		}
+	};
+
+	const validate = (values) => {
+		const errors = {};
+
+		if (!values.identifier || !validateEmail(values.identifier)) {
+			errors.identifier = "Introduce a valid email.";
+		}
+		if (!values.password || !valueLength(values.password, 6)) {
+			errors.password =
+				"Invalid password. Introduce at least 6 characters.";
+		}
+
+		return errors;
+	};
+
 	return (
 		<>
 			<Header jwt={jwt} />
 			<main>
+				<ImageContainer>
+					<ImageComponent
+						src="/images/login-portrait.jpg"
+						layout="fill"
+						objectFit="cover"
+						alt="image"
+					/>
+				</ImageContainer>
 				<ContactContainer>
-					<ImageContainer>
-						<Image
-							src="/images/login-portrait.jpg"
-							layout="fill"
-							objectFit="cover"
-							alt="image"
-						/>
-					</ImageContainer>
 					<ContactFormContainer>
 						<div className="form__title-container">
 							<h1 className="form__title">Sign in</h1>
@@ -204,13 +247,15 @@ function Login({ jwt }) {
 										<input
 											className="text-input text-input-with-icon"
 											name="identifier"
-											type="email"
+											type="text"
 											placeholder="Email"
 											onChange={handleChange}
 										/>
 
-										{false && (
-											<div className="error">error</div>
+										{errorData.identifier && (
+											<div className="error">
+												{errorData.identifier}
+											</div>
 										)}
 									</InputContainer>
 									<InputContainer>
@@ -221,8 +266,10 @@ function Login({ jwt }) {
 											placeholder="password"
 											onChange={handleChange}
 										/>
-										{false && (
-											<div className="error">error</div>
+										{errorData.password && (
+											<div className="error">
+												{errorData.password}
+											</div>
 										)}
 									</InputContainer>
 								</div>
@@ -235,6 +282,9 @@ function Login({ jwt }) {
 										type="submit"
 									></Button>
 								</div>
+								{errorMessage && (
+									<div className="error">{errorMessage}</div>
+								)}
 							</FormContainer>
 						</form>
 					</ContactFormContainer>
