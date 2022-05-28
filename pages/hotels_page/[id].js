@@ -7,6 +7,22 @@ import DetailsEnquirySection from "../../components/detailsEnquirySection/Detail
 import DetailsAboutHotelSection from "../../components/detailsAboutHotelSection/DetailsAboutHotelSection";
 import { BASE_URL } from "../../utils/config/config";
 
+function HotelResults({ data, jwt }) {
+	return (
+		<>
+			<Header user={jwt} />
+			<main>
+				<DetailsMainSection data={data} />
+				<DetailsAmenitiesSection data={data} />
+				<DetailsEnquirySection data={data} />
+				<DetailsAboutHotelSection data={data} />
+			</main>
+			<Footer />
+		</>
+	);
+}
+
+export default HotelResults;
 export async function getStaticPaths() {
 	try {
 		const res = await fetch(`${BASE_URL}/hotels/`);
@@ -33,20 +49,3 @@ export async function getStaticProps({ params }) {
 		console.error(error);
 	}
 }
-
-function HotelResults({ data, jwt }) {
-	return (
-		<>
-			<Header user={jwt} />
-			<main>
-				<DetailsMainSection data={data} />
-				<DetailsAmenitiesSection data={data} />
-				<DetailsEnquirySection data={data} />
-				<DetailsAboutHotelSection data={data} />
-			</main>
-			<Footer />
-		</>
-	);
-}
-
-export default HotelResults;

@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import nookies, { parseCookies } from "nookies";
 import Router from "next/router";
 import { useRouter } from "next/router";
-
+import { redirectUser } from "../utils/redirectUser/redirectUser";
 function MyApp({ Component, pageProps }) {
 	return (
 		<>
@@ -14,16 +14,6 @@ function MyApp({ Component, pageProps }) {
 			<Component {...pageProps} />
 		</>
 	);
-}
-
-function redirectUser(ctx, location) {
-	// console.log("funcion redirect user", ctx);
-	if (ctx.res) {
-		ctx.res.writeHead(302, { Location: location });
-		ctx.res.end();
-	} else {
-		Router.push(location);
-	}
 }
 
 MyApp.getInitialProps = async ({ Component, ctx, req }) => {
