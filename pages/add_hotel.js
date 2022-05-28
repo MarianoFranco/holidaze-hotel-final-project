@@ -705,25 +705,22 @@ function AddHotel({ jwt }) {
 		</>
 	);
 }
-export function getServerSideProps({ req, res, ctx }) {
-	return { props: { jwt: req.cookies.jwt || "" } };
-}
 
-// export const getServerSideProps = async (ctx) => {
-// 	const jwt = nookies.get(ctx);
-// 	let user = null;
+export const getServerSideProps = async (ctx) => {
+	const jwt = nookies.get(ctx);
+	let user = null;
 
-// 	if (!jwt.jwt) {
-// 		return {
-// 			redirect: {
-// 				permanent: false,
-// 				destination: "/login",
-// 			},
-// 		};
-// 	}
+	if (!jwt.jwt) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: "/login",
+			},
+		};
+	}
 
-// 	return {
-// 		props: {},
-// 	};
-// };
+	return {
+		props: {},
+	};
+};
 export default AddHotel;

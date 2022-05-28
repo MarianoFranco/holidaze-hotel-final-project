@@ -288,15 +288,15 @@ function EditHotel({ data, jwt }) {
 	};
 	console.log(jwt);
 
-	const router = useRouter();
-	useEffect(() => {
-		if (!jwt) {
-			location.href = "/login";
-		}
-		// if (!jwt) {
-		// 	router.push("/login");
-		// }
-	}, [jwt, router]);
+	// const router = useRouter();
+	// useEffect(() => {
+	// 	if (!jwt) {
+	// 		location.href = "/login";
+	// 	}
+	// if (!jwt) {
+	// 	router.push("/login");
+	// }
+	// }, [jwt, router]);
 	return (
 		<>
 			<Header user={jwt} />
