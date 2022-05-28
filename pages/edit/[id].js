@@ -174,16 +174,6 @@ const ButtonContainer = styled.div`
 `;
 
 function EditHotel({ data, jwt }) {
-	const router = useRouter();
-	useEffect(() => {
-		// if (!jwt) {
-		// 	location.href = "/login";
-		// }
-		if (!jwt) {
-			router.push("/login");
-		}
-	}, [jwt, router]);
-
 	const [featuredCheck, setFeaturedChecked] = useState(data.featured);
 	const [spaCheck, setSpaChecked] = useState(data.amenities.spa);
 	const [wifiCheck, setWifiChecked] = useState(data.amenities.wifi);
@@ -298,6 +288,15 @@ function EditHotel({ data, jwt }) {
 	};
 	console.log(jwt);
 
+	const router = useRouter();
+	useEffect(() => {
+		// if (!jwt) {
+		// 	location.href = "/login";
+		// }
+		if (!jwt) {
+			router.push("/login");
+		}
+	}, [jwt, router]);
 	return (
 		<>
 			<Header user={jwt} />
