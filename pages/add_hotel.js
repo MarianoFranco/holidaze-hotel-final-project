@@ -218,12 +218,12 @@ function AddHotel({ jwt }) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setFormErrors(validate(userData));
-		setIsSubmit(true);
-	};
+		// setFormErrors(validate(userData));
+		// setIsSubmit(true);
+		const errorData2 = validate(userData);
+		setFormErrors(errorData2);
 
-	useEffect(() => {
-		if (Object.keys(formErrors).length === 0 && isSubmit) {
+		if (Object.keys(formErrors).length === 0) {
 			let newHotel = {
 				Title: userData.title,
 				Address: userData.address,
@@ -270,7 +270,7 @@ function AddHotel({ jwt }) {
 			axios
 				.post(`${BASE_URL}/hotels`, newHotel, {
 					headers: {
-						Authorization: `Bearer ${token}`,
+						Authorization: `Bearer ${jwt}`,
 					},
 				})
 				.then(() => {
@@ -293,7 +293,7 @@ function AddHotel({ jwt }) {
 					}, 3000);
 				});
 		}
-	}, [formErrors, isSubmit]);
+	};
 
 	const validate = (values) => {
 		const errors = {};
