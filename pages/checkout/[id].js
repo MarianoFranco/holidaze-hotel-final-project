@@ -216,34 +216,7 @@ const InputContainer = styled.div`
 const SmallInput = styled(InputContainer)`
 	max-width: 150px;
 `;
-export async function getStaticPaths() {
-	try {
-		const res = await fetch(`${BASE_URL}/hotels/`);
-		const data = await res.json();
-		// const paths = data.map(({ id }) => ({ params: { id: `${id}` } }));
-		const paths = data.map((edit) => ({
-			params: { id: edit.id },
-		}));
-		return {
-			paths,
-			fallback: false,
-		};
-	} catch (error) {
-		console.log(error);
-	}
-}
-export async function getStaticProps({ params }) {
-	try {
-		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
-		let data = await res.json();
 
-		return {
-			props: { data },
-		};
-	} catch (error) {
-		console.error(error);
-	}
-}
 function Checkout({ jwt, data }) {
 	const [inputValue, setInputValue] = useState(1);
 	const [deleteCard, setDeleteCard] = useState(true);
@@ -513,3 +486,30 @@ function Checkout({ jwt, data }) {
 }
 
 export default Checkout;
+
+export async function getStaticPaths() {
+	try {
+		const res = await fetch(`${BASE_URL}/hotels/`);
+		const data = await res.json();
+		const paths = data.map(({ id }) => ({ params: { id: `${id}` } }));
+
+		return {
+			paths,
+			fallback: false,
+		};
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function getStaticProps({ params }) {
+	try {
+		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
+		let data = await res.json();
+
+		return {
+			props: { data },
+		};
+	} catch (error) {
+		console.error(error);
+	}
+}
