@@ -6,6 +6,8 @@ import axios from "axios";
 import Button from "../../components/button/Button";
 import nookies, { parseCookies } from "nookies";
 import { BASE_URL } from "../../utils/config/config";
+import Router, { useRouter } from "next/router";
+import { redirectUser } from "../../utils/redirectUser/redirectUser";
 const SectionContainer = styled.div`
 	max-width: 1440px;
 	margin: auto;
@@ -181,7 +183,7 @@ function EditHotel({ data, jwt }) {
 	const [parkingCheck, setParkingChecked] = useState(data.amenities.parking);
 	const [gymCheck, setGymChecked] = useState(data.amenities.gym);
 	const [stars, setStars] = useState(data.stars);
-	console.log(data);
+
 	const initialValues = {
 		title: data.Title,
 		address: data.Address,
@@ -284,6 +286,17 @@ function EditHotel({ data, jwt }) {
 		}
 	};
 
+	let user = null;
+	console.log("AAAAAAA", jwt);
+
+	// if (!user) {
+	// 	return {
+	// 		redirect: {
+	// 			permanent: false,
+	// 			destination: "/login",
+	// 		},
+	// 	};
+	// }
 	return (
 		<>
 			<Header user={jwt} />

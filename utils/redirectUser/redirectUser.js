@@ -1,3 +1,4 @@
+import Router from "next/router";
 export const redirectUser = function (ctx, location) {
 	// console.log("funcion redirect user", ctx);
 	console.log("CTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", ctx.req);
