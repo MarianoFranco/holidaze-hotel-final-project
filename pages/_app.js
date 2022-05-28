@@ -21,28 +21,27 @@ MyApp.getInitialProps = async ({ Component, ctx, res }) => {
 	let pageProps = {};
 	const jwt = parseCookies(ctx).jwt;
 
-	console.log("GETINITIALPROPS JWT TOKEN", jwt, "CONTEXT", ctx);
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
 	}
 
-	if (!jwt) {
-		if (
-			ctx.pathname.includes("/edit") ||
-			ctx.pathname.includes("/admin") ||
-			ctx.pathname.includes("/add_hotel")
-		) {
-			if (ctx.req) {
-				ctx.res.writeHead(302, {
-					Location: "/login",
-					"Content-Type": "text/html; charset=utf-8",
-				});
-				ctx.res.end();
+	// if (!jwt) {
+	// 	if (
+	// 		ctx.pathname.includes("/edit") ||
+	// 		ctx.pathname.includes("/admin") ||
+	// 		ctx.pathname.includes("/add_hotel")
+	// 	) {
+	// 		if (ctx.req) {
+	// 			ctx.res.writeHead(302, {
+	// 				Location: "/login",
+	// 				"Content-Type": "text/html; charset=utf-8",
+	// 			});
+	// 			ctx.res.end();
 
-				return {};
-			}
-		}
-	}
+	// 			return {};
+	// 		}
+	// 	}
+	// }
 
 	pageProps.jwt = jwt;
 

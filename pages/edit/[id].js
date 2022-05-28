@@ -8,6 +8,7 @@ import nookies, { parseCookies } from "nookies";
 import { BASE_URL } from "../../utils/config/config";
 import Router, { useRouter } from "next/router";
 import { redirectUser } from "../../utils/redirectUser/redirectUser";
+
 const SectionContainer = styled.div`
 	max-width: 1440px;
 	margin: auto;
@@ -286,17 +287,6 @@ function EditHotel({ data, jwt }) {
 		}
 	};
 
-	let user = null;
-	console.log("AAAAAAA", jwt);
-
-	// if (!user) {
-	// 	return {
-	// 		redirect: {
-	// 			permanent: false,
-	// 			destination: "/login",
-	// 		},
-	// 	};
-	// }
 	return (
 		<>
 			<Header user={jwt} />
