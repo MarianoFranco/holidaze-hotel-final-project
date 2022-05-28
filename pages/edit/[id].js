@@ -170,41 +170,6 @@ const ButtonContainer = styled.div`
 	margin: var(--size-md) var(--size-lg);
 `;
 
-export async function getStaticPaths(ctx) {
-	console.log("GETTT", ctx);
-
-	try {
-		const res = await fetch(`${BASE_URL}/hotels/`);
-		const data = await res.json();
-		const paths = data.map(({ id }) => ({
-			params: { id: `${id}` },
-		}));
-
-		return {
-			paths,
-			fallback: false,
-		};
-	} catch (error) {
-		console.log(error);
-	}
-}
-
-export async function getStaticProps(ctx) {
-	const { params } = ctx;
-	const cookies = nookies.get(ctx);
-
-	try {
-		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
-		let data = await res.json();
-
-		return {
-			props: { data },
-		};
-	} catch (error) {
-		console.error(error);
-	}
-}
-
 function EditHotel({ data, jwt }) {
 	const [featuredCheck, setFeaturedChecked] = useState(data.featured);
 	const [spaCheck, setSpaChecked] = useState(data.amenities.spa);
@@ -721,3 +686,38 @@ function EditHotel({ data, jwt }) {
 }
 
 export default EditHotel;
+
+export async function getStaticPaths(ctx) {
+	console.log("GETTT", ctx);
+
+	try {
+		const res = await fetch(`${BASE_URL}/hotels/`);
+		const data = await res.json();
+		const paths = data.map(({ id }) => ({
+			params: { id: `${id}` },
+		}));
+
+		return {
+			paths,
+			fallback: false,
+		};
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export async function getStaticProps(ctx) {
+	const { params } = ctx;
+	const cookies = nookies.get(ctx);
+
+	try {
+		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
+		let data = await res.json();
+
+		return {
+			props: { data },
+		};
+	} catch (error) {
+		console.error(error);
+	}
+}
