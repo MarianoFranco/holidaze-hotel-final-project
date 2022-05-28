@@ -66,7 +66,7 @@ function OurSelectionSection({ hotel_data }) {
 									<FeaturedCards
 										isaportraitcard="true"
 										imgSrc={hotel.cardImage}
-										imgAlt="title of the pictured"
+										imgAlt={hotel.alt_portrait_image}
 										mwidth="704px"
 										titleFontSize="var(--font-size-xl)"
 										cityFontSize="var(--font-size-lg)"

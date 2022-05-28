@@ -77,13 +77,21 @@ const Gallery = styled.div`
 	}
 `;
 
-function ImageGallery({ sliderImg }) {
+function ImageGallery({ sliderImg, altImg }) {
 	const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
 	const sliderArray = [];
+	const altImgArray = [];
+
 	Object.values(sliderImg[0]).map((image) => {
 		if (image && isNaN(image)) {
 			sliderArray.push(image);
+		}
+	});
+
+	Object.values(altImg[0]).map((altSrc) => {
+		if (altSrc && isNaN(altSrc)) {
+			altImgArray.push(altSrc);
 		}
 	});
 
@@ -106,16 +114,28 @@ function ImageGallery({ sliderImg }) {
 					className="mySwiper2"
 				>
 					{sliderArray.map((image, i) => {
-						return (
-							<SwiperSlide key={i}>
-								<Image
-									src={image}
-									layout="fill"
-									loader={firstLoader}
-									alt={image.title}
-								/>
-							</SwiperSlide>
-						);
+						altImgArray.map((altSrc, i) => {
+							return (
+								<SwiperSlide key={i}>
+									<Image
+										src={image}
+										layout="fill"
+										loader={firstLoader}
+										alt={altSrc}
+									/>
+								</SwiperSlide>
+							);
+						});
+						// return (
+						// 	<SwiperSlide key={i}>
+						// 		<Image
+						// 			src={image}
+						// 			layout="fill"
+						// 			loader={firstLoader}
+						// 			alt={image.title}
+						// 		/>
+						// 	</SwiperSlide>
+						// );
 					})}
 				</Swiper>
 				<Swiper

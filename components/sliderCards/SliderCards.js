@@ -139,7 +139,16 @@ const DataContainer = styled.div`
 	}
 `;
 
-function SliderCards({ id, title, imgSrc, imageLoader, stars, town, price }) {
+function SliderCards({
+	id,
+	title,
+	imgSrc,
+	imageLoader,
+	stars,
+	town,
+	price,
+	imgAlt,
+}) {
 	return (
 		<>
 			<CardContainer key={id}>
@@ -147,7 +156,7 @@ function SliderCards({ id, title, imgSrc, imageLoader, stars, town, price }) {
 					<ImgContainer>
 						<ImgElement
 							src={imgSrc}
-							alt="Card Image"
+							alt={imgAlt}
 							layout="fill"
 							objectFit="cover"
 							loader={imageLoader}

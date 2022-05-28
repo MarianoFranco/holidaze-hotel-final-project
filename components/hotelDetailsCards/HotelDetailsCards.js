@@ -180,12 +180,16 @@ function HotelDetailsCards({
 	price,
 	stars,
 	sliderImg,
+	altImg,
 }) {
 	return (
 		<>
 			<CardContainer>
 				<GalleryContainer>
-					<ImageGallery sliderImg={sliderImg}></ImageGallery>
+					<ImageGallery
+						sliderImg={sliderImg}
+						altImg={altImg}
+					></ImageGallery>
 				</GalleryContainer>
 				<DataContainer>
 					<div className="data__title-container">

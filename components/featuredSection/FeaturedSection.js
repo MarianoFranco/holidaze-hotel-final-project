@@ -99,7 +99,7 @@ function FeaturedSection({ hotel_data }) {
 									<a>
 										<FeaturedCards
 											imgSrc={hotel.cardImage}
-											imgAlt="title of the photo"
+											imgAlt={hotel.alt_portrait_image}
 											imageLoader={secondaryLoader}
 											title={hotel.Title}
 											town={hotel.Town}

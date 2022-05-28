@@ -53,6 +53,7 @@ function Carousel({ hotel_data }) {
 			</div>
 			<SliderContainer ref={sliderRef} {...settings}>
 				{hotel_data.map((hotel) => {
+					console.log(hotel);
 					const secondaryLoader = ({
 						width = 100,
 						quality = 100,
@@ -71,6 +72,7 @@ function Carousel({ hotel_data }) {
 								stars={hotel.stars}
 								town={hotel.Town}
 								price={hotel.price}
+								imgAlt={hotel.alt_portrait_image}
 							/>
 						</div>
 					);

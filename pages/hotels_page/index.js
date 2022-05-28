@@ -305,6 +305,7 @@ function Hotels({ data, jwt }) {
 					<div className="div3">
 						<CardsContainer>
 							{dataFilteredByAmenities.map((hotel) => {
+								console.log(hotel);
 								return (
 									<HotelDetailsCards
 										key={hotel.id}
@@ -316,6 +317,7 @@ function Hotels({ data, jwt }) {
 										stars={hotel.stars}
 										sliderImg={hotel.SliderImages}
 										id={hotel.id}
+										altImg={hotel.img_alt}
 									></HotelDetailsCards>
 								);
 							})}
