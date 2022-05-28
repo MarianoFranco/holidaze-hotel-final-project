@@ -4,7 +4,7 @@ import Header from "../../components/header/Header";
 import { Switch } from "@mantine/core";
 import axios from "axios";
 import Button from "../../components/button/Button";
-import nookies from "nookies";
+import nookies, { parseCookies } from "nookies";
 import { BASE_URL } from "../../utils/config/config";
 const SectionContainer = styled.div`
 	max-width: 1440px;
@@ -687,9 +687,7 @@ function EditHotel({ data, jwt }) {
 
 export default EditHotel;
 
-export async function getStaticPaths(ctx) {
-	console.log("GETTT", ctx);
-
+export async function getStaticPaths() {
 	try {
 		const res = await fetch(`${BASE_URL}/hotels/`);
 		const data = await res.json();
@@ -706,10 +704,7 @@ export async function getStaticPaths(ctx) {
 	}
 }
 
-export async function getStaticProps(ctx) {
-	const { params } = ctx;
-	const cookies = nookies.get(ctx);
-
+export async function getStaticProps({ params }) {
 	try {
 		let res = await fetch(`${BASE_URL}/hotels/` + params.id);
 		let data = await res.json();
