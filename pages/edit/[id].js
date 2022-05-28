@@ -174,15 +174,15 @@ const ButtonContainer = styled.div`
 `;
 
 function EditHotel({ data, jwt }) {
-	const router = useRouter();
-	useEffect(() => {
-		// if (!jwt) {
-		// 	location.href = "/login";
-		// }
-		if (!jwt) {
-			router.push("/login");
-		}
-	}, [jwt, router]);
+	// const router = useRouter();
+	// useEffect(() => {
+	// 	// if (!jwt) {
+	// 	// 	location.href = "/login";
+	// 	// }
+	// 	if (!jwt) {
+	// 		router.push("/login");
+	// 	}
+	// }, [jwt, router]);
 
 	const [featuredCheck, setFeaturedChecked] = useState(data.featured);
 	const [spaCheck, setSpaChecked] = useState(data.amenities.spa);
