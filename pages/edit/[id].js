@@ -290,12 +290,12 @@ function EditHotel({ data, jwt }) {
 
 	const router = useRouter();
 	useEffect(() => {
-		// if (!jwt) {
-		// 	location.href = "/login";
-		// }
 		if (!jwt) {
-			router.push("/login");
+			location.href = "/login";
 		}
+		// if (!jwt) {
+		// 	router.push("/login");
+		// }
 	}, [jwt, router]);
 	return (
 		<>
