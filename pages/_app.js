@@ -25,23 +25,23 @@ MyApp.getInitialProps = async ({ Component, ctx, res }) => {
 		pageProps = await Component.getInitialProps(ctx);
 	}
 
-	if (!jwt) {
-		if (
-			ctx.pathname.includes("/edit") ||
-			ctx.pathname.includes("/admin") ||
-			ctx.pathname.includes("/add_hotel")
-		) {
-			if (ctx.req && ctx.res && ctx.res.writeHead && ctx.res.end) {
-				ctx.res.writeHead(302, {
-					Location: "/login",
-					"Content-Type": "text/html; charset=utf-8",
-				});
-				ctx.res.end();
+	// if (!jwt) {
+	// 	if (
+	// 		ctx.pathname.includes("/edit") ||
+	// 		ctx.pathname.includes("/admin") ||
+	// 		ctx.pathname.includes("/add_hotel")
+	// 	) {
+	// 		if (ctx.req && ctx.res && ctx.res.writeHead && ctx.res.end) {
+	// 			ctx.res.writeHead(302, {
+	// 				Location: "/login",
+	// 				"Content-Type": "text/html; charset=utf-8",
+	// 			});
+	// 			ctx.res.end();
 
-				return {};
-			}
-		}
-	}
+	// 			return {};
+	// 		}
+	// 	}
+	// }
 
 	pageProps.jwt = jwt;
 
