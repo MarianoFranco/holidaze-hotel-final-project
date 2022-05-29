@@ -23,7 +23,7 @@ export async function getStaticProps() {
 	}
 }
 
-export default function Home({ data, jwt }) {
+export default function Home({ data }) {
 	const jwt2 = parseCookies().jwt;
 	return (
 		<>
@@ -40,19 +40,3 @@ export default function Home({ data, jwt }) {
 		</>
 	);
 }
-
-// export const getServerSideProps = async (ctx) => {
-// 	const jwt = nookies.get(ctx);
-
-// 	try {
-// 		const { data } = await axios.get(`${BASE_URL}/hotels`);
-
-// 		data: data;
-// 	} catch (error) {}
-
-// 	return {
-// 		props: {
-// 			data,
-// 		},
-// 	};
-// };

@@ -6,11 +6,13 @@ import DetailsAmenitiesSection from "../../components/detailsAmenitiesSection/De
 import DetailsEnquirySection from "../../components/detailsEnquirySection/DetailsEnquirySection";
 import DetailsAboutHotelSection from "../../components/detailsAboutHotelSection/DetailsAboutHotelSection";
 import { BASE_URL } from "../../utils/config/config";
+import { parseCookies } from "nookies";
 
 function HotelResults({ data, jwt }) {
+	const jwt2 = parseCookies().jwt;
 	return (
 		<>
-			<Header user={jwt} />
+			<Header user={jwt2} />
 			<main>
 				<DetailsMainSection data={data} />
 				<DetailsAmenitiesSection data={data} />

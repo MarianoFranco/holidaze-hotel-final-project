@@ -174,6 +174,7 @@ const ButtonContainer = styled.div`
 `;
 
 function EditHotel({ data, jwt }) {
+	const jwt2 = parseCookies().jwt;
 	const [featuredCheck, setFeaturedChecked] = useState(data.featured);
 	const [spaCheck, setSpaChecked] = useState(data.amenities.spa);
 	const [wifiCheck, setWifiChecked] = useState(data.amenities.wifi);
@@ -264,7 +265,7 @@ function EditHotel({ data, jwt }) {
 				updateHotel,
 				{
 					headers: {
-						Authorization: `Bearer ${jwt}`,
+						Authorization: `Bearer ${jwt2}`,
 					},
 				}
 			);
@@ -289,7 +290,7 @@ function EditHotel({ data, jwt }) {
 
 	return (
 		<>
-			<Header user={jwt} />
+			<Header user={jwt2} />
 			<main>
 				<SectionContainer
 					confirmationMessage={confirmationMessage}

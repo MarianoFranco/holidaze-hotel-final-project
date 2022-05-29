@@ -12,6 +12,7 @@ import { device } from "../../styles/breakpoints";
 import { BASE_URL } from "../../utils/config/config";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
+import { parseCookies } from "nookies";
 const CheckoutSectionContainer = styled.div`
 	display: flex;
 	@media ${device.tablet} {
@@ -220,6 +221,7 @@ const SmallInput = styled(InputContainer)`
 `;
 
 function Checkout({ jwt, data }) {
+	const jwt2 = parseCookies().jwt;
 	const [inputValue, setInputValue] = useState(1);
 	const [guestValue, setInputGuestValue] = useState(1);
 	const [deleteCard, setDeleteCard] = useState(true);
@@ -251,7 +253,7 @@ function Checkout({ jwt, data }) {
 
 	return (
 		<>
-			<Header user={jwt}></Header>
+			<Header user={jwt2}></Header>
 			<main>
 				<CheckoutSectionContainer>
 					<SummaryContainer>

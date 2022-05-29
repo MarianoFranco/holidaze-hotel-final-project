@@ -176,6 +176,7 @@ export async function getStaticProps(context) {
 }
 
 function Hotels({ data, jwt }) {
+	const jwt2 = parseCookies().jwt;
 	const [opened, toggleOpened] = useState(false);
 
 	const showFiltered = () => {
@@ -230,14 +231,9 @@ function Hotels({ data, jwt }) {
 	const [onGetDateValues, setOnGetDateValues] = useState("");
 	const [onGetGuestValues, setOnGetGuestValues] = useState(1);
 
-	console.log(jwt);
-	useEffect(() => {
-		jwt;
-	}, [jwt]);
-
 	return (
 		<>
-			<Header user={jwt}></Header>
+			<Header user={jwt2}></Header>
 			<MainSection>
 				<SearchSection>
 					<Searchbar
