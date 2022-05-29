@@ -86,8 +86,11 @@ function FilterComponent({
 	onStarsSelected,
 	onPriceRangeSelected,
 	onWifiSelected,
-	onSpaSelected,
+	onBreakfastSelected,
 	onPetSelected,
+	onParkingSelected,
+	onSpaSelected,
+	onGymSelected,
 }) {
 	const [value, setValue] = useState([0, 10000]);
 
@@ -95,8 +98,11 @@ function FilterComponent({
 	const [starsSelected, setStarsSelected] = useState(5);
 
 	const [toggleWifi, setToggleWifi] = useState(false);
-	const [toggleSpa, setToggleSpa] = useState(false);
+	const [toggleBreakfast, setToggleBreakfast] = useState(false);
 	const [togglePet, setTogglePet] = useState(false);
+	const [toggleParking, setToggleParking] = useState(false);
+	const [toggleSpa, setToggleSpa] = useState(false);
+	const [toggleGym, setToggleGym] = useState(false);
 
 	return (
 		<>
@@ -223,16 +229,33 @@ function FilterComponent({
 							onWifiSelected(newToggle);
 						}}
 					/>
-					<CheckboksItem label="Breakfast included" />
+					<CheckboksItem
+						label="Breakfast included"
+						checked={toggleBreakfast}
+						onChange={() => {
+							const newToggle = toggleBreakfast ? false : true;
+							setToggleBreakfast(newToggle);
+							onBreakfastSelected(newToggle);
+						}}
+					/>
 					<CheckboksItem
 						label="Pet friendly"
 						checked={togglePet}
 						onChange={() => {
+							const newToggle = togglePet ? false : true;
 							setTogglePet(newToggle);
 							onPetSelected(newToggle);
 						}}
 					/>
-					<CheckboksItem label="Parking" />
+					<CheckboksItem
+						label="Parking"
+						checked={toggleParking}
+						onChange={() => {
+							const newToggle = toggleParking ? false : true;
+							setToggleParking(newToggle);
+							onParkingSelected(newToggle);
+						}}
+					/>
 					<CheckboksItem
 						label="Spa"
 						checked={toggleSpa}
@@ -242,7 +265,15 @@ function FilterComponent({
 							onSpaSelected(newToggle);
 						}}
 					/>
-					<CheckboksItem label="Gym" />
+					<CheckboksItem
+						label="Gym"
+						checked={toggleGym}
+						onChange={() => {
+							const newToggle = toggleGym ? false : true;
+							setToggleGym(newToggle);
+							onGymSelected(newToggle);
+						}}
+					/>
 				</Accordion.Item>
 			</AccordionContainer>
 		</>

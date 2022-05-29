@@ -186,8 +186,11 @@ function Hotels({ data, jwt }) {
 	const [starsSelected, setStarsSelected] = useState(null);
 	const [priceRange, setPriceRange] = useState([0, 10000]);
 	const [wifiSelected, setWifiSelected] = useState(false);
-	const [spaSelected, setSpaSelected] = useState(false);
+	const [breakfastSelected, setBreakfastSelected] = useState(false);
 	const [petSelected, setPetSelected] = useState(false);
+	const [parkingSelected, setParkingSelected] = useState(false);
+	const [spaSelected, setSpaSelected] = useState(false);
+	const [gymSelected, setGymSelected] = useState(false);
 
 	const starsDataFiltered = data.filter((hotel) => {
 		return starsSelected === null || hotel.stars === starsSelected;
@@ -202,8 +205,12 @@ function Hotels({ data, jwt }) {
 	let dataFilteredByAmenities = dataFilteredByRangePrice.filter((hotel) => {
 		return (
 			(!wifiSelected || hotel.amenities.wifi === wifiSelected) &&
+			(!breakfastSelected ||
+				hotel.amenities.breakfast === breakfastSelected) &&
+			(!petSelected || hotel.amenities.pets === petSelected) &&
+			(!parkingSelected || hotel.amenities.parking === parkingSelected) &&
 			(!spaSelected || hotel.amenities.spa === spaSelected) &&
-			(!petSelected || hotel.amenities.pets === petSelected)
+			(!gymSelected || hotel.amenities.gym === gymSelected)
 		);
 	});
 	const [hotelNameValue, setHotelNameValue] = useState("");
@@ -273,8 +280,11 @@ function Hotels({ data, jwt }) {
 									}}
 									onPriceRangeSelected={setPriceRange}
 									onWifiSelected={setWifiSelected}
-									onSpaSelected={setSpaSelected}
+									onBreakfastSelected={setBreakfastSelected}
 									onPetSelected={setPetSelected}
+									onParkingSelected={setParkingSelected}
+									onSpaSelected={setSpaSelected}
+									onGymSelected={setGymSelected}
 								></FilterComponent>
 							</div>
 							<div className="filtered-box-container-2">
@@ -296,8 +306,13 @@ function Hotels({ data, jwt }) {
 										}}
 										onPriceRangeSelected={setPriceRange}
 										onWifiSelected={setWifiSelected}
-										onSpaSelected={setSpaSelected}
+										onBreakfastSelected={
+											setBreakfastSelected
+										}
 										onPetSelected={setPetSelected}
+										onParkingSelected={setParkingSelected}
+										onSpaSelected={setSpaSelected}
+										onGymSelected={setGymSelected}
 									/>
 								)}
 							</div>
