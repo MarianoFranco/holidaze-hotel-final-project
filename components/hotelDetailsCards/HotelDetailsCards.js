@@ -120,7 +120,7 @@ const TotalContainer = styled.div`
 
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	align-items: center;
 	padding: var(--size);
 
@@ -139,7 +139,6 @@ const TotalContainer = styled.div`
 		flex-direction: column;
 		align-items: flex-end;
 		gap: 8px;
-
 		margin: 0 10%;
 		@media ${device.laptop} {
 			align-self: center;
