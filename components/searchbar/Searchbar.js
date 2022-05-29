@@ -114,7 +114,7 @@ const NumberInputComponent = styled(NumberInput)`
 		outline-color: var(--color-secondary);
 	}
 `;
-function Searchbar({ onSubmitValue }) {
+function Searchbar({ onSubmitValue, getDateValue, getGuestValue }) {
 	const router = useRouter();
 	const queryDate = router.query.dateValue;
 	const dateRange = queryDate ? queryDate.split(",") : [];
@@ -131,6 +131,12 @@ function Searchbar({ onSubmitValue }) {
 	function handleSubmit(e) {
 		e.preventDefault();
 		onSubmitValue(hotelName, dateValue, guestValue);
+		{
+			getDateValue && getDateValue(dateValue);
+		}
+		{
+			getGuestValue && getGuestValue(guestValue);
+		}
 	}
 
 	return (

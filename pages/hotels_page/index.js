@@ -208,7 +208,7 @@ function Hotels({ data, jwt }) {
 		);
 	});
 	const [hotelNameValue, setHotelNameValue] = useState("");
-	console.log("inputvalue del padre", hotelNameValue);
+
 	// TODO
 	// change equal for includes(...)
 	dataFilteredByAmenities = dataFilteredByAmenities.filter((hotel) =>
@@ -217,7 +217,6 @@ function Hotels({ data, jwt }) {
 
 	const [sortValue, setSortValue] = useState("");
 
-	// TODO create sort state
 	const sortBy = sortValue;
 	dataFilteredByAmenities = dataFilteredByAmenities.sort((a, b) => {
 		if (sortBy === "price") {
@@ -230,16 +229,20 @@ function Hotels({ data, jwt }) {
 			return a.Title.toLowerCase() > b.Title.toLowerCase() ? 1 : -1;
 		}
 	});
-	console.log("estado sort", sortValue);
 
-	console.log("jwt token", jwt);
+	const [onGetDateValues, setOnGetDateValues] = useState("");
+	const [onGetGuestValues, setOnGetGuestValues] = useState(1);
 
 	return (
 		<>
 			<Header user={jwt}></Header>
 			<MainSection>
 				<SearchSection>
-					<Searchbar onSubmitValue={setHotelNameValue} />
+					<Searchbar
+						onSubmitValue={setHotelNameValue}
+						getDateValue={setOnGetDateValues}
+						getGuestValue={setOnGetGuestValues}
+					/>
 				</SearchSection>
 				<Title>Hotels Results</Title>
 				<ResultsContainer>
@@ -317,6 +320,8 @@ function Hotels({ data, jwt }) {
 										sliderImg={hotel.SliderImages}
 										id={hotel.id}
 										altImg={hotel.img_alt}
+										dateValue={onGetDateValues}
+										guestValue={onGetGuestValues}
 									></HotelDetailsCards>
 								);
 							})}

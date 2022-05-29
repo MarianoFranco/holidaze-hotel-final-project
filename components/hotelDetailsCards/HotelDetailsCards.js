@@ -8,6 +8,8 @@ import Link from "next/link";
 import StarsIcon from "../starsIcon/StarsIcon";
 import ImageGallery from "../imageGallery/ImageGallery";
 import { device } from "../../styles/breakpoints";
+import { useRouter } from "next/router";
+import dayjs from "dayjs";
 
 // Import Swiper styles
 import "swiper/css";
@@ -181,7 +183,26 @@ function HotelDetailsCards({
 	stars,
 	sliderImg,
 	altImg,
+	dateValue,
+	guestValue,
 }) {
+	const router = useRouter();
+
+	function handleClick() {
+		let newRange;
+		{
+			dateValue
+				? (newRange = dateValue.map((date) => {
+						return dayjs(date).format("MM-DD-YYYY");
+				  }))
+				: (newRange = "");
+		}
+
+		router.push(
+			`/checkout/${id}?hotel=${title}&dateValue=${newRange}&guestValue=${guestValue}`
+		);
+	}
+
 	return (
 		<>
 			<CardContainer>
@@ -243,17 +264,14 @@ function HotelDetailsCards({
 						<span>per night</span>
 					</div>
 					<div className="total__btn-container">
-						<Link href={`/checkout/${id}`} passHref>
-							<a>
-								<Button
-									className="total__btn"
-									text="BOOK NOW"
-									btnCategory="primary"
-									typeOfButton="link"
-									color="blue"
-								></Button>
-							</a>
-						</Link>
+						<Button
+							className="total__btn"
+							text="BOOK NOW"
+							btnCategory="primary"
+							typeOfButton="button"
+							color="blue"
+							onClick={handleClick}
+						></Button>
 					</div>
 				</TotalContainer>
 			</CardContainer>

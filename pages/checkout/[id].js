@@ -10,6 +10,8 @@ import * as Yup from "yup";
 import Button from "../../components/button/Button";
 import { device } from "../../styles/breakpoints";
 import { BASE_URL } from "../../utils/config/config";
+import { useRouter } from "next/router";
+import dayjs from "dayjs";
 const CheckoutSectionContainer = styled.div`
 	display: flex;
 	@media ${device.tablet} {
@@ -219,6 +221,7 @@ const SmallInput = styled(InputContainer)`
 
 function Checkout({ jwt, data }) {
 	const [inputValue, setInputValue] = useState(1);
+	const [guestValue, setInputGuestValue] = useState(1);
 	const [deleteCard, setDeleteCard] = useState(true);
 
 	const loader = ({ src, width = 100, quality = 100 }) => {
@@ -237,6 +240,14 @@ function Checkout({ jwt, data }) {
 		let total = totalVat + subtotalPrice;
 		return total.toFixed();
 	}
+	const router = useRouter();
+
+	const queryDate = router.query.dateValue;
+
+	const dateRange = queryDate ? queryDate.split(",") : [];
+
+	const [checkIn, setCheckInValue] = useState(dateRange[0]);
+	const [checkOut, setCheckOutValue] = useState(dateRange[1]);
 
 	return (
 		<>
@@ -265,14 +276,24 @@ function Checkout({ jwt, data }) {
 									layout="fill"
 									objectFit="cover"
 									loader={loader}
+									alt={data.alt_portrait_image}
+									priority="true"
 								></Image>
 							</div>
 							<div className="summary__inputs-container">
-								<InputDate labelMessage="Check in: "></InputDate>
-								<InputDate labelMessage="Check out: "></InputDate>
+								<InputDate
+									labelMessage="Check in: "
+									setCheckIn={setCheckInValue}
+									value={checkIn}
+								></InputDate>
+								<InputDate
+									labelMessage="Check out: "
+									setCheckout={setCheckOutValue}
+									value={checkOut}
+								></InputDate>
 								<InputOption
 									labelMessage="Guest: "
-									onClickInArrow={setInputValue}
+									onClickInArrow={setInputGuestValue}
 								></InputOption>
 								<InputOption
 									labelMessage="Rooms: "

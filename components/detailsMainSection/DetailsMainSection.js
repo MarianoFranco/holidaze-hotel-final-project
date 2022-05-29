@@ -216,7 +216,7 @@ const GuestContainer = styled(CheckInOutContainer)``;
 function DetailsMainSection({ data }) {
 	const [guest, setGuest] = useState(1);
 	const [rooms, setRoom] = useState(1);
-
+	console.log(data);
 	return (
 		<DetailsSectionContainer>
 			<TextContainer>
@@ -238,7 +238,10 @@ function DetailsMainSection({ data }) {
 			</TextContainer>
 			<MainContainer>
 				<GalleryContainer>
-					<ImageGallery sliderImg={data.SliderImages}></ImageGallery>
+					<ImageGallery
+						sliderImg={data.SliderImages}
+						altImg={data.img_alt}
+					></ImageGallery>
 				</GalleryContainer>
 				<DataContainer>
 					<CardContainer>
