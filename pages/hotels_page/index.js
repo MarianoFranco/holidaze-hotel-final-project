@@ -14,6 +14,7 @@ import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { SegmentedControl } from "@mantine/core";
 import { BASE_URL } from "../../utils/config/config";
+import { useEffect } from "react";
 
 const MainSection = styled.main`
 	max-width: 1440px;
@@ -175,9 +176,6 @@ export async function getStaticProps(context) {
 }
 
 function Hotels({ data, jwt }) {
-	//const router = useRouter();
-	//console.log(router, "router");
-
 	const [opened, toggleOpened] = useState(false);
 
 	const showFiltered = () => {
@@ -209,8 +207,6 @@ function Hotels({ data, jwt }) {
 	});
 	const [hotelNameValue, setHotelNameValue] = useState("");
 
-	// TODO
-	// change equal for includes(...)
 	dataFilteredByAmenities = dataFilteredByAmenities.filter((hotel) =>
 		hotel.Title.toLowerCase().includes(hotelNameValue.toLowerCase())
 	);
@@ -218,6 +214,7 @@ function Hotels({ data, jwt }) {
 	const [sortValue, setSortValue] = useState("");
 
 	const sortBy = sortValue;
+
 	dataFilteredByAmenities = dataFilteredByAmenities.sort((a, b) => {
 		if (sortBy === "price") {
 			return a.price - b.price;
@@ -232,6 +229,11 @@ function Hotels({ data, jwt }) {
 
 	const [onGetDateValues, setOnGetDateValues] = useState("");
 	const [onGetGuestValues, setOnGetGuestValues] = useState(1);
+
+	console.log(jwt);
+	useEffect(() => {
+		jwt;
+	}, [jwt]);
 
 	return (
 		<>
