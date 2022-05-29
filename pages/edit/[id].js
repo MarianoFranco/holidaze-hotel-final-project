@@ -287,7 +287,13 @@ function EditHotel({ data, jwt }) {
 			}, 3000);
 		}
 	};
+	const router = useRouter();
 
+	useEffect(() => {
+		if (!jwt2) {
+			router.push("/login");
+		}
+	}, [jwt2, router]);
 	return (
 		<>
 			<Header user={jwt2} />
