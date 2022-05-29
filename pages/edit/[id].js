@@ -286,30 +286,6 @@ function EditHotel({ data, jwt }) {
 			}, 3000);
 		}
 	};
-	console.log(jwt);
-
-	// const router = useRouter();
-	// useEffect(() => {
-	// 	if (!jwt) {
-	// 		location.href = "/login";
-	// 	}
-	// if (!jwt) {
-	// 	router.push("/login");
-	// }
-	// }, [jwt, router]);
-
-	const [loaded, setLoaded] = useState(false);
-	useEffect(() => {
-		const { pathname } = Router;
-		// conditional redirect
-		if (!jwt) {
-			// with router.push the page may be added to history
-			// the browser on history back will  go back to this page and then forward again to the redirected page
-			// you can prevent this behaviour using location.replace
-			// Router.push("/login");
-			location.replace("/login");
-		}
-	}, [jwt]);
 
 	return (
 		<>

@@ -8,6 +8,7 @@ import FaqSection from "../components/faqSection/FaqSection";
 import IndexContactSection from "../components/indexContactSection/IndexContactSection";
 import Footer from "../components/footer/Footer";
 import { BASE_URL } from "../utils/config/config";
+import { parseCookies } from "nookies";
 
 export async function getStaticProps() {
 	try {
@@ -23,9 +24,10 @@ export async function getStaticProps() {
 }
 
 export default function Home({ data, jwt }) {
+	const jwt2 = parseCookies().jwt;
 	return (
 		<>
-			<Header user={jwt} />
+			<Header user={jwt2} />
 			<main>
 				<Hero />
 				<FeaturedSection hotel_data={data}></FeaturedSection>
@@ -38,3 +40,19 @@ export default function Home({ data, jwt }) {
 		</>
 	);
 }
+
+// export const getServerSideProps = async (ctx) => {
+// 	const jwt = nookies.get(ctx);
+
+// 	try {
+// 		const { data } = await axios.get(`${BASE_URL}/hotels`);
+
+// 		data: data;
+// 	} catch (error) {}
+
+// 	return {
+// 		props: {
+// 			data,
+// 		},
+// 	};
+// };
