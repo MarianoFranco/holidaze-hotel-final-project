@@ -9,8 +9,11 @@ const InputsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 8px;
-
-	@media ${device.mobile} {
+	@media ${device.laptop} {
+		margin: 24px 8px;
+		width: 40%;
+	}
+	@media ${device.tablet} {
 		margin: 24px 8px;
 		width: 95%;
 	}
