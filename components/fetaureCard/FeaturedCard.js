@@ -115,6 +115,7 @@ export function FeaturedCards({
 							alt={imgAlt}
 							isaportraitcard={isaportraitcard}
 							loader={imageLoader}
+							priority="true"
 						/>
 					)}
 				</FeaturedImgContaner>

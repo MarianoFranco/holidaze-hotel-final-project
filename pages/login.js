@@ -226,6 +226,7 @@ function Login({ jwt }) {
 						layout="fill"
 						objectFit="cover"
 						alt="image"
+						priority="true"
 					/>
 				</ImageContainer>
 				<ContactContainer>
@@ -265,6 +266,7 @@ function Login({ jwt }) {
 											type="password"
 											placeholder="password"
 											onChange={handleChange}
+											autoComplete="on"
 										/>
 										{errorData.password && (
 											<div className="error">
