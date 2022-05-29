@@ -25,7 +25,7 @@ const ContactContainer = styled.div`
 	align-items: center;
 	@media ${device.tablet} {
 		flex-direction: column;
-
+		gap: 60px;
 		padding: var(--size-md);
 	}
 `;
@@ -49,6 +49,7 @@ const ContactData = styled.div`
 	justify-content: space-around;
 	@media ${device.tablet} {
 		width: 100%;
+		min-height: 600px;
 	}
 	.contact__title {
 		font-size: var(--font-size-xxl);
@@ -106,13 +107,14 @@ const ContactForm = styled.div`
 	@media ${device.tablet} {
 		width: 100%;
 		padding: var(--size-sm);
-		height: 696px;
+		height: 100%;
 	}
 	.form__title {
 		color: var(--color-primary);
 		font-size: var(--font-size-lg);
 		@media ${device.tablet} {
 			font-size: var(--font-size-md);
+			margin: var(--size-sm) 0 var(--size-md);
 		}
 	}
 `;
@@ -155,6 +157,7 @@ const FormContainer = styled.div`
 		height: 74px;
 		@media ${device.tablet} {
 			max-width: 300px;
+			margin: var(--size) 0;
 		}
 	}
 `;

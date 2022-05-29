@@ -352,28 +352,37 @@ function Checkout({ jwt, data }) {
 										.email("Invalid email address")
 										.required("Required"),
 
-									cardNumber: Yup.string()
-										.min(
-											10,
-											"Must be 10 characters as minimun"
+									cardNumber: Yup.number(
+										"Introduce a credit card number"
+									)
+										.required("Required")
+										.positive(
+											"The number has to be positive"
 										)
-										.required("Required"),
-									expirationDate: Yup.string()
+										.integer("Introduce just numbers")
+										.max(
+											16,
+											"Must be 16 characters maximun"
+										),
+
+									expirationDate: Yup.number(
+										"Must be a number"
+									)
 										.max(
 											4,
 											"Must be 4 characters as maximun"
 										)
 										.required("Required"),
-									cvc: Yup.string()
+									cvc: Yup.number("Must be a number")
 										.max(
 											3,
-											"Must be 4 characters as maximun"
+											"Must be 3 characters as maximun"
 										)
 										.required("Required"),
 									cardHolder: Yup.string()
-										.max(
-											3,
-											"Must be 4 characters as maximun"
+										.min(
+											10,
+											"Must be 10 characters as maximun"
 										)
 										.required("Required"),
 								})}

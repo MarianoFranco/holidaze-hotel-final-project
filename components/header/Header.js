@@ -65,6 +65,14 @@ const LogoutBtn = styled.button`
 
 const BurgerIcon = styled(Burger)`
 	display: none;
+	.mantine-Burger-burger,
+	.mantine-Burger-burger::before,
+	.mantine-Burger-burger::after {
+		background-color: var(--color-primary);
+	}
+	.mantine-Burger-opened {
+		background-color: transparent;
+	}
 	@media ${device.laptop} {
 		display: block;
 		z-index: 20;
@@ -74,10 +82,10 @@ const ButtonsGroup = styled.div`
 	display: flex;
 	align-items: center;
 	@media ${device.laptop} {
-		display: ${(props) => (props.opened ? "flex" : "none")};
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		gap: 40px;
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -85,6 +93,8 @@ const ButtonsGroup = styled.div`
 		height: 100%;
 		z-index: 20;
 		background-color: var(--color-secondary);
+		transform: translateY(${(props) => (props.opened ? "0" : "-100%")});
+		transition: transform 900ms cubic-bezier(0.76, -0.18, 0.35, 1.33);
 	}
 `;
 

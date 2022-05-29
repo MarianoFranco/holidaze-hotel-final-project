@@ -13,7 +13,7 @@ import axios from "axios";
 import validateEmail from "../utils/validate/email";
 import valueLength from "../utils/validate/valueLength";
 
-const ContactContainer = styled.div`
+const LoginContainer = styled.div`
 	position: relative;
 
 	padding: var(--size-xl);
@@ -30,7 +30,6 @@ const ImageContainer = styled.div`
 	position: absolute;
 	z-index: -100;
 	@media ${device.tablet} {
-		height: 744px;
 	}
 `;
 const ImageComponent = styled(Image)`
@@ -40,9 +39,9 @@ const ImageComponent = styled(Image)`
 	z-index: -100;
 `;
 
-const ContactFormContainer = styled.div`
+const LoginFormContainer = styled.div`
 	max-width: 600px;
-	height: 670px;
+	min-height: 670px;
 	padding: var(--size-xl);
 	background-color: var(--color-black-90);
 	border-radius: 15px;
@@ -53,19 +52,24 @@ const ContactFormContainer = styled.div`
 
 	@media ${device.tablet} {
 		padding: var(--size-sm);
-		height: 696px;
+		min-height: 558px;
+		justify-content: center;
+		gap: 24px;
 	}
 	.form__title-container {
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
+		@media ${device.tablet} {
+			padding: var(--size);
+		}
 	}
 
 	.form__title {
 		color: var(--color-white);
 		font-size: var(--font-size-xxl);
 		@media ${device.tablet} {
-			font-size: var(--font-size-md);
+			font-size: var(--font-size-xl);
 		}
 	}
 	.form__subtitle {
@@ -229,8 +233,8 @@ function Login({ jwt }) {
 						priority="true"
 					/>
 				</ImageContainer>
-				<ContactContainer>
-					<ContactFormContainer>
+				<LoginContainer>
+					<LoginFormContainer>
 						<div className="form__title-container">
 							<h1 className="form__title">Sign in</h1>
 							<p className="form__subtitle">
@@ -289,8 +293,8 @@ function Login({ jwt }) {
 								)}
 							</FormContainer>
 						</form>
-					</ContactFormContainer>
-				</ContactContainer>
+					</LoginFormContainer>
+				</LoginContainer>
 			</main>
 			<Footer />
 		</>

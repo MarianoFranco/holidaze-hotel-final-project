@@ -15,12 +15,16 @@ const SectionTitle = styled.h2`
 
 	@media ${device.tablet} {
 		margin: var(--size-md);
+		padding: 0;
 		font-size: var(--font-size-md);
 	}
 `;
 const CardContainer = styled.div`
 	position: relative;
 	height: 775px;
+	@media ${device.tablet} {
+		height: 488px;
+	}
 `;
 const ImgContainer = styled.div`
 	position: absolute;

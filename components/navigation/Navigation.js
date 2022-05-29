@@ -9,6 +9,7 @@ const NavBar = styled.nav`
 		margin: 0 var(--size-md);
 		@media ${device.laptop} {
 			flex-direction: column;
+			gap: 32px;
 		}
 	}
 	.nav__list {

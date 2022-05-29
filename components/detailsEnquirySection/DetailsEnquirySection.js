@@ -51,7 +51,6 @@ const BoxDataContainer = styled.div`
 	gap: 32px;
 	padding: 10px;
 	@media ${device.tablet} {
-		height: 426px;
 		padding: var(--size);
 	}
 	.box__title {

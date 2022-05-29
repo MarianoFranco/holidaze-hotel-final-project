@@ -44,8 +44,11 @@ const AmenitiesDataContainer = styled.div`
 		gap: 25px;
 		padding: 0 var(--size-lg);
 		align-self: start;
+
 		@media ${device.tablet} {
 			align-self: center;
+			flex-wrap: wrap;
+			padding: 0 var(--size);
 		}
 	}
 	.amenities__icon-container {

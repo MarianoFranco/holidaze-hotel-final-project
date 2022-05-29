@@ -25,6 +25,8 @@ const ImageContainer = styled.div`
 	@media ${device.tablet} {
 		height: 303px;
 		max-width: 400px;
+		display: flex;
+		align-items: center;
 	}
 	.about__title {
 		padding: var(--size-md);
@@ -32,10 +34,13 @@ const ImageContainer = styled.div`
 		width: 100%;
 		max-width: 280px;
 		font-weight: 600;
-		color: var(--color-primary);
+		color: var(--color-white);
+		background-color: rgba(0, 0, 0, 0.9);
+		border-radius: 10px;
 		@media ${device.tablet} {
 			font-size: var(--font-size-lg);
 			max-width: 100%;
+			text-align: center;
 		}
 	}
 `;

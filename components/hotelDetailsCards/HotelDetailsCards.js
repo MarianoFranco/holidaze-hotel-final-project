@@ -252,9 +252,6 @@ function HotelDetailsCards({
 				</DataContainer>
 				<Line></Line>
 				<TotalContainer>
-					<div className="total__icon-container">
-						<Icon icon="akar-icons:heart" />
-					</div>
 					<div className="total__price-container">
 						<span className="total__text">from</span>
 						<div className="total__total-price">

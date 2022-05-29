@@ -8,6 +8,7 @@ import { BASE_URL } from "../utils/config/config";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import Image from "next/image";
+import { device } from "../styles/breakpoints";
 
 import { Tabs, Table } from "@mantine/core";
 
@@ -38,6 +39,9 @@ const LinkContainer = styled.div`
 
 const TabsContainer = styled(Tabs)`
 	margin: var(--size-xl) auto;
+	@media ${device.tablet} {
+		flex-direction: column;
+	}
 	.mantine-Tabs-tabsListWrapper {
 		max-width: 345px;
 		width: 100%;

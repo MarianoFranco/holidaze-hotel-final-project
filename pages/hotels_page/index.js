@@ -47,6 +47,7 @@ const ResultsContainer = styled.div`
 		grid-template-columns: 30% auto auto;
 	}
 	@media ${device.tablet} {
+		padding: var(--size);
 		grid-template-columns: auto;
 		grid-template-areas:
 			"card2 card2 card2"

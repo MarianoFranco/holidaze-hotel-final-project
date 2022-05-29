@@ -55,6 +55,10 @@ const SearchBtnContainer = styled.div`
 `;
 
 const InputDate = styled.div`
+	@media ${device.mobile} {
+		margin: 24px 8px;
+		width: 95%;
+	}
 	.form__label {
 		font-size: var(--font-size-md);
 		font-weight: 500;
@@ -89,6 +93,10 @@ const DatePickerComponent = styled(DateRangePicker)`
 	}
 `;
 const InputGuest = styled.div`
+	@media ${device.mobile} {
+		margin: 24px 8px;
+		width: 95%;
+	}
 	.form__label {
 		font-size: var(--font-size-md);
 		font-weight: 500;
