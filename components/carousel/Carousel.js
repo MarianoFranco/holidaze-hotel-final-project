@@ -53,7 +53,6 @@ function Carousel({ hotel_data }) {
 			</div>
 			<SliderContainer ref={sliderRef} {...settings}>
 				{hotel_data.map((hotel) => {
-					console.log(hotel);
 					const secondaryLoader = ({
 						width = 100,
 						quality = 100,

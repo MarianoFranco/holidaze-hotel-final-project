@@ -118,7 +118,7 @@ function Footer() {
 								</Link>
 							</li>
 							<li className="contact__list">
-								<Link href="/" passHref>
+								<Link href="/contact" passHref>
 									<a className="contact__text">Contact</a>
 								</Link>
 							</li>

@@ -305,7 +305,6 @@ function Hotels({ data, jwt }) {
 					<div className="div3">
 						<CardsContainer>
 							{dataFilteredByAmenities.map((hotel) => {
-								console.log(hotel);
 								return (
 									<HotelDetailsCards
 										key={hotel.id}

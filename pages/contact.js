@@ -313,7 +313,7 @@ function Contact({ user, token, jwt }) {
 						src="/images/contact_portrait.jpg"
 						layout="fill"
 						objectFit="cover"
-						alt="image"
+						alt="Contact portrait, landscape"
 					/>
 				</ImageContainer>
 				<ContactContainer>

@@ -175,7 +175,9 @@ function Admin({ user, messages, hotels, hotelMessages, jwt }) {
 														width="150px"
 														height="100px"
 														loader={loader}
-														alt={`Image of ${element.Title} in ${element.Address} `}
+														alt={
+															element.alt_portrait_image
+														}
 													></Image>
 												)}
 											</td>

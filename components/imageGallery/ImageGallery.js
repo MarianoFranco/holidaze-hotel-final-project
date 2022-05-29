@@ -114,28 +114,16 @@ function ImageGallery({ sliderImg, altImg }) {
 					className="mySwiper2"
 				>
 					{sliderArray.map((image, i) => {
-						altImgArray.map((altSrc, i) => {
-							return (
-								<SwiperSlide key={i}>
-									<Image
-										src={image}
-										layout="fill"
-										loader={firstLoader}
-										alt={altSrc}
-									/>
-								</SwiperSlide>
-							);
-						});
-						// return (
-						// 	<SwiperSlide key={i}>
-						// 		<Image
-						// 			src={image}
-						// 			layout="fill"
-						// 			loader={firstLoader}
-						// 			alt={image.title}
-						// 		/>
-						// 	</SwiperSlide>
-						// );
+						return (
+							<SwiperSlide key={i}>
+								<Image
+									src={image}
+									layout="fill"
+									loader={firstLoader}
+									alt={altImgArray[i]}
+								/>
+							</SwiperSlide>
+						);
 					})}
 				</Swiper>
 				<Swiper

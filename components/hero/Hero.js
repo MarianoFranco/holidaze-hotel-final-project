@@ -78,6 +78,7 @@ function Hero() {
 					objectFit="cover"
 					alt="Holidaze portrait"
 					className="hero__image"
+					priority="true"
 				></Image>
 			</div>
 			<TitleContainer>
