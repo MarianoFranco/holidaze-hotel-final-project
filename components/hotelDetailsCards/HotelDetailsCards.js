@@ -224,13 +224,19 @@ function HotelDetailsCards({
 					</div>
 					<div className="data__address-container">
 						<p>{address}</p>
-						<div className="data__location-container">
-							<Icon
-								icon="carbon:location-filled"
-								className="data__location-icon"
-							/>
-							<span className="data__location">Map view</span>
-						</div>
+						<Link href="https://www.google.com/maps">
+							<a target="_blank">
+								<div className="data__location-container">
+									<Icon
+										icon="carbon:location-filled"
+										className="data__location-icon"
+									/>
+									<span className="data__location">
+										Map view
+									</span>
+								</div>
+							</a>
+						</Link>
 					</div>
 
 					<div className="data__amenities">
