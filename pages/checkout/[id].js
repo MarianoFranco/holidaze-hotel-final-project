@@ -11,7 +11,7 @@ import Button from "../../components/button/Button";
 import { device } from "../../styles/breakpoints";
 import { BASE_URL } from "../../utils/config/config";
 import { useRouter } from "next/router";
-import dayjs from "dayjs";
+
 import { parseCookies } from "nookies";
 const CheckoutSectionContainer = styled.div`
 	display: flex;
@@ -46,8 +46,6 @@ const Message = styled.div`
 	font-weight: 500;
 `;
 const SummaryCard = styled.div`
-	/* display: ${(props) => (props.deleteCard ? "none" : "block")}; */
-
 	border: solid 1px rgba(0, 0, 0, 0.3);
 	border-radius: 10px;
 	max-width: 500px;
@@ -59,7 +57,6 @@ const SummaryCard = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-
 	display: ${(props) => (props.deleteCard ? "flex" : "none")};
 	.summary__top-container {
 		display: flex;

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import ImageGallery from "../imageGallery/ImageGallery";
@@ -216,7 +216,7 @@ const GuestContainer = styled(CheckInOutContainer)``;
 function DetailsMainSection({ data }) {
 	const [guest, setGuest] = useState(1);
 	const [rooms, setRoom] = useState(1);
-	console.log(data);
+
 	return (
 		<DetailsSectionContainer>
 			<TextContainer>

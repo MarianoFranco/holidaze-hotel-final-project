@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
-import { Accordion, createStyles } from "@mantine/core";
+import { Accordion } from "@mantine/core";
 import styled from "styled-components";
-import { device } from "../../styles/breakpoints";
 
 const AccordionContainer = styled(Accordion)`
 	width: 100%;

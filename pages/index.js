@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import Header from "../components/header/Header";
 import Hero from "../components/hero/Hero";
 import FeaturedSection from "../components/featuredSection/FeaturedSection";

@@ -1,14 +1,7 @@
-import React, { useState, usePreviousState } from "react";
-import {
-	Accordion,
-	RangeSlider,
-	Text,
-	Container,
-	Checkbox,
-} from "@mantine/core";
+import React, { useState } from "react";
+import { Accordion, RangeSlider, Container, Checkbox } from "@mantine/core";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
-import usePrevious from "../../utils/hooks/usePrevious";
 
 const AccordionContainer = styled(Accordion)`
 	.mantine-v4lv9f {

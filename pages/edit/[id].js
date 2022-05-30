@@ -4,10 +4,9 @@ import Header from "../../components/header/Header";
 import { Switch } from "@mantine/core";
 import axios from "axios";
 import Button from "../../components/button/Button";
-import nookies, { parseCookies } from "nookies";
+import { parseCookies } from "nookies";
 import { BASE_URL } from "../../utils/config/config";
-import Router, { useRouter } from "next/router";
-import { redirectUser } from "../../utils/redirectUser/redirectUser";
+import { useRouter } from "next/router";
 
 const SectionContainer = styled.div`
 	max-width: 1440px;

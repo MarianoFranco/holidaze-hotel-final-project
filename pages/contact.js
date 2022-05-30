@@ -4,13 +4,11 @@ import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import { Formik, Form, useField } from "formik";
-import * as Yup from "yup";
 import Button from "../components/button/Button";
 import { device } from "../styles/breakpoints";
 import axios from "axios";
-import nookies, { parseCookies } from "nookies";
 import { BASE_URL } from "../utils/config/config";
+
 const Main = styled.main`
 	position: relative;
 `;
@@ -424,7 +422,6 @@ function Contact({ user, token, jwt }) {
 											name="phone"
 											type="tel"
 											placeholder="Telephone"
-											//pattern="[0-9]{8}"
 											onChange={handleChange}
 											className="text-input text-input-with-icon"
 											value={userData.phone}

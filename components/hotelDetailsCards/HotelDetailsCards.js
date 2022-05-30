@@ -1,7 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React from "react";
 import styled from "styled-components";
-import Image from "next/image";
 import { Icon } from "@iconify/react";
 import Button from "../button/Button";
 import Link from "next/link";

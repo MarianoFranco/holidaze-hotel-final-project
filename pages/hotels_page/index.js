@@ -1,20 +1,15 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
 import Searchbar from "../../components/searchbar/Searchbar";
-import SortButton from "../../components/sortButton/SortButton";
 import FilterComponent from "../../components/filterComponent/FilterComponent";
 import HotelDetailsCards from "../../components/hotelDetailsCards/HotelDetailsCards";
 import Footer from "../../components/footer/Footer";
-import Link from "next/link";
 import { device } from "../../styles/breakpoints";
 import Button from "../../components/button/Button";
-import { filteringAnArray } from "../../utils/filteringAnArray/filterinAnArray";
 import { parseCookies } from "nookies";
-import { useRouter } from "next/router";
 import { SegmentedControl } from "@mantine/core";
 import { BASE_URL } from "../../utils/config/config";
-import { useEffect } from "react";
 
 const MainSection = styled.main`
 	max-width: 1440px;
@@ -167,7 +162,6 @@ export async function getStaticProps(context) {
 		let res = await fetch(`${BASE_URL}/hotels/`);
 		let data = await res.json();
 
-		//console.log(data);
 		return {
 			props: { data },
 		};
@@ -200,9 +194,6 @@ function Hotels({ data, jwt }) {
 		return hotel.price >= priceRange[0] && hotel.price <= priceRange[1];
 	});
 
-	// TODO mañana
-	//definir variable wifi
-	//y cada una de las amenities para hacer funcionar el filtered
 	let dataFilteredByAmenities = dataFilteredByRangePrice.filter((hotel) => {
 		return (
 			(!wifiSelected || hotel.amenities.wifi === wifiSelected) &&

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import * as Yup from "yup";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
 import axios from "axios";

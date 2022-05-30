@@ -1,17 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Icon } from "@iconify/react";
-import { device } from "../../styles/breakpoints";
-const IconsContainer = styled.div`
-	display: flex;
-	align-items: center;
-	color: var(--color-white);
-	font-size: var(--font-size-md);
-	gap: var(--size-sm);
-	@media ${device.laptop} {
-		font-size: var(--font-size);
-	}
-`;
+
 function StarsIcon({ stars }) {
 	switch (stars) {
 		case 1:

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { device } from "../../styles/breakpoints";

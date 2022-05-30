@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Searchbar from "../searchbar/Searchbar";
 import { device } from "../../styles/breakpoints";
 import { useRouter } from "next/router";
-import { date } from "yup/lib/locale";
 import dayjs from "dayjs";
 
 const Wrapper = styled.div`

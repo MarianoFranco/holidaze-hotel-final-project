@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
 
 const BtnContainer = styled.div`
 	height: 100%;

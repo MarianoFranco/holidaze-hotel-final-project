@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Image from "next/image";
 import { device } from "../../styles/breakpoints";
 import { FeaturedCards } from "../fetaureCard/FeaturedCard";
 import Link from "next/link";
@@ -26,22 +25,7 @@ const CardContainer = styled.div`
 		height: 488px;
 	}
 `;
-const ImgContainer = styled.div`
-	position: absolute;
-	top: 0;
-	height: 100%;
-	width: 100%;
-	z-index: -100;
-`;
-const DataContainer = styled.div`
-	width: 704px;
-	height: 288px;
-	position: absolute;
-	bottom: 0;
-	margin: var(--size-xl);
-	background-color: rgba(0, 0, 0, 0.75);
-	border-radius: 10px;
-`;
+
 function OurSelectionSection({ hotel_data }) {
 	const filteredHotel = hotel_data.filter(function (hotel) {
 		return hotel.featured === true;

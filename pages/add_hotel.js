@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "../components/header/Header";
 import { Switch } from "@mantine/core";
@@ -22,8 +22,6 @@ const SectionContainer = styled.div`
 		margin: 16px 0;
 	}
 	.error {
-		/* display: ${(props) => (props.errorMessage ? "block" : "none")}; */
-
 		background-color: red;
 		font-size: var(--font-size-md);
 		padding: 16px;
@@ -205,7 +203,6 @@ function AddHotel({ jwt }) {
 
 	const [userData, setUserData] = useState(initialValues);
 	const [formErrors, setFormErrors] = useState({});
-	const [isSubmit, setIsSubmit] = useState(false);
 
 	const [confirmationMessage, setConfirmationMessage] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
@@ -218,8 +215,7 @@ function AddHotel({ jwt }) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// setFormErrors(validate(userData));
-		// setIsSubmit(true);
+
 		const errorData2 = validate(userData);
 		setFormErrors(errorData2);
 
@@ -263,10 +259,6 @@ function AddHotel({ jwt }) {
 				},
 			};
 
-			// let response = await axios.post(
-			// 	`http://localhost:1337/hotels`,
-			// 	newHotel
-			// )
 			axios
 				.post(`${BASE_URL}/hotels`, newHotel, {
 					headers: {
@@ -708,7 +700,6 @@ function AddHotel({ jwt }) {
 
 export const getServerSideProps = async (ctx) => {
 	const jwt = nookies.get(ctx);
-	let user = null;
 
 	if (!jwt.jwt) {
 		return {

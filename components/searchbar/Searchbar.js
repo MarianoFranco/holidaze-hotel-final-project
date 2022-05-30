@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Input } from "../inputs/Inputs";
 import Button from "../button/Button";
 import { device } from "../../styles/breakpoints";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { DateRangePicker } from "@mantine/dates";
 import { Icon } from "@iconify/react";

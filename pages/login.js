@@ -5,8 +5,7 @@ import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import { Formik, Form, useField, ErrorMessage, Field } from "formik";
-import * as Yup from "yup";
+import { ErrorMessage } from "formik";
 import Button from "../components/button/Button";
 import { device } from "../styles/breakpoints";
 import axios from "axios";
@@ -157,17 +156,6 @@ const InputContainer = styled.div`
 		font-size: var(--font-size);
 		font-weight: 500;
 	}
-`;
-
-const Error = styled(ErrorMessage)`
-	background-color: #fe0000;
-	border-radius: 10px;
-	opacity: 0.7;
-	color: var(--color-white);
-	padding: var(--size-sm);
-	font-family: var(--font-headings);
-	font-size: var(--font-size);
-	font-weight: 500;
 `;
 
 function Login({ jwt }) {

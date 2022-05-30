@@ -5,9 +5,9 @@ import Navigation from "../navigation/Navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { device } from "../../styles/breakpoints";
-import { createStyles, Burger, Transition, Paper } from "@mantine/core";
+import { Burger } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
-import { getStorageItem } from "../../utils/localStorageHelper/LocalStorageHelper";
+
 import axios from "axios";
 const HeaderElement = styled.header`
 	background-color: var(--color-secondary);

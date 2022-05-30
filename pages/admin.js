@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../components/header/Header";
-import nookies, { parseCookies } from "nookies";
+import nookies from "nookies";
 import axios from "axios";
 import Button from "../components/button/Button";
 import { BASE_URL } from "../utils/config/config";
