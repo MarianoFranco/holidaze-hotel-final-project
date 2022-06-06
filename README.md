@@ -1,6 +1,6 @@
 #Holidaze hotel booking - Final Project Exam
 
-[Preview of the website](public/images/holidaze-portrait.jpg)
+![Preview of the website!](public/images/holidaze-portrait.jpg)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
