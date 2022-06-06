@@ -1,6 +1,27 @@
-#Holidaze hotel booking - Final Project Exam
+# Holidaze hotel booking - Final Project Exam
 
 ![Preview of the website!](public/images/holidaze-portrait.jpg)
+
+This project is an example of a booking website, in which hotels can contact the tourism agency, which manages the hotels by adding, editing, or even removing them. In addition, hotels can contact the agency through the contact page. Or even customers can send their questions to each hotel.
+
+## Description
+
+The hotel is created in NextJs, and it contains 9 pages, some of them generates dynamic routes.
+
+- Home page (index.js)
+- Hotel page (add_hotel.js)
+- Details page ([id].js) (Dynamically generated)
+- Contact page (contact.js)
+- Login page (login.js)
+- Admin page (admin.js)
+- Edit page ([id]) (Dynamically generated)
+- Add hotel (add_hotel.js)
+- Checkout page ([id]) (Dynamically generated)
+
+## Admin information
+
+User: admin@holidaze.com
+Password: Admin1234
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -36,3 +57,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Contact
+
+https://www.linkedin.com/in/mariano-david-franco-gallo/
+
